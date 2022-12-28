@@ -22,4 +22,6 @@
 /app/tmp/*
 /app/Config/core.php
 /app/Config/database.php
-/vendors/*
+webcache/*
+debug.log
+chrome_debug.log
