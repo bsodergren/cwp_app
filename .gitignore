@@ -25,3 +25,6 @@ www/library/vendor/*
 webcache/*
 debug.log
 chrome_debug.log
+www/library/composer.lock
+www/assets/database/cwp_sqlite.db
+www/library/composer.lock
