@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
 
 function write_xlsx_workbook($xlsx_array,$job_number,$pdf_file)
 {
-	global $db;
+	global $explorer;
 	
 	if (__XLSX_EXTRAS__ == true ) {
 		$master_sheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -135,9 +135,8 @@ function write_xlsx_workbook($xlsx_array,$job_number,$pdf_file)
 	
 
     $xlsx_directory=get_xlsx_directory($pdf_file,$job_number);
-    $data = Array (	'xlsx_dir' => "$xlsx_directory");
-    $db->where ('job_id', $job_id);
-    $db->update ('media_job', $data);
+
+	$explorer->table('media_job')->where('job_id', $job_id)->update(['xlsx_dir' => "$xlsx_directory"]);
     //myHeader();  
 
 }

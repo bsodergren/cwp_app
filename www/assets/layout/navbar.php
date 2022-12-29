@@ -17,7 +17,7 @@
 				<!-- start default menu_link --> 
 				<li class="nav-item"><a class="nav-link" href="import.php" >Import</a></li>
 				<!-- start default menu_link --> 
-				<li class="nav-item"><a class="nav-link" href="home.php" >Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="index.php" >Home</a></li>
 			</ul>
 		</div>
 	</div>

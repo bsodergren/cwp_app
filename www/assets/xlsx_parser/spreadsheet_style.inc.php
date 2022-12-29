@@ -2,7 +2,8 @@
 
 function sheetCommon(&$sheet_obj)
 {
-	global $db;
+    global $connection;
+    global $explorer;
 
 	$styles=array(
 		"A6" => array("Job Number",true,22),
@@ -82,14 +83,10 @@ function sheetCommon(&$sheet_obj)
 	}
 	
 	*/
-	 $sql = "SELECT CONCAT_WS('',ecol, erow) as location, text,bold,font_size,h_align,v_align FROM flag_style WHERE erow IS NOT NULL;";
+		 $sql = "SELECT ecol ||  erow as location, text,bold,font_size,h_align,v_align FROM flag_style WHERE erow IS NOT NULL;";
 
-        logger("SQL Query ",$sql);
-
-        $result = $db->query($sql);
-        logger("SQL Query ",$result);
-    
-    	foreach($result as $val )
+                $result = $connection->fetchAll($sql);
+    	foreach($result as $k => $val )
         {
             
              $col = $val['location'];
@@ -172,10 +169,11 @@ function setRowHeights(&$sheet_obj)
 
 function setColWidths(&$sheet_obj,$style="Load Flag")
 {
-	global $db;
+	global $connection;
+    global $explorer;
+	$result = $connection->fetchAll("SELECT ecol,width FROM flag_style WHERE erow IS NULL and style_name = '".$style."' ORDER BY ecol ASC");
 
-	$result = $db->query("SELECT ecol,width FROM flag_style WHERE erow IS NULL and style_name = '".$style."' ORDER BY ecol ASC");
-
+	
 	foreach($result as $k => $v)
 	{
 		$sheet_obj->getColumnDimension($v['ecol'])->setWidth($v['width']);

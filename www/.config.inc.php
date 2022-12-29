@@ -1,4 +1,5 @@
 <?php
+use Nette\Utils\FileSystem;
 
 /**
  *  Basic constants for application that are displayed in the output
@@ -56,9 +57,6 @@ require_once __COMPOSER_DIR__.'/autoload.php';
 /*
  * Tracy Debugger
  */
-
-use Nette\Utils\FileSystem;
-use Nette\Utils\Strings;
 use Tracy\Debugger;
 
 Debugger::enable();
@@ -66,50 +64,17 @@ Debugger::$dumpTheme    = 'dark';
 Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
 
 
+require_once __INC_CORE_DIR__ . "/require_files.inc.php";
 
-function first_run()
-{
-        $file = 'firstrun.inc.php';
-        $replacement  = '<?php';
-        $replacement .= ' #skip';
-        $__db_string  = FileSystem::read(__INC_CORE_DIR__.'/'.$file);
-        $__db_write   = str_replace('<?php', $replacement, $__db_string);
-        FileSystem::write(__INC_CORE_DIR__.'/'.$file, $__db_write);
-    
-}
+define("__FILES_DIR__", __PROJECT_ROOT__ . "/files");
+define("__PDF_UPLOAD_DIR__",__FILES_DIR__. "/uploads" );
+define("__ZIP_FILE_DIR__",__FILES_DIR__. "/zip" );
+define("__XLSX_DIRECTORY__",__FILES_DIR__. "/xlsx" );
 
-
-
-// require_once __INC_CLASS_DIR__ . "/strings.class.php";
-/*
- *  Include all files from the include directories.
- *
- *
- */
+define("__XLSX_EXTRAS__", 0);
+FileSystem::createDir(__PDF_UPLOAD_DIR__);
+FileSystem::createDir(__ZIP_FILE_DIR__);
+FileSystem::createDir(__XLSX_DIRECTORY__);
 
 
-$const = get_defined_constants(true);
-foreach ($const['user'] as $name => $value) {
-    if (Strings::contains($name, '_INC_')) {
-        if ($all = opendir($value)) {
-            while ($file = readdir($all)) {
-                if (!is_dir($value.'/'.$file)) {
-                    if (preg_match('/(php)$/', $file)) {
-                        $f    = fopen($value.'/'.$file, 'r');
-                        $line = fgets($f);
-                        fclose($f);
-                        if (strpos($line, '#skip') == false)
-                        {
-                            include_once $value.'/'.$file;
-                            if ($file == 'firstrun.inc.php') {
-                                first_run();
-                            }
-                        }
-                    }//end if
-                }//end if
-            }//end while
-
-            closedir($all);
-        }//end if
-    }//end if
-}//end foreach
+define('__lang_bindery', "Bindery");

@@ -22,7 +22,8 @@ function getFormTotals($data)
 
 function calculateBox( $form_details, $form_configuration)
 {
-    global $db;
+    global $connection;
+    global $explorer;
     $face_trim = $form_details["face_trim"];
   
     $pcs=str_replace(',', '', trim($form_details['count']));
@@ -33,27 +34,14 @@ function calculateBox( $form_details, $form_configuration)
     $delivery =  strtolower($form_details['former']);
 
     $paper_size = $form_configuration['paper_size'];
+    $config = str_replace("pg", "", $config);
 
-    logger("form_number pcs",$pcs);
-    logger("delivery delivery",$delivery);
-
-	logger("face_trim ",$face_trim);
-	
-	
-    $ids = $db->subQuery ();
-    $ids->where ('paper_wieght', $paper_wieght);
-    $ids->where ('paper_size', $paper_size);
-    $ids->where ('pages', $config);
-    $ids->getone('paper_type','id');
-
-    $db->where ("paper_id", $ids);
-    $res = $db->getone("paper_count");
-
-
+    $res = $explorer->table("paper_type")->select("id")->where("paper_wieght = ?  AND paper_size = ?  AND pages = ?", $paper_wieght, $paper_size, $config)->fetch();
+    $res = $explorer->table("paper_count")->where('paper_id',$res['id'])->fetch();
+    
     foreach ($res as $var => $value) {
         $$var=$value;
     }
-
 
 	
     if ($pcs <= $max_carton && $face_trim != 1) {

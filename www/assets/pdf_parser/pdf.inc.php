@@ -1,5 +1,7 @@
 <?php
 
+#namespace Smalot\PdfParser\Parser;
+
 function getPageCount($config_type )
 {
 
@@ -40,6 +42,9 @@ function getPageCount($config_type )
 
 function process_pdf($pdf_file,$media_job_id)
 {
+
+
+
 	$type = '';
 	$form =  array();
 	$parser = new \Smalot\PdfParser\Parser();
@@ -53,7 +58,7 @@ function process_pdf($pdf_file,$media_job_id)
 		$text = $page->getDataTm();
 		$p=0;
 		$next_form = 0;
-		
+
 
 		$rows = count($text);
 		$i++;

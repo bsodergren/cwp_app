@@ -27,7 +27,7 @@ hr {
 		width: 100%;
 		margin: 10px;
 		/* text-align: left; */
-		padding: 50px 50px 50px 50px;
+		/*padding: 50px 50px 50px 50px;*/
 		border-collapse: collapse; 
 
 	}
@@ -64,7 +64,7 @@ hr {
 	}
 
 	#mycontainer {
-		width:800px; 
+/*		width:800px; */
 		clear:both; 		 
 		color:#cc0000;
 

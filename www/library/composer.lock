@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d2bef663102afaa265cc5dd3b9a355a",
+    "content-hash": "244632ff5ddfd0aec1145176bdd98145",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -66,6 +66,53 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.16.0"
             },
             "time": "2022-09-18T07:06:19+00:00"
+        },
+        {
+            "name": "formr/formr",
+            "version": "1.4.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/formr/Formr.git",
+                "reference": "816bf4af80f2933d739e541ba451dde0e78795e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/formr/Formr/zipball/816bf4af80f2933d739e541ba451dde0e78795e6",
+                "reference": "816bf4af80f2933d739e541ba451dde0e78795e6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "class.formr.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Gavin",
+                    "homepage": "https://formr.github.io",
+                    "role": "Original Author"
+                }
+            ],
+            "description": "Formr is a PHP micro-framework which helps you build and validate forms quickly, painlessly, and without all the messy overhead.",
+            "support": {
+                "issues": "https://github.com/formr/Formr/issues",
+                "source": "https://github.com/formr/Formr/tree/1.4.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/timgavin",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-10-28T16:12:52+00:00"
         },
         {
             "name": "latte/latte",
