@@ -62,7 +62,7 @@ use Tracy\Debugger;
 Debugger::enable();
 Debugger::$dumpTheme    = 'dark';
 Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
-
+Debugger::$showBar = 1;
 
 require_once __INC_CORE_DIR__ . "/require_files.inc.php";
 
