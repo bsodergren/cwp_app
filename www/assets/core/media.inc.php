@@ -166,6 +166,14 @@ function get_drop_form_data($job_id,$form_number='',$sort=array())
 }
 
 
+function get_Job($job_id)
+{
+    global $explorer;
+
+    $table = $explorer->table("media_job");
+    return $table->get($job_id);
+}
+
 function get_form_configuration($data)
 {
     $config=$data["config"];

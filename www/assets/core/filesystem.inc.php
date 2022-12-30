@@ -2,16 +2,19 @@
 use Nette\Utils\FileSystem;
 function get_directory($pdf_file,$job_number, $type='')
 {
-	$output_filename = get_filename($pdf_file,$job_number);
+	$output_filename = "/".get_filename($pdf_file,$job_number);
+	$directory = '';
 	if (strtolower($type) == 'xlsx'){
-		$directory=__XLSX_DIRECTORY__  .'/'.$output_filename;
+		$directory=__XLSX_DIRECTORY__ ;	
 	}
-	
+	if (strtolower($type) == 'pdf'){
+		$directory=__PDF_UPLOAD_DIR__ ;	
+	}
 	if (strtolower($type) == 'zip'){
-		$directory=__ZIP_FILE_DIR__  .'/'.$output_filename;
+		$directory=__ZIP_FILE_DIR__ ;
 	}
-	
-    FileSystem::createDir($directory);    
+	$directory = __FILES_DIR__ . $output_filename . $directory;
+    //FileSystem::createDir($directory);    
     return $directory;
 }
 
@@ -20,6 +23,7 @@ function get_filename($pdf_file,$job_number,$type='',$form_number='')
 {
 	$file = basename($pdf_file,".pdf");
     $filename = $file."_".$job_number;
+	
 	if (strtolower($type) == 'xlsx')
 	{
 		$directory = get_directory($pdf_file,$job_number,$type);
@@ -44,12 +48,15 @@ function get_xlsx_directory($pdf_file,$job_number)
     return get_directory($pdf_file,$job_number, 'xlsx');
 }
 
+function get_pdf_directory($pdf_file,$job_number)
+{
+    return get_directory($pdf_file,$job_number, 'pdf');
+}
+
 function get_xlsx_filename($pdf_file,$job_number,$form_number)
 {
 	return  get_filename($pdf_file,$job_number,'xlsx',$form_number);
 }
-
-
 
 function get_zip_filename($pdf_file,$job_number,$form_number='')
 {

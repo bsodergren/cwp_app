@@ -48,6 +48,7 @@ function process_pdf($pdf_file,$media_job_id)
 	$type = '';
 	$form =  array();
 	$parser = new \Smalot\PdfParser\Parser();
+	logger("PDF File in process", $pdf_file);
 	$pdf    = $parser->parseFile($pdf_file);
 
 	$pages  = $pdf->getPages(); 

@@ -13,8 +13,13 @@ define('APP_DESCRIPTION', 'Embeddable PHP Login System');
  * base directory and script name.
  */
 define('__SCRIPT_NAME__', basename($_SERVER['PHP_SELF'], '.php'));
-//define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']);
+
 define('__PROJECT_ROOT__', ".");
+//define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']);
+
+define('__ROOT_BIN_DIR__', $_SERVER['SERVER_ROOT']."/../bin");
+
+
 /*
  * Default constants for include path structure.
  *
@@ -66,15 +71,42 @@ Debugger::$showBar = 1;
 
 require_once __INC_CORE_DIR__ . "/require_files.inc.php";
 
-define("__FILES_DIR__", __PROJECT_ROOT__ . "/files");
-define("__PDF_UPLOAD_DIR__",__FILES_DIR__. "/uploads" );
-define("__ZIP_FILE_DIR__",__FILES_DIR__. "/zip" );
-define("__XLSX_DIRECTORY__",__FILES_DIR__. "/xlsx" );
+
 
 define("__XLSX_EXTRAS__", 0);
+
+
+
+
+
+require_once __ASSETS_DIR__ . "/settings.inc.php";
+
+if (defined('__USE_LOCAL_XLSX__'))
+{
+    if (__USE_LOCAL_XLSX__ == 1) {
+        if (
+            defined('__USER_XLSX_DIR__') &&
+            is_dir(__USER_XLSX_DIR__)
+        ) {
+            define("__FILES_DIR__", __USER_XLSX_DIR__ . "/files");
+        }
+    }
+}
+
+if(!defined('__FILES_DIR__')){
+    define("__FILES_DIR__", __PROJECT_ROOT__ . "/files");
+}
+
+logger("Default file dir", __FILES_DIR__);
+
+define("__PDF_UPLOAD_DIR__", "/pdf" );
+define("__ZIP_FILE_DIR__", "/zip" );
+define("__XLSX_DIRECTORY__", "/xlsx" );
+
+/*
 FileSystem::createDir(__PDF_UPLOAD_DIR__);
 FileSystem::createDir(__ZIP_FILE_DIR__);
 FileSystem::createDir(__XLSX_DIRECTORY__);
-
+*/
 
 define('__lang_bindery', "Bindery");

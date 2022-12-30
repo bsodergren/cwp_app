@@ -16,7 +16,9 @@ if(key_exists("actSubmit",$_REQUEST))
 			delete_xlsx($job_id);   
 			delete_zip($job_id);
 			delete_form_data($job_id);
-			add_new_media_drop(__PDF_UPLOAD_DIR__."/".$job['pdf_file'],$job['job_number']);
+			$pdf_loc = get_pdf_directory($job['pdf_file'],$job['job_number']);
+			bdump($pdf_loc);
+			add_new_media_drop($pdf_loc ."/".$job['pdf_file'],$job['job_number']);
 
 			break;
 	

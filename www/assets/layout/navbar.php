@@ -14,6 +14,8 @@
 		<!-- Right Side Of Navbar -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link" href="paper.php" >Paper</a></li>
+				<li class="nav-item"><a class="nav-link" href="settings.php" >Settings</a></li>
+
 				<!-- start default menu_link --> 
 				<li class="nav-item"><a class="nav-link" href="import.php" >Import</a></li>
 				<!-- start default menu_link --> 

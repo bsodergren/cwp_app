@@ -21,8 +21,9 @@ if(isset($_FILES['the_file']) ) {
     $f=explode('.',$fileName);
     $f=end($f);    
     $fileExtension = strtolower($f);
-
-    $pdf_file = __PDF_UPLOAD_DIR__ .'/'. basename($fileName); 
+    $media_closing = "/".basename($fileName,".pdf");
+    $pdf_directory = get_directory($fileName,$_POST['job_number'] , 'pdf');
+    $pdf_file = $pdf_directory.'/'. basename($fileName); 
 
 }
 
@@ -43,6 +44,8 @@ if (isset($_POST['submit'])) {
       FileSystem::delete($pdf_file);
     }
 
+    FileSystem::createDir($pdf_directory);
+
     if(!file_exists($pdf_file))
     {
         $didUpload = move_uploaded_file($fileTmpName, $pdf_file);
@@ -51,20 +54,18 @@ if (isset($_POST['submit'])) {
         if ($didUpload) {
 
 
-            $descriptorspec = array(
-                0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-                1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-              //  2 => array("file", "error-output.txt", "a") // stderr is a file to write to
-             );
-             
-             $cmd = ''.__PROJECT_ROOT__.'/../bin/qpdf "'.$pdf_file.'" --pages . 1-z -- --replace-input ';
+          $descriptorspec = array(
+            0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+            1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+            //  2 => array("file", "error-output.txt", "a") // stderr is a file to write to
+          );
 
-             $process = proc_open($cmd,$descriptorspec, $pipes); 
-          
-            
-            
-            $output_text = "The file " . basename($fileName) . " has been uploaded <br>";
-            $output_text .= "Job number " . $_POST['job_number'] . "<br>";
+          $cmd = ''.__ROOT_BIN_DIR__.'/qpdf "'.$pdf_file.'" --pages . 1-z -- --replace-input ';
+          logger("QDPF Command", $cmd);
+          $process = proc_open($cmd,$descriptorspec, $pipes); 
+
+          $output_text = "The file " . basename($fileName) . " has been uploaded <br>";
+          $output_text .= "Job number " . $_POST['job_number'] . "<br>";
 
         } else {
           $output_text = "An error occurred. Please contact the administrator.";
@@ -80,6 +81,8 @@ if (isset($_POST['submit'])) {
     $job_id = '';
     if($job_id == '') {
         $output_text .= "Importing new media job<br>".$_POST['job_number']." \n";
+        logger("pdf_file", $pdf_file);
+
         add_new_media_drop($pdf_file,$_POST['job_number']);
 
     }
