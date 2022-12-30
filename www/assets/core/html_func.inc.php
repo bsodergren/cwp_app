@@ -106,3 +106,28 @@ function myHeader($redirect = __URL_PATH__."/home.php")
     header( "refresh:0;url=".$redirect);
     
 }
+
+
+
+function JavaRefresh($url,$timeout=0)
+{
+    global $_REQUEST;
+    
+    $html = '<script>' . "\n";
+    
+    
+    if($timeout > 0)
+    {
+        $html .= 'setTimeout(function(){ ';
+    }
+    
+    $html .= "window.location.href = '".$url."';";
+    
+    if($timeout > 0)
+    {
+        $html .= '}, '.$timeout.');';
+    }
+    $html .= "\n".'</script>';
+
+    return $html;
+}

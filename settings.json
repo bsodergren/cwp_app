@@ -4,13 +4,13 @@
         "dpi_aware": true
     },
     "debugging": {
-        "show_console": true,
+        "show_console": false,
         "subprocess_show_console": false,
         "log_level": "INFO",
         "log_file": "debug.log"
     },
     "main_window": {
-        "title": "PHP Desktop Chrome",
+        "title": "Media Flag Creator",
         "icon": "",
         "default_size": [1024, 600],
         "minimum_size": [640, 480],

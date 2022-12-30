@@ -55,8 +55,6 @@ if (array_key_exists("submit_edit",$_REQUEST) == TRUE)
 		$form_data->where('job_id = ?', $_REQUEST['job_id']);
 		$results = $form_data->fetch();
 	
-		bdump($results);
-		exit;
 		if(empty($results))
 		{
 			$next_form_number=$next_form_number-1;
@@ -70,5 +68,3 @@ if (array_key_exists("submit_edit",$_REQUEST) == TRUE)
 myHeader(__URL_HOME__."/form.php?job_id=".$_REQUEST['job_id']."&form_number=".$next_form_number."");  
 
 }
-
-

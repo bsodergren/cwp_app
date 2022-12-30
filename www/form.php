@@ -93,8 +93,8 @@ include __LAYOUT_HEADER__;
         
         output('<form action="'.$form_url.'" method="post">');
 
-        $edit_button='<input type="submit" name="submit_edit" value="Edit">';
-        output(display_table_header("Form Number " . $form_number ." of ". $max_forms .' - '.$config[$form_number]["config"].' - '.$config[$form_number]["bind"],
+    $edit_button = ''; //'<input type="submit" name="submit_edit" value="Edit">';
+        output(display_table_header( $form_array['job_number'] ." - Form Number " . $form_number ." of ". $max_forms .' - '.$config[$form_number]["config"].' - '.$config[$form_number]["bind"],
         $previous_form_html,
         ' <input type="submit" name="submit" value="'.$next_button.'">',$edit_button));
         output("\t<tbody>");

@@ -255,27 +255,3 @@ function display_navbar_links()
     return $html . $dropdown_html ;
 }
 
-
-
-function JavaRefresh($url,$timeout=0)
-{
-    global $_REQUEST;
-    
-    $html = '<script>' . "\n";
-    
-    
-    if($timeout > 0)
-    {
-        $html .= 'setTimeout(function(){ ';
-    }
-    
-    $html .= "window.location.href = '".$url."';";
-    
-    if($timeout > 0)
-    {
-        $html .= '}, '.$timeout.');';
-    }
-    $html .= "\n".'</script>';
-
-    return $html;
-}
