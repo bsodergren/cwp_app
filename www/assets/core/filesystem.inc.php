@@ -1,6 +1,6 @@
 <?php 
 use Nette\Utils\FileSystem;
-function get_directory($pdf_file,$job_number, $type='')
+function get_directory($pdf_file,$job_number, $type='',$create_dir=false)
 {
 	$output_filename = "/".get_filename($pdf_file,$job_number);
 	$directory = '';
@@ -14,25 +14,27 @@ function get_directory($pdf_file,$job_number, $type='')
 		$directory=__ZIP_FILE_DIR__ ;
 	}
 	$directory = __FILES_DIR__ . $output_filename . $directory;
-    //FileSystem::createDir($directory);    
+	if($create_dir == true) {
+    	FileSystem::createDir($directory);    
+	}
     return $directory;
 }
 
 
-function get_filename($pdf_file,$job_number,$type='',$form_number='')
+function get_filename($pdf_file,$job_number,$type='',$form_number='',$create_dir=false)
 {
 	$file = basename($pdf_file,".pdf");
     $filename = $file."_".$job_number;
 	
 	if (strtolower($type) == 'xlsx')
 	{
-		$directory = get_directory($pdf_file,$job_number,$type);
+		$directory = get_directory($pdf_file,$job_number,$type,$create_dir);
 		$filename = $directory.'/'.$filename."_FM".$form_number.'.xlsx';
 	}
 	if (strtolower($type) == 'zip')
 	{
 		
-		$directory = get_directory($pdf_file,$job_number,$type);
+		$directory = get_directory($pdf_file,$job_number,$type,$create_dir);
 		if($form_number != '' ) {
 			$filename = $directory.'/'.$filename."_FM".$form_number.'.zip';
 		} else {
@@ -43,22 +45,22 @@ function get_filename($pdf_file,$job_number,$type='',$form_number='')
 	return $filename;
 }
 
-function get_xlsx_directory($pdf_file,$job_number)
+function get_xlsx_directory($pdf_file,$job_number,$create_dir=false)
 {
-    return get_directory($pdf_file,$job_number, 'xlsx');
+    return get_directory($pdf_file,$job_number, 'xlsx',$create_dir);
 }
 
-function get_pdf_directory($pdf_file,$job_number)
+function get_pdf_directory($pdf_file,$job_number,$create_dir=false)
 {
-    return get_directory($pdf_file,$job_number, 'pdf');
+    return get_directory($pdf_file,$job_number, 'pdf',$create_dir);
 }
 
-function get_xlsx_filename($pdf_file,$job_number,$form_number)
+function get_xlsx_filename($pdf_file,$job_number,$form_number,$create_dir=false)
 {
-	return  get_filename($pdf_file,$job_number,'xlsx',$form_number);
+	return  get_filename($pdf_file,$job_number,'xlsx',$form_number,$create_dir);
 }
 
-function get_zip_filename($pdf_file,$job_number,$form_number='')
+function get_zip_filename($pdf_file,$job_number,$form_number='',$create_dir=false)
 {
-	return  get_filename($pdf_file,$job_number,'zip',$form_number);
+	return  get_filename($pdf_file,$job_number,'zip',$form_number,$create_dir);
 }

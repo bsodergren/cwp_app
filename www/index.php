@@ -1,12 +1,7 @@
 <?php
 require_once ".config.inc.php";
-
-
-
-define('TITLE', __SCRIPT_NAME__);
+define('TITLE', APP_NAME);
 include __LAYOUT_HEADER__;
-use Nette\Utils\Random;
-
 
 $table = $explorer->table("media_job");
 $results = $table->fetchAssoc('job_id');
@@ -18,7 +13,7 @@ $cnt = $table->count('*');
 	<table class="blueTable">
 		<thead>
 			<tr>
-				<th colspan=2>Media</th>
+				<th>Media</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,85 +22,69 @@ $cnt = $table->count('*');
 
 				foreach ($results as $k => $v) {
 					$url = __URL_HOME__ . "/form.php?job_id=" . $v['job_id'];
-					$text = $v['job_number'] . " - " . $v['pdf_file'];
+					$text_close = basename($v['pdf_file'], ".pdf");
+					$text_job = "Job Number:" . $v['job_number'];
 
 					$form = new Formr\Formr();
 					$hidden = ["job_id" => $v['job_id']];
 					$form->open("", '', __URL_HOME__ . "/action.php", 'post', '', $hidden);
 
+					$class_create = 'class="btn btn-success"';
+					$class_delete = 'class="btn btn-danger"';
+					$class_normal = 'class="btn btn-primary"';
+					$tb = $explorer->table("media_forms");
+					$num_of_forms = $tb->where("job_id", $v['job_id'])->count('*');
+
 			?>
 					<tr id="RedHead">
-						<td> <?php echo $text; ?> </td>
-						<td align="right"><?php
+						<td>
+							<div class="row mb-1">
+								<div class="col text-nowrap "><?php echo $text_job; ?></div>
+								<div class="col text-nowrap  text-md"><?php echo $text_close; ?></div>
+								<div class="col text-end"> Number of Forms:<?php echo $num_of_forms; ?></div>
+							</div>
+							<div class="row mb-2">
+								<div class="container btn-group btn-group-lg" role="group">
+									<?php
+									$vdisabled = " disabled";
+									$zdisabled = " disabled";
 
-											$form->checkbox(
-												'hide',
-												'Hide',
-												'jobId_' . $v['job_id'],
-												'jobId_' . $v['job_id'],
-												"onchange=\"this.form.submit()\""
-											);
+									$zip_file = get_zip_filename($v['pdf_file'], $v['job_number']);
+									$xlsx_dir = get_xlsx_directory($v['pdf_file'], $v['job_number']);
 
-											?>
+									$form->input_submit('actSubmit', '', "Process PDF Form", '', $class_normal);
 
-						</td>
-					<tr>
-					<tr>
-						<td colspan=2>
-							<div class="container">
-								<?php
-								//draw_link($url,$text,'class="button"',false);
+									if ($v["xlsx_dir"] && is_dir($xlsx_dir) == true) {
+										$vdisabled = "";
+									}
 
+									//$form->input_submit('actSubmit', '', 'View Forms', '', class_normal.$vdisabled);
 
-								$zip_file = get_zip_filename($v['pdf_file'],$v['job_number']);
-								$xlsx_dir = get_xlsx_directory($v['pdf_file'],$v['job_number']);
+									if ($v['xlsx_dir'] == true) {
+										$form->input_submit('actSubmit', '', 'delete_xlsx', '', $class_delete);
+									} else {
+										$form->input_submit('actSubmit', '', 'create_xlsx', '', $class_create);
+									}
 
+									if ($v['zip_file'] == true) {
+										$form->input_submit('actSubmit', '', 'delete_zip', '', $class_delete);
+									} else {
+										if ($v['xlsx_dir'] == true) {
+											$zdisabled = "";
+										}
 
-								$form->input_submit('actSubmit', '', "Process PDF Form", '', 'class="button"');
+										$form->input_submit('actSubmit', '', 'create_zip', '', $class_create . $zdisabled);
+									}
 
-								if ($v["xlsx_dir"] && is_dir($xlsx_dir) == true) {
-									$action = "View Forms";
-									$form->input_submit('actSubmit', '', $action, '', 'class="button"');
-								}
+									$form->input_submit('actSubmit', '', 'refresh_import', '', $class_create);
+									$form->input_submit('actSubmit', '', 'delete_job', '', $class_delete);
+									$form->close();
 
-
-
-								if ($v["zip_file"] && file_exists($zip_file) == true) {
-									$form->input_submit('actSubmit', '', 'Download Zip File', '', 'class="button"');
-									$form->input_submit('actSubmit','','Mail Zip File','5','class="button"');
-
-								}
-
-
-								//	$form->close();
-
-
-
-								//	$form_url = __URL_HOME__."/edit.php?job_id=".$v['job_id'];
-								//	$edit_form = new Formr\Formr();
-								//	$edit_form->open("",'',$form_url ,'post');
-
-								// $edit_form = $form;
-
-								if ($v['xlsx_dir'] == true) {
-									$form->input_submit('actSubmit', '', 'delete_xlsx', '', 'class="button"');
-								} else {
-									$form->input_submit('actSubmit', '', 'create_xlsx', '', 'class="button"');
-								}
-
-								if ($v['zip_file'] == true) {
-									$form->input_submit('actSubmit', '', 'delete_zip', '', 'class="button"');
-								} elseif ($v['xlsx_dir'] == true) {
-									$form->input_submit('actSubmit', '', 'create_zip', '', 'class="button"');
-								}
-
-								$form->input_submit('actSubmit', '', 'refresh_import', '', 'class="button"');
-								$form->input_submit('actSubmit', '', 'delete_job', '', 'class="button"');
-								$form->close();
-
-								?>
+									?>
+								</div>
 							</div>
 						</td>
+
 					</tr>
 				<?php  } ?>
 
@@ -113,43 +92,6 @@ $cnt = $table->count('*');
 
 			}
 
-		/*	$db->where('hidden', 1);
-			$media_job = $db->withTotalCount()->get('media_job');
-			if ($db->totalCount > 0) {
-			?>
-
-				<tr>
-					<td colspan=2>
-						<div class="container">
-							<p>
-						</div>
-					</td>
-				</tr>
-
-			<?php
-				foreach ($media_job as $k => $v) {
-					$form = new Formr\Formr();
-
-					$hidden = ["job_id" => $v['job_id']];
-
-					$form->open("HideForms", '', __URL_HOME__ . "/action.php", 'post', '', $hidden);
-					$text = $v['job_number'] . " - " . $v['pdf_file'];
-					echo '	<tr id="RedHead">';
-					echo '<td> ' . $text . '</td><td align="right">';
-
-					$form->checkbox(
-						'show',
-						'Show',
-						'jobId_' . $v['job_id'],
-						'jobId_' . $v['job_id'],
-						"onchange=\"this.form.submit()\""
-					);
-					echo '</td>	</tr>';
-
-					$form->close();
-				}
-			}
-            */
 			?>
 		</tbody>
 	</table>

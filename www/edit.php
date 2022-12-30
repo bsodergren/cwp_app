@@ -23,7 +23,7 @@ if(key_exists("actSubmit",$_REQUEST))
 			break;
 	
 		case  "create_zip":
-			$zip_file = get_zip_filename($job['pdf_file'],$job['job_number']);
+			$zip_file = get_zip_filename($job['pdf_file'],$job['job_number'],'',true);
 
 			zip_Workbooks($job['xlsx_dir'],$job_id, $zip_file );
 			

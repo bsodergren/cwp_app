@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm p-2">
 	<div class="container">
 		<a class="navbar-brand" href="#">
-		<img src="<?php echo __URL_LAYOUT__;?>/images/logonotext.png" alt="" width="50" height="50" class="mr-3"><?php echo APP_NAME; ?></a>
+		<img src="<?php echo __URL_LAYOUT__;?>/images/logonotext.png" alt="" width="50" height="50" class="mr-3"><?php echo TITLE; ?></a>
 		
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -12,7 +12,9 @@
 			</ul> -->
 
 		<!-- Right Side Of Navbar -->
-			<ul class="navbar-nav ml-auto">
+			<ul class="navbar-nav ml-end">
+			<li class="nav-item"><a class="nav-link" href="test.php" >Test</a></li>
+
 				<li class="nav-item"><a class="nav-link" href="paper.php" >Paper</a></li>
 				<li class="nav-item"><a class="nav-link" href="settings.php" >Settings</a></li>
 

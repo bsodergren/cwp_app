@@ -31,6 +31,8 @@ define('__INC_PDF_DIR__', __ASSETS_DIR__.'/pdf_parser');
 define('__INC_XLSX_DIR__', __ASSETS_DIR__.'/xlsx_parser');
 define('__COMPOSER_DIR__', __PROJECT_ROOT__.'/library/vendor');
 
+define('__TEMP_DIR__', sys_get_temp_dir());
+
 define('__SQLITE_DIR__', __ASSETS_DIR__.'/database');
 define('__SQLITE_DATABASE__', __SQLITE_DIR__.'/cwp_sqlite.db');
 define('__DATABASE_DSN__', 'sqlite:'.__SQLITE_DATABASE__);
@@ -43,6 +45,7 @@ define('__DATABASE_DSN__', 'sqlite:'.__SQLITE_DATABASE__);
 define('__LAYOUT_DIR__', '/assets/layout');
 define('__LAYOUT_ROOT__', __PROJECT_ROOT__.__LAYOUT_DIR__);
 define('__TEMPLATE_DIR__', __LAYOUT_ROOT__.'/template');
+define('__LATTE_TEMPLATE__', __TEMPLATE_DIR__.'/latte');
 
 define('__LAYOUT_HEADER__', __LAYOUT_ROOT__.'/header.php');
 define('__LAYOUT_NAVBAR__', __LAYOUT_ROOT__.'/navbar.php');

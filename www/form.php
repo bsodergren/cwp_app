@@ -2,7 +2,7 @@
 
 require_once(".config.inc.php");
 
-define('TITLE', "Form Viewer");
+define('TITLE', "Form Editor");
 include __LAYOUT_HEADER__;
 ?>
 

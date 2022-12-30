@@ -110,7 +110,7 @@ function write_xlsx_workbook($xlsx_array,$job_number,$pdf_file)
 		
 		$spreadsheet->setActiveSheetIndex(0);
         $writer = new Xlsx($spreadsheet);
-        $new_xlsx_file=get_xlsx_filename($pdf_file,$job_number,$form_number);
+        $new_xlsx_file=get_xlsx_filename($pdf_file,$job_number,$form_number,true);
         $writer->save($new_xlsx_file);
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);
@@ -134,7 +134,7 @@ function write_xlsx_workbook($xlsx_array,$job_number,$pdf_file)
 	}
 	
 
-    $xlsx_directory=get_xlsx_directory($pdf_file,$job_number);
+    $xlsx_directory=get_xlsx_directory($pdf_file,$job_number,true);
 
 	$explorer->table('media_job')->where('job_id', $job_id)->update(['xlsx_dir' => "$xlsx_directory"]);
     //myHeader();  
