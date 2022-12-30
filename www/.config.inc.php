@@ -13,8 +13,8 @@ define('APP_DESCRIPTION', 'Embeddable PHP Login System');
  * base directory and script name.
  */
 define('__SCRIPT_NAME__', basename($_SERVER['PHP_SELF'], '.php'));
-define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']);
-
+//define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']);
+define('__PROJECT_ROOT__', ".");
 /*
  * Default constants for include path structure.
  *
