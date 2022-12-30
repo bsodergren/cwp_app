@@ -14,26 +14,27 @@ define('APP_DESCRIPTION', 'Embeddable PHP Login System');
  */
 define('__SCRIPT_NAME__', basename($_SERVER['PHP_SELF'], '.php'));
 
-define('__PROJECT_ROOT__', ".");
-//define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']);
+//define('__PROJECT_ROOT__', ".");
+define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']."/..");
+define('__WEB_ROOT__', ".");
 
-define('__ROOT_BIN_DIR__', $_SERVER['SERVER_ROOT']."/../bin");
+define('__ROOT_BIN_DIR__', __PROJECT_ROOT__."/bin");
 
 
 /*
  * Default constants for include path structure.
  *
  */
-define('__ASSETS_DIR__', __PROJECT_ROOT__.'/assets');
+define('__ASSETS_DIR__', __WEB_ROOT__.'/assets');
 define('__INC_CORE_DIR__', __ASSETS_DIR__.'/core');
 define('__INC_CLASS_DIR__', __ASSETS_DIR__.'/class');
 define('__INC_PDF_DIR__', __ASSETS_DIR__.'/pdf_parser');
 define('__INC_XLSX_DIR__', __ASSETS_DIR__.'/xlsx_parser');
-define('__COMPOSER_DIR__', __PROJECT_ROOT__.'/library/vendor');
+define('__COMPOSER_DIR__', __WEB_ROOT__.'/library/vendor');
 
 define('__TEMP_DIR__', sys_get_temp_dir());
 
-define('__SQLITE_DIR__', __ASSETS_DIR__.'/database');
+define('__SQLITE_DIR__', __PROJECT_ROOT__.'/database');
 define('__SQLITE_DATABASE__', __SQLITE_DIR__.'/cwp_sqlite.db');
 define('__DATABASE_DSN__', 'sqlite:'.__SQLITE_DATABASE__);
 
@@ -43,7 +44,7 @@ define('__DATABASE_DSN__', 'sqlite:'.__SQLITE_DATABASE__);
  */
 
 define('__LAYOUT_DIR__', '/assets/layout');
-define('__LAYOUT_ROOT__', __PROJECT_ROOT__.__LAYOUT_DIR__);
+define('__LAYOUT_ROOT__', __WEB_ROOT__.__LAYOUT_DIR__);
 define('__TEMPLATE_DIR__', __LAYOUT_ROOT__.'/template');
 define('__LATTE_TEMPLATE__', __TEMPLATE_DIR__.'/latte');
 
@@ -97,7 +98,7 @@ if (defined('__USE_LOCAL_XLSX__'))
 }
 
 if(!defined('__FILES_DIR__')){
-    define("__FILES_DIR__", __PROJECT_ROOT__ . "/files");
+    define("__FILES_DIR__", __WEB_ROOT__ . "/files");
 }
 
 logger("Default file dir", __FILES_DIR__);

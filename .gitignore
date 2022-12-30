@@ -30,3 +30,5 @@ www/assets/database/cwp_sqlite.db
 www/library/composer.lock
 www/error-output.txt
 www/files/*
+database/cwp_sqlite.db
+www/assets/core/firstrun.inc.php
