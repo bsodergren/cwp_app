@@ -19,16 +19,14 @@ www/library/vendor/*
 
 # CakePHP 2
 
-/app/tmp/*
-/app/Config/core.php
-/app/Config/database.php
 webcache/*
 debug.log
 chrome_debug.log
 www/library/composer.lock
-www/assets/database/cwp_sqlite.db
+database/cwp_sqlite.db
 www/library/composer.lock
 www/error-output.txt
 www/files/*
 database/cwp_sqlite.db
 www/assets/core/firstrun.inc.php
+php/old_ext/**

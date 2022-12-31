@@ -29,8 +29,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "E:\cwp_app\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "*"; Excludes: "cwp_sqlite.*,webcache\*,files\*"; Flags: recursesubdirs
+Source: "E:\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
