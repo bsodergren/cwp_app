@@ -13,10 +13,12 @@ AppPublisherURL=https://www.sodergren.us
 AppSupportURL=https://www.sodergren.us
 AppUpdatesURL=https://www.sodergren.us
 DefaultDirName={autopf}\MediaCreator
-DisableProgramGroupPage=yes
+DisableProgramGroupPage=no
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
+OutputDir= D:\development\
+
 OutputBaseFilename=MediaCreator_install
 Compression=lzma
 SolidCompression=yes
@@ -29,7 +31,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "E:\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -37,8 +39,6 @@ Source: "E:\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webc
 Name: "{autoprograms}\MediaCreator"; Filename: "{app}\MediaCreator.exe"
 Name: "{autodesktop}\MediaCreator"; Filename: "{app}\MediaCreator.exe"; Tasks: desktopicon
 
-
-
 [Run]
-Filename: "{app}\MediaCreator.exe"; Description: "{cm:LaunchProgram,My Program}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\MediaCreator.exe"; Description: "{cm:LaunchProgram,Media Creator}"; Flags: nowait postinstall skipifsilent
 
