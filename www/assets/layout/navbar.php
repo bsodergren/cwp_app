@@ -4,10 +4,8 @@
 		<a class="navbar-brand" href="#">
 			<img src="<?php echo __URL_LAYOUT__; ?>/images/logonotext.png" alt="" width="50" height="50" class="mr-3"><?php echo TITLE; ?></a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			</ul>
-
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="test.php">Test</a></li>
 				<li class="nav-item"><a class="nav-link" href="settings.php">Settings</a></li>

@@ -53,10 +53,12 @@ if (isset($_POST['submit'])) {
           // 2 => array("file", "error-output.txt", "a") // stderr is a file to write to
         ];
 
-        $cmd = '' . __ROOT_BIN_DIR__ . '/qpdf "' . $pdf_file . '" --pages . 1-z -- --replace-input ';
+		$qdf_cmd = FileSystem::normalizePath('"' . __ROOT_BIN_DIR__ . '/qpdf" ');
+		$pdf_file = FileSystem::normalizePath($pdf_file);
+        $cmd = $qdf_cmd.'"'. $pdf_file .'" ' . ' --pages . 1-z -- --replace-input ';
+
         logger('QDPF Command', $cmd);
         $process = proc_open($cmd, $descriptorspec, $pipes);
-
         $output_text  = 'The file ' . basename($fileName) . ' has been uploaded <br>';
         $output_text .= 'Job number ' . $_POST['job_number'] . '<br>';
       } else {

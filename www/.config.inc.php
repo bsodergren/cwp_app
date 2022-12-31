@@ -14,9 +14,9 @@ define('APP_DESCRIPTION', 'Embeddable PHP Login System');
  */
 define('__SCRIPT_NAME__', basename($_SERVER['PHP_SELF'], '.php'));
 
-//define('__PROJECT_ROOT__', ".");
+define('__WEB_ROOT__', $_SERVER['SERVER_ROOT']);
 define('__PROJECT_ROOT__', $_SERVER['SERVER_ROOT']."/..");
-define('__WEB_ROOT__', ".");
+//define('__WEB_ROOT__', ".");
 
 define('__ROOT_BIN_DIR__', __PROJECT_ROOT__."/bin");
 
@@ -63,27 +63,32 @@ set_include_path(get_include_path().PATH_SEPARATOR.__COMPOSER_DIR__);
 require_once __COMPOSER_DIR__.'/autoload.php';
 
 
-/*
- * Tracy Debugger
- */
-use Tracy\Debugger;
-
-Debugger::enable();
-Debugger::$dumpTheme    = 'dark';
-Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
-Debugger::$showBar = 1;
-
 require_once __INC_CORE_DIR__ . "/require_files.inc.php";
-
-
 
 define("__XLSX_EXTRAS__", 0);
 
-
-
-
-
 require_once __ASSETS_DIR__ . "/settings.inc.php";
+
+
+           use Tracy\Debugger;
+
+if(defined('__SHOW_TRACY__'))
+{ 
+    /*
+    * Tracy Debugger
+    */
+
+
+    if (__SHOW_TRACY__ == 1)
+    { 
+
+        Debugger::enable();
+        Debugger::$dumpTheme    = 'dark';
+        Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
+        Debugger::$showBar = 1;
+    }
+}
+
 
 if (defined('__USE_LOCAL_XLSX__'))
 {

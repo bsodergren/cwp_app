@@ -15,5 +15,9 @@ if ($results) {
     define("__SETTINGS__", $setting);
 }
 
+
+
+
+
 logger("DB Settings", __SETTINGS__);
 ?>

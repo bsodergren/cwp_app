@@ -1,4 +1,4 @@
-<?php #skip #skip 
+<?php #skip #skip #skip 
 
 use Nette\Utils\FileSystem;
 
