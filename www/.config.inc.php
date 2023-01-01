@@ -1,6 +1,4 @@
 <?php
-use Nette\Utils\FileSystem;
-
 /**
  *  Basic constants for application that are displayed in the output
  */
@@ -63,14 +61,18 @@ set_include_path(get_include_path().PATH_SEPARATOR.__COMPOSER_DIR__);
 require_once __COMPOSER_DIR__.'/autoload.php';
 
 
-require_once __INC_CORE_DIR__ . "/require_files.inc.php";
+
+use Tracy\Debugger;
+
+
+
+require_once __ASSETS_DIR__ . "/includes.inc.php";
 
 define("__XLSX_EXTRAS__", 0);
 
 require_once __ASSETS_DIR__ . "/settings.inc.php";
 
 
-           use Tracy\Debugger;
 
 if(defined('__SHOW_TRACY__'))
 { 
@@ -84,11 +86,12 @@ if(defined('__SHOW_TRACY__'))
 
         Debugger::enable();
         Debugger::$dumpTheme    = 'dark';
+//        Debugger::$editor = null;.
+//        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
         Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
         Debugger::$showBar = 1;
     }
 }
-
 
 if (defined('__USE_LOCAL_XLSX__'))
 {

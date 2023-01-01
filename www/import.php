@@ -4,11 +4,10 @@ use Nette\Utils\FileSystem;
 
 require_once '.config.inc.php';
 define('TITLE', 'Media Import');
+$template = new Template();
 
 require_once __LAYOUT_HEADER__;
-?>
-<main role="main" class="container">
-<?php
+
 $errors = [];
 // Store errors here
 $fileExtensionsAllowed = ['pdf'];
@@ -53,12 +52,13 @@ if (isset($_POST['submit'])) {
           // 2 => array("file", "error-output.txt", "a") // stderr is a file to write to
         ];
 
-		$qdf_cmd = FileSystem::normalizePath('"' . __ROOT_BIN_DIR__ . '/qpdf" ');
-		$pdf_file = FileSystem::normalizePath($pdf_file);
-        $cmd = $qdf_cmd.'"'. $pdf_file .'" ' . ' --pages . 1-z -- --replace-input ';
+        $qdf_cmd = FileSystem::normalizePath('"' . __ROOT_BIN_DIR__ . '/qpdf" ');
+        $pdf_file = FileSystem::normalizePath($pdf_file);
+        $cmd = $qdf_cmd . '"' . $pdf_file . '" ' . ' --pages . 1-z -- --replace-input ';
 
         logger('QDPF Command', $cmd);
         $process = proc_open($cmd, $descriptorspec, $pipes);
+
         $output_text  = 'The file ' . basename($fileName) . ' has been uploaded <br>';
         $output_text .= 'Job number ' . $_POST['job_number'] . '<br>';
       } else {
@@ -74,33 +74,38 @@ if (isset($_POST['submit'])) {
     }
 
     $job_id = '';
-    if ($job_id == '') {
-      $output_text .= 'Importing new media job<br>' . $_POST['job_number'] . " \n";
-      logger('pdf_file', $pdf_file);
+  if ($job_id == '') {
+    logger('pdf_file', $pdf_file);
 
-      add_new_media_drop($pdf_file, $_POST['job_number']);
+    $return = add_new_media_drop($pdf_file, $_POST['job_number']);
+    
+    if($return < 1) {
+      $output_text = "<span class='p-3 text-danger'>File failed to process</span> <br>";
+      $output_text .= "<span class='p-3 text-danger'>Will have to run Refresh Import </span><br>";
+      $replace_array['HOMEURL'] = ' Click on <a href="' . __URL_PATH__ . '/index.php">Home</a> to Continue <br>';
+      } else {
+        $replace_array['JAVAREFRESH'] = JavaRefresh(__URL_PATH__."/home.php",5000);
+      }
     }
 
-    $replace_array = [
-      'PDFFILE'   => $fileName,
-      'STATUS'    => $output_text,
-      'JOBNUMBER' => $_POST['job_number'],
-      'HOMEURL'   => ' Click on <a href="' . __URL_PATH__ . '/index.php">Home</a> to Continue <br>',
-      // "JAVAREFRESH" => JavaRefresh(__URL_PATH__."/home.php",5000)
-    ];
+    $replace_array['PDFFILE']   = $fileName;
+    $replace_array['STATUS']    = $output_text;
+    $replace_array['JOBNUMBER'] = $_POST['job_number'];
+  
 
-    echo process_template('import_pdf_finish', $replace_array);
+    $template->template('import_pdf_finish', $replace_array);
   } else {
     foreach ($errors as $error) {
       echo $error . 'These are the errors' . "\n";
     }
   } //end if
 } else {
-  echo process_template('import_pdf_form');
-}//end if
-?>
+  $template->template('import_pdf_form');
+}
 
-</main>
+$template_html['FORM_BODY']  = $template->return();
 
-<?php
+$template->template('import/main',$template_html);
+
+$template->render();//end if
 require_once __LAYOUT_FOOTER__;

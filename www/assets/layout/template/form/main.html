@@ -1,0 +1,18 @@
+    <form action="%%FORM_URL%%" method="post">
+        <!-- <table class="blueTable"> -->
+            <table class="blueTable">
+            <thead>
+                <tr>
+                    <th class="text-start nowrap" >%%NAME%%</th>
+                    <th class="text-end nowrap" >%%PREVIOUS%% %%EDIT%% %%NEXT%%</th>
+                </tr>
+            </thead>
+            <tbody  class="table-group-divider">
+            %%FORM_BODY_HTML%%
+            </tbody>
+        </table>
+
+        <input type="hidden" name="form_number" value="%%CURRENT_FORM_NUMBER%%">
+        <input type="hidden" name="job_id" value="%%JOB_ID%%">
+        <input type="hidden" name="view" value="%%NEXT_VIEW%%">
+    </form>

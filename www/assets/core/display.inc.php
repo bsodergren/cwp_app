@@ -108,18 +108,6 @@ function display_page()
     return $html;
 }
 
-function display_table_header($name,$prev,$next,$edit='')
-{
-        
-    $array = array(
-        "NAME" => $name,
-        "EDIT" =>$edit,
-        "PREVIOUS" =>  $prev,
-        "NEXT" =>  $next );
-
-    return process_template("table_header",$array);
-
-}
 
 
 function display_table_LetterHeader($number,$letter,$array)
@@ -135,7 +123,8 @@ function display_table_rows($array,$letter)
     $html='';
     $start = '';
     $end = '';
-
+    $row_template = new template();
+    
     foreach ($array as $part)
     {
         if($start == '') { 
@@ -173,32 +162,29 @@ function display_table_rows($array,$letter)
             "FACE_TRIM"=>draw_checkbox("facetrim_".$part["id"],$part["facetrim"],'Face Trim'),
             "NO_TRIM"=>draw_checkbox("nobindery_".$part["id"],$part["nobindery"],'No Bindery Trim'));
         
-        $html .=  process_template("form_row",$array);
+        $row_template->template("form/row",$array);
+        
     }
+
     
     $AllCheckBoxFront="all".$classFront;
     $AllCheckBoxBack="all".$classBack;
     if ($end > $start+1 && $radio_check != '' )
     {
-        $html .= "
-        <tr>
-            <td colspan=3 align=right>All Parts&nbsp;&nbsp;&nbsp;</td>
-        <td align=left nowrap><input type='radio' onclick=\"checkAll".$letter."(\$(this));\" name=\"All".$letter."\"  class=\"".$AllCheckBoxFront."\" > Front 
-        <input type='radio' onclick=\"checkAll".$letter."(\$(this));\" name=\"All".$letter."\"  class=\"".$AllCheckBoxBack."\"> Back  </td>
-        </tr>";
-        
-        $html .= "
-        <script type=\"text/javascript\">
-                function checkAll".$letter."(e) {
-                    if(e.hasClass('".$AllCheckBoxFront."')) {
-                        $('.".$classFront."').attr('checked', 'checked');
-                    } else {
-                        $('.".$classBack."').attr('checked', 'checked');
-                    }
-                }
-                </script>";
+
+
+        $radio_check_array = [
+            'LETTER' => $letter,
+            'ALLCHECKBOXFRONT' => $AllCheckBoxFront,
+            'ALLCHECKBOXBACK' => $AllCheckBoxBack,
+            'CLASSFRONT' => $classFront,
+            'CLASSBACK' => $classBack
+        ];
+        $row_template->template("form/all_parts",$radio_check_array);
     }
-    
+
+        $html = $row_template->return();
+
     return $html;
     
 }

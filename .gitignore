@@ -31,3 +31,5 @@ database/cwp_sqlite.db
 www/assets/core/firstrun.inc.php
 php/old_ext/**
 www/assets/database/cwp_sqlite.db
+install.cmd
+.gitignore

@@ -19,4 +19,5 @@
 	</head>
 	<body>
 	<?php require __LAYOUT_NAVBAR__; ?>
+	<main role="main" class="container pt-3">
 	<!-- end of header.php -->

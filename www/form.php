@@ -4,12 +4,9 @@ require_once(".config.inc.php");
 
 define('TITLE', "Form Editor");
 include __LAYOUT_HEADER__;
-?>
 
-<main role="main" class="container">
-
-<?php
-
+$row_html='';
+$letter_html='';
     $next_view="job";
     $max_forms =  get_max_drop_forms($_REQUEST['job_id']);
     $first_form=get_first_form($_REQUEST['job_id']);
@@ -67,7 +64,7 @@ include __LAYOUT_HEADER__;
 			"nobindery" => $form_array['no_bindery'],
             "job_number" =>  $form_array['job_number'] );
     }
-    output( "<table class=\"blueTable\" border=1>");
+
     foreach($new_forms as $form_number => $parts)
     {
     
@@ -91,26 +88,35 @@ include __LAYOUT_HEADER__;
             $next_form_number=$current_form_number;
         }
         
-        output('<form action="'.$form_url.'" method="post">');
+        $form_html['FORM_URL'] = $form_url;
 
-    $edit_button = ''; //'<input type="submit" name="submit_edit" value="Edit">';
-        output(display_table_header( $form_array['job_number'] ." - Form Number " . $form_number ." of ". $max_forms .' - '.$config[$form_number]["config"].' - '.$config[$form_number]["bind"],
-        $previous_form_html,
-        ' <input type="submit" name="submit" value="'.$next_button.'">',$edit_button));
-        output("\t<tbody>");
+        $edit_button = ''; //'<input type="submit" name="submit_edit" value="Edit">';
+
+        $form_html["NAME"] = $form_array['job_number'] ." - Form Number " . $form_number ." of ". $max_forms .' - '.$config[$form_number]["config"].' - '.$config[$form_number]["bind"];
+        $form_html["EDIT"] = $edit_button;
+        $form_html["PREVIOUS"] = $previous_form_html;
+        $form_html["NEXT"] =  ' <input type="submit" name="submit" value="'.$next_button.'">';
+                
         foreach ($parts as $form_letter => $form_data)
         {
-            output( display_table_LetterHeader($form_number,$form_letter,$form_data));
+           
+            $row_html = display_table_rows($form_data,$form_letter);
+            $template->template("form/header", array("NUMBER" => $form_number,"LETTER" => $form_letter,"ROWS" => $row_html));
+            $letter_html .= $template->return();
+            $template->clear();
+            
         }
     }
-    output("\n\t</tbody>\n</table>\n");
-    output('<br>
-    <input type="hidden" name="form_number" value="'.$current_form_number.'">
-    <input type="hidden" name="job_id" value="'.$_REQUEST['job_id'].'">
-    <input type="hidden" name="view" value="'.$next_view.'">
-</form>
-<br>');
 
-?>
-</main>
-<?php include __LAYOUT_FOOTER__; ?>
+    $form_html["CURRENT_FORM_NUMBER"] = $current_form_number;
+    $form_html["JOB_ID"] = $_REQUEST['job_id'];
+    $form_html["NEXT_VIEW"] = $next_view;
+    $form_html['FORM_BODY_HTML'] = $letter_html;
+    $template->clear();
+
+    $template->template("form/main",$form_html);
+    $template->render();
+
+
+
+ include __LAYOUT_FOOTER__; ?>

@@ -23,6 +23,11 @@ function add_new_media_drop($pdf_uploaded_file="",$job_number=110011)
 	
 
     $pdf = process_pdf($pdf_uploaded_file,$job_id);
+
+    if(count($pdf) < 1){
+        return 0;
+    }
+
 	$keyidx=array_key_first($pdf);
 
     
@@ -33,6 +38,8 @@ function add_new_media_drop($pdf_uploaded_file="",$job_number=110011)
 		add_form_details($form_info['details']);
 		add_form_data($form_number, $job_id, $form_info);        
     }  
+
+    return 1;
 }
 
 function add_form_details($form_array)

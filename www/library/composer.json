@@ -6,6 +6,7 @@
         "formr/formr": "^1.4",
         "tracy/tracy": "^2.9",
         "nette/utils": "^3.2",
-        "nette/database": "^3.1"
+        "nette/database": "^3.1",
+        "nette/robot-loader": "^3.4"
     }
 }
