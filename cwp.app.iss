@@ -4,22 +4,22 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{192AAF12-C60E-4BB2-8959-2E1DD9E4188C}
+AppId={{C5A769F9-275A-4774-8ACC-2C3FA0775B1C}
+
+
 AppName=Media Creator
 AppVersion=1.5
-;AppVerName=My Program 1.5
 AppPublisher=Bjorn Sodergren
 AppPublisherURL=https://www.sodergren.us
 AppSupportURL=https://www.sodergren.us
 AppUpdatesURL=https://www.sodergren.us
 DefaultDirName={autopf}\MediaCreator
-DisableProgramGroupPage=no
+DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir= D:\development\
-
-OutputBaseFilename=MediaCreator_install
+OutputDir=D:\development\Installers
+OutputBaseFilename=mediacreator_installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,12 +33,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-
 [Icons]
-Name: "{autoprograms}\MediaCreator"; Filename: "{app}\MediaCreator.exe"
-Name: "{autodesktop}\MediaCreator"; Filename: "{app}\MediaCreator.exe"; Tasks: desktopicon
+Name: "{autoprograms}\Media Creator"; Filename: "{app}\MediaCreator.exe"
+Name: "{autodesktop}\Media Creator"; Filename: "{app}\MediaCreator.exe"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\MediaCreator.exe"; Description: "{cm:LaunchProgram,Media Creator}"; Flags: nowait postinstall skipifsilent
-

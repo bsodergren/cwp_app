@@ -87,32 +87,31 @@ output('New Job Number <input type="text" name="job_number" value="'.$job["job_n
 output('<input type="hidden" name="job_id" value="'.$job_id.'">');
 
 if($job['zip_file'] == true) {
-?>
-<input type="submit" name="actSubmit" value="delete_zip">
-<?php } else { ?>
-<input type="submit" name="actSubmit" value="create_zip">
+echo '<input type="submit" name="actSubmit" value="delete_zip">';
 
-<?php }
+} else { 
+
+	echo '<input type="submit" name="actSubmit" value="create_zip">';
+}
 
 if($job['xlsx_dir'] == true) {
-?>
-<input type="submit" name="actSubmit" value="delete_xlsx">
-<?php } else { ?>
-<input type="submit" name="actSubmit" value="create_xlsx">
+	echo '<input type="submit" name="actSubmit" value="delete_xlsx">';
+} else { 
+	echo '<input type="submit" name="actSubmit" value="create_xlsx">';
 
-<?php } ?>
+} 
 
 
-<input type="submit" name="actSubmit" value="refresh_import">
-<input type="submit" name="actSubmit" value="delete_job">
+echo '<input type="submit" name="actSubmit" value="refresh_import">';
+echo '<input type="submit" name="actSubmit" value="delete_job">';
 
-<input type="submit" name="actSubmit" value="actSubmit">
+echo '<input type="submit" name="actSubmit" value="actSubmit">';
 
-</td>
-</tr>
-<tr>
-    <td>
-    <?
+echo '</td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>';
+    
                
 	if(file_exists($job["zip_file"]) == true) {
 		output( '  <a href="'.__URL_HOME__.'/download.php?job_id='.$job['job_id'].'"> Zip File </a>');
