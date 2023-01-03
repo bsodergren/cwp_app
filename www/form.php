@@ -1,5 +1,4 @@
 <?php
-
 require_once(".config.inc.php");
 
 define('TITLE', "Form Editor");
@@ -10,7 +9,6 @@ $letter_html='';
     $next_view="job";
     $max_forms =  get_max_drop_forms($_REQUEST['job_id']);
     $first_form=get_first_form($_REQUEST['job_id']);
-    logger("max_forms", $max_forms);
 
     if (array_key_exists("form_number",$_REQUEST))
     {
@@ -29,8 +27,6 @@ $letter_html='';
     $form_data->where('form_number = ?', $current_form_number);
     $form_data->where('job_id = ?', $_REQUEST['job_id']);
     $results = $form_data->fetch();
-
-    bdump($results);
     
     if(empty($results))
     {
@@ -70,7 +66,7 @@ $letter_html='';
     
 
         $next_button="Next Form";
-        $form_url=__URL_HOME__."/form_update.php";
+        $form_url=__URL_HOME__."/process.php";
         $previous_form_html ='';
         if($current_form_number != $first_form )
         {
@@ -83,7 +79,7 @@ $letter_html='';
         if($next_form_number > $max_forms ) {
             $next_view="save";
             $next_button="Save Form";
-            $form_url=__URL_HOME__."/form_update.php";
+            $form_url=__URL_HOME__."/process.php";
             //$previous_form_html =' ';
             $next_form_number=$current_form_number;
         }

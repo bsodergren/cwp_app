@@ -2,12 +2,9 @@
 
 function output($var)
 {
-    if (is_array($var)) {
-        print_r2($var);
-        return 0;
-    }
 
-    echo $var."\n";
+    echo $var."<br>\n";
+    ob_flush();
    // return 0;
     
 }
@@ -125,6 +122,7 @@ function JavaRefresh($url,$timeout=0)
     
     if($timeout > 0)
     {
+        $timeout = $timeout * 1000;
         $html .= '}, '.$timeout.');';
     }
     $html .= "\n".'</script>';

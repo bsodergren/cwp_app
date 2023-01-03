@@ -33,3 +33,4 @@ php/old_ext/**
 www/assets/database/cwp_sqlite.db
 install.cmd
 .gitignore
+*Media Load Flags/*

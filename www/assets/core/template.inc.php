@@ -12,8 +12,6 @@ class Template
 {
     public $html = '';
 
-    public $template_file;
-
     public function callback_replace($matches)
     {
         return "";
@@ -23,15 +21,25 @@ class Template
         $this->html = '';
     }
 
-    public function return()
+    public function return($template='',$array='')
     {
+        if($template)
+        {
+            $this->template($template,$array);
+        }
+        
         $html = $this->html;
         $this->clear();
         return $html;
     }
 
-    public function render()
+    public function render($template='',$array='')
     {
+        if($template)
+        {
+            $this->template($template,$array);
+        }
+
         $html = $this->html;
         $this->clear();
         echo $html;

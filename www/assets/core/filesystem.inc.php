@@ -1,9 +1,11 @@
 <?php 
 use Nette\Utils\FileSystem;
+
 function get_directory($pdf_file,$job_number, $type='',$create_dir=false)
 {
 	$output_filename = "/".get_filename($pdf_file,$job_number);
 	$directory = '';
+
 	if (strtolower($type) == 'xlsx'){
 		$directory=__XLSX_DIRECTORY__ ;	
 	}
@@ -13,8 +15,13 @@ function get_directory($pdf_file,$job_number, $type='',$create_dir=false)
 	if (strtolower($type) == 'zip'){
 		$directory=__ZIP_FILE_DIR__ ;
 	}
+
 	$directory = __FILES_DIR__ . $output_filename . $directory;
+
+	$directory= FileSystem::normalizePath($directory);
+
 	if($create_dir == true) {
+		
     	FileSystem::createDir($directory);    
 	}
     return $directory;

@@ -8,9 +8,9 @@ function formValidation() {
       return true;
     }
   }
-
   return false;
 }
+
 // Function that checks whether input text is numeric or not.
 function textNumeric(inputtext, alertMsg) {
   var numericExpression = /^[0-9]+$/;
@@ -23,6 +23,7 @@ function textNumeric(inputtext, alertMsg) {
     return false;
   }
 }
+
 function validateFileType(inputtext, alertMsg) {
 
     var files = inputtext.files;
@@ -61,4 +62,5 @@ function lengthDefine(inputtext, min, max) {
     return false;
   }
 }
+
 

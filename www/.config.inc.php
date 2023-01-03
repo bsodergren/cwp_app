@@ -28,6 +28,8 @@ define('__INC_CORE_DIR__', __ASSETS_DIR__.'/core');
 define('__INC_CLASS_DIR__', __ASSETS_DIR__.'/class');
 define('__INC_PDF_DIR__', __ASSETS_DIR__.'/pdf_parser');
 define('__INC_XLSX_DIR__', __ASSETS_DIR__.'/xlsx_parser');
+define('__PROCESS_DIR__', __ASSETS_DIR__.'/form_processor');
+
 define('__COMPOSER_DIR__', __WEB_ROOT__.'/library/vendor');
 
 define('__TEMP_DIR__', sys_get_temp_dir());
@@ -62,7 +64,6 @@ require_once __COMPOSER_DIR__.'/autoload.php';
 
 
 
-use Tracy\Debugger;
 
 
 
@@ -72,7 +73,7 @@ define("__XLSX_EXTRAS__", 0);
 
 require_once __ASSETS_DIR__ . "/settings.inc.php";
 
-
+   use Tracy\Debugger;
 
 if(defined('__SHOW_TRACY__'))
 { 
@@ -80,9 +81,13 @@ if(defined('__SHOW_TRACY__'))
     * Tracy Debugger
     */
 
-
+ 
     if (__SHOW_TRACY__ == 1)
     { 
+
+
+    
+
 
         Debugger::enable();
         Debugger::$dumpTheme    = 'dark';
@@ -93,6 +98,22 @@ if(defined('__SHOW_TRACY__'))
     }
 }
 
+if (!function_exists('dump')){
+	function dump($var)
+	{
+		return 0;
+	}
+}
+
+if (!function_exists('bdump')){
+	function bdump($bdump)
+	{
+        return 0;
+	}
+}
+
+define("__MEDIA_FILES_DIR__","/Media Load Flags");
+
 if (defined('__USE_LOCAL_XLSX__'))
 {
     if (__USE_LOCAL_XLSX__ == 1) {
@@ -100,13 +121,13 @@ if (defined('__USE_LOCAL_XLSX__'))
             defined('__USER_XLSX_DIR__') &&
             is_dir(__USER_XLSX_DIR__)
         ) {
-            define("__FILES_DIR__", __USER_XLSX_DIR__ . "/files");
+            define("__FILES_DIR__", __USER_XLSX_DIR__ . __MEDIA_FILES_DIR__);
         }
     }
 }
 
 if(!defined('__FILES_DIR__')){
-    define("__FILES_DIR__", __WEB_ROOT__ . "/files");
+    define("__FILES_DIR__", __PROJECT_ROOT__ . __MEDIA_FILES_DIR__);
 }
 
 logger("Default file dir", __FILES_DIR__);
@@ -114,11 +135,5 @@ logger("Default file dir", __FILES_DIR__);
 define("__PDF_UPLOAD_DIR__", "/pdf" );
 define("__ZIP_FILE_DIR__", "/zip" );
 define("__XLSX_DIRECTORY__", "/xlsx" );
-
-/*
-FileSystem::createDir(__PDF_UPLOAD_DIR__);
-FileSystem::createDir(__ZIP_FILE_DIR__);
-FileSystem::createDir(__XLSX_DIRECTORY__);
-*/
 
 define('__lang_bindery', "Bindery");

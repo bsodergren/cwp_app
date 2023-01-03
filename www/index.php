@@ -17,7 +17,7 @@ if ($cnt > 0) {
 
 		$form = new Formr\Formr('', 'hush');
 		$hidden = ["job_id" => $v['job_id']];
-		$replacement['FORM_OPEN_HTML'] = $form->open("", '', __URL_HOME__ . "/action.php", 'post', '', $hidden);
+		$replacement['FORM_OPEN_HTML'] = $form->open("", '', __URL_HOME__ . "/process.php", 'post', '', $hidden);
 
 		$class_create = 'class="btn btn-success"';
 		$class_delete = 'class="btn btn-danger"';
@@ -46,27 +46,27 @@ if ($cnt > 0) {
 			$vdisabled = "";
 		}
 
-		$replacement['FORM_BUTTONS_HTML'] =	$form->input_submit('actSubmit', '', "Process PDF Form", '', $class_normal . $pdisabled);
+		$replacement['FORM_BUTTONS_HTML'] =	$form->input_submit('process', '', "Process PDF Form", '', $class_normal . $pdisabled);
 		//$form->input_submit('actSubmit', '', 'View Forms', '', class_normal.$vdisabled);
 
 		if ($v['xlsx_dir'] == true) {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'delete_xlsx', '', $class_delete);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_xlsx', '', 'delete xlsx', '', $class_delete);
 		} else {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'create_xlsx', '', $class_create . $pdisabled);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_xlsx', '', 'create xlsx', '', $class_create . $pdisabled);
 		}
 
 		if ($v['zip_file'] == true) {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'delete_zip', '', $class_delete);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_zip', '', 'delete zip', '', $class_delete);
 		} else {
 			if ($v['xlsx_dir'] == true) {
 				$zdisabled = "";
 			}
 
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'create_zip', '', $class_create . $zdisabled);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_zip', '', 'create zip', '', $class_create . $zdisabled);
 		}
 
-		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'refresh_import', '', $class_create);
-		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('actSubmit', '', 'delete_job', '', $class_delete);
+		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('refresh_import', '', 'refresh import', '', $class_create);
+		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_job', '', 'delete job', '', $class_delete);
 		$replacement['FORM_CLOSE'] = $form->close();
 		$template->template('index/job', $replacement);
 	}

@@ -27,6 +27,7 @@ function delete_job($job_id)
     deleteFromDatabase('media_forms', $job_id);
     deleteFromDatabase('media_job', $job_id);    
 
+    $job_dir = get_directory($job['pdf_file'],$job['job_number']);
 
     $pdf_file = get_pdf_directory($job['pdf_file'],$job['job_number'])."/".$job['pdf_file'];
     $pdf_tmp_file = $pdf_file.'.~qpdf-orig';
@@ -39,7 +40,10 @@ function delete_job($job_id)
         FileSystem::delete($pdf_tmp_file);
     }
 
-    header( "refresh:2;url=".__URL_HOME__."/index.php");   
+    if ( is_dir($job_dir)) {
+        FileSystem::delete($job_dir);
+        
+    }
 }
 
 function delete_zip($job_id)

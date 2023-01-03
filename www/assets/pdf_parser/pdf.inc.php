@@ -43,17 +43,17 @@ function getPageCount($config_type )
 function process_pdf($pdf_file,$media_job_id)
 {
 
-
-
 	$type = '';
 	$form =  array();
 	$parser = new \Smalot\PdfParser\Parser();
-	logger("PDF File in process", $pdf_file);
+
 	$pdf    = $parser->parseFile($pdf_file);
 
 	$pages  = $pdf->getPages(); 
 	$i=0;
 	$next_form = 0;
+	output(count($pages) . " total pages");
+
 	foreach ($pages as $page)
 	{
 		$text = $page->getDataTm();
@@ -71,7 +71,6 @@ function process_pdf($pdf_file,$media_job_id)
 		
 		for($idx=0;$idx < $rows;$idx++)
 		{
-
 			if ($next_form == 0) {
 				//unset($printer_peices);
 				if (str_contains($text[$idx][1], "PRODUCTION CLOSE")) {
@@ -81,7 +80,6 @@ function process_pdf($pdf_file,$media_job_id)
 				if (str_contains($text[$idx][1], "Run#")) {
 					$form_peices = explode("Run#", $text[$idx][1]);
 					$form_number = trim($form_peices[1]);
-
 				}
 
 				if (isset($form_number)) {
@@ -95,9 +93,7 @@ function process_pdf($pdf_file,$media_job_id)
 				if (str_contains($text[$idx][1], "Count")) {
 					$peices = explode(":", $text[$idx][1]);
 					$form[$form_number]["details"]["count"] = toint(trim($peices[1]));
-				}
-
-				
+				}			
 
 				if (str_contains($text[$idx][1], "Config")) {
 					$peices = explode(":", $text[$idx][1]);
@@ -112,6 +108,7 @@ function process_pdf($pdf_file,$media_job_id)
 					$type = str_replace(" ", "", $peices[1]);
 					$form[$form_number]["details"]["bind"] = trim($type);
 				}
+
 				if (isset($type) && $type == "sheeter") {
 					if (isset($form_number)) {
 						unset($form[$form_number]);
@@ -164,6 +161,8 @@ function process_pdf($pdf_file,$media_job_id)
 						$idx=$idx+3;
 						$skip_text ="";
 						$skip_letter=false;
+						output("Form number ". $form_number .$letter. " ".$market." ".$pub." ".$count." ".$ship);
+
 					} else {
 						$p=0;
 						unset($letter);
