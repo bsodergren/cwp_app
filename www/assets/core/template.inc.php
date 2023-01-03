@@ -12,6 +12,15 @@ class Template
 {
     public $html = '';
 
+
+    public static function echo($template='',$array='')
+    {
+        $template_obj = new Template();
+        $template_obj->template($template,$array);
+        return $template_obj->html;
+        
+    }
+
     public function callback_replace($matches)
     {
         return "";

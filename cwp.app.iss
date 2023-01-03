@@ -31,7 +31,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "old_ext/*,cwp_sqlite.*,webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "*Media Load Flags\*,old_ext/*,cwp_sqlite.*,.webcache\*,files\*"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{autoprograms}\Media Creator"; Filename: "{app}\MediaCreator.exe"

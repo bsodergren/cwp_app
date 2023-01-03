@@ -1,10 +1,10 @@
 <?php
 require_once(".config.inc.php");
 
-
 $deleted_id = 0;
-dump($_REQUEST);
+dump($_POST);
 exit;
+
 $job_id=$_REQUEST['job_id'];
 $form_number=$_REQUEST['form_number'];
 

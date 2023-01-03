@@ -3,8 +3,12 @@ require_once(".config.inc.php");
 define('TITLE', "Test Page");
 
 require __LAYOUT_HEADER__;
+
 $settings_html='';
-	//$form->messages(); 
+$checkbox_html='';
+
+$textbox_html='';
+//$form->messages(); 
 	# $form->create_form('Name, Email, Comments|textarea');
 	if (defined('__SETTINGS__')) {
 		foreach (__SETTINGS__ as $definedName => $array) {
@@ -12,13 +16,32 @@ $settings_html='';
 			$type =  $array['type'];
 			$value =  $array['value'];
 			$description  = $array['description'] ;
-			$description = $definedName ." " . $description;
+			$tooltip_desc = $definedName ." " . $description;
+			$name = $array['name'];
+			
+			$name_label = '';
+			$tooltip = 'data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"	data-bs-title="'.$tooltip_desc.'" ';
 
-			$tooltip = 'data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"	data-bs-title="'.$description.'" ';
 
 			if ($type == "bool") {
 				$checked = '';
 				$notchecked = '';
+
+				if ( $name == null )
+				{
+					$name = $definedName;
+					$name_label = template::echo("settings/checkbox/textbox",['DESCRIPTION' => $definedName,'DEFINED_NAME'=>$definedName]);
+				} else {
+					$name_label = template::echo("settings/checkbox/label",['NAME' => $name,'DEFINED_NAME'=>$definedName]);
+	
+				}
+				
+				if($description == null )
+				{
+					$description_label = template::echo("settings/checkbox/description_textbox",['DESCRIPTION' => $definedName,'DEFINED_NAME'=>$definedName]);
+				} else {
+					$description_label = template::echo("settings/checkbox/description_label",['DESCRIPTION' => $description,'DEFINED_NAME'=>$definedName]);
+				}
 
 				if ($value == 1) {
 					$checked = "checked";
@@ -30,24 +53,47 @@ $settings_html='';
 					'DEFINED_NAME' => $definedName,
 					'TOOLTIP' => $tooltip,
 					'CHECKED' => $checked,
-					'NAME' => $array['name'],
-					'DESCRIPTION' => $array['description'],
+					'NAME' => $name,
+					'NAME_LABEL' => $name_label,
+					'DESCRIPTION_LABEL' => $description_label,
 				];
-				$template->template("settings/checkbox",$params);
+				$checkbox_html .= template::echo("settings/checkbox/checkbox",$params);
 				
 			}
 
 			if ($type == "text") {
 
+				$place_holder = $value;
+				if($value == '' ){
+					$place_holder = "no value set";
+				}
+
+				if ( $name == null )
+				{
+					$name = $definedName;
+					$name_label = template::echo("settings/text/textbox",['DESCRIPTION' => $definedName,'DEFINED_NAME'=>$definedName]);
+				} else {
+					$name_label = template::echo("settings/text/label",['NAME' => $name,'DEFINED_NAME'=>$definedName]);
+	
+				}
+
+				if($description == null )
+				{
+					$description_label = template::echo("settings/checkbox/description_textbox",['DESCRIPTION' => $definedName,'DEFINED_NAME'=>$definedName]);
+				} else {
+					$description_label = template::echo("settings/checkbox/description_label",['DESCRIPTION' => $description,'DEFINED_NAME'=>$definedName]);
+				}
 				$params = [
 					'DEFINED_NAME' => $definedName,
+					'PLACEHOLDER' => $place_holder,
 					'TOOLTIP' => $tooltip,
 					'VALUE' => $value,
-					'NAME' => $array['name'],
-					'DESCRIPTION' => $array['description'],
+					'NAME' => $name,
+					'NAME_LABEL' => $name_label,
+					'DESCRIPTION_LABEL' => $description_label,
 
 				];
-				$template->template("settings/text",$params);
+				$textbox_html .= template::echo("settings/text/text",$params);
 				
 			}
 		}
@@ -55,11 +101,13 @@ $settings_html='';
 
 	$template->template("settings/new_setting",'');
 
-	$settings_html .= $template->return();
+	$settings_html = $template->return();
 	$template->clear();
 
 
 	$template->template("settings/main",[
+		'CHECKBOX_HTML' => $checkbox_html,
+		'TEXTBOX_HTML' => $textbox_html,
 		'SETTINGS_HTML' => $settings_html	]);
 
 		$template->render();

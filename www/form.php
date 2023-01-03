@@ -86,7 +86,7 @@ $letter_html='';
         
         $form_html['FORM_URL'] = $form_url;
 
-        $edit_button = ''; //'<input type="submit" name="submit_edit" value="Edit">';
+        $edit_button = '<input type="submit" name="submit" value="Edit">';
 
         $form_html["NAME"] = $form_array['job_number'] ." - Form Number " . $form_number ." of ". $max_forms .' - '.$config[$form_number]["config"].' - '.$config[$form_number]["bind"];
         $form_html["EDIT"] = $edit_button;

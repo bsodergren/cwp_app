@@ -2,14 +2,14 @@
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 
-function logger($text,$var='')
-{
-    bdump($var, $text);
-}
+
+require_once __INC_CORE_DIR__ . "/html_func.inc.php";
 
 
 if (!file_exists(__SQLITE_DATABASE__))
 {
+    output("Creating Database in ".__SQLITE_DATABASE__);
+
     require_once __ASSETS_DIR__ . '/config/firstrun.inc.php';
     
     $file         = '/config/firstrun.inc.php';
@@ -19,6 +19,12 @@ if (!file_exists(__SQLITE_DATABASE__))
     $__db_write   = str_replace('<?php', $replacement, $__db_string);
     FileSystem::write(__INC_CORE_DIR__.'/'.$file, $__db_write);
 
+}
+
+$upddate_file = __ASSETS_DIR__ . '/config/update.inc.php';
+if (file_exists($upddate_file))
+{
+    require_once $upddate_file;
 }
 
 $storage = new Nette\Caching\Storages\FileStorage(sys_get_temp_dir());

@@ -3,7 +3,6 @@
 define("REFRESH_TIMEOUT", 5);
 define("REFRESH_URL", 'index.php');
 
-
     $form = new Formr\Formr('bootstrap4');
 
     if ($form->submitted())
@@ -15,12 +14,11 @@ define("REFRESH_URL", 'index.php');
             }
 
             if (!str_contains($key, "-")) {
-                $field = "value";
+                $field = "setting_value";
             }
 
             if (str_contains($key, "setting_")) {
-                $pcs = explode('_', $key);
-                $field = $pcs[1];
+                $field = $key;
                 $new_settiings[$field] = $value;
                 continue;
             }
@@ -28,30 +26,32 @@ define("REFRESH_URL", 'index.php');
             if (str_contains($key, "-description")) {
                 $pcs = explode('-', $key);
                 $key = $pcs[0];
-                $field = $pcs[1];
+                $field = "setting_".$pcs[1];
             }
 
-            if (str_contains($key, "-radio")) {
+            if (str_contains($key, "-name")) {
                 $pcs = explode('-', $key);
                 $key = $pcs[0];
-                $field = $pcs[1];
+                $field = "setting_".$pcs[1];
             }
 
+            $arr[$key][$field] = $value;
+            
 
-
-            $count = $explorer->table('settings')->where('definedName', $key)->update([$field => $value]);
+            
+           $count = $explorer->table('settings')->where('definedName', $key)->update([$field => $value]);
             $template->render('process/update_setting',['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field ]);
             
             ob_flush();
 
 
         }
+  
+        if ($new_settiings['setting_definedName'] != '') {
 
-        if ($new_settiings['definedName'] != '') {
+            if ($new_settiings['setting_value'] == '') {
 
-            if ($new_settiings['value'] == '') {
-
-                $new_settiings['value'] = NULL;
+                $new_settiings['setting_value'] = NULL;
             }
 
             $explorer->table("settings")->insert($new_settiings);

@@ -34,7 +34,7 @@ define('__COMPOSER_DIR__', __WEB_ROOT__.'/library/vendor');
 
 define('__TEMP_DIR__', sys_get_temp_dir());
 
-define('__SQLITE_DIR__', __PROJECT_ROOT__.'/database');
+define('__SQLITE_DIR__', __PROJECT_ROOT__.'/.database');
 define('__SQLITE_DATABASE__', __SQLITE_DIR__.'/cwp_sqlite.db');
 define('__DATABASE_DSN__', 'sqlite:'.__SQLITE_DATABASE__);
 

@@ -1,19 +1,3 @@
-CREATE TABLE "flag_style" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"style_name"	varchar(150) NOT NULL,
-	"ecol"	varchar(5) DEFAULT NULL,
-	"erow"	varchar(3) DEFAULT NULL,
-	"text"	varchar(50) DEFAULT NULL,
-	"bold"	int DEFAULT NULL,
-	"font_size"	int DEFAULT NULL,
-	"h_align"	int DEFAULT NULL,
-	"v_align"	int DEFAULT NULL,
-	"width"	int DEFAULT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
---
--- Dumping data for table `flag_style`
---
 
 INSERT INTO `flag_style` VALUES(1, 'Job Number', 'A', '6', 'Job Number', 1, 22, NULL, NULL, NULL);
 INSERT INTO `flag_style` VALUES(2, 'Market Text', 'A', '7', 'Market', 1, 22, NULL, NULL, NULL);
@@ -61,3 +45,38 @@ INSERT INTO `flag_style` VALUES(44, 'master sheet', 'A', NULL, NULL, NULL, NULL,
 INSERT INTO `flag_style` VALUES(45, 'master sheet', 'B', NULL, NULL, NULL, NULL, NULL, NULL, 20);
 INSERT INTO `flag_style` VALUES(46, 'master sheet', 'C', NULL, NULL, NULL, NULL, NULL, NULL, 20);
 INSERT INTO `flag_style` VALUES(47, 'master sheet', 'E', NULL, NULL, NULL, NULL, NULL, NULL, 5);
+
+
+
+INSERT INTO `paper_count` VALUES(1, 1, 2500, 500, 1250, 17500, 40000, 135000, 8, 18, 10, 15, 4, 6);
+INSERT INTO `paper_count` VALUES(2, 2, 1400, NULL, 700, 9800, 28000, NULL, 8, 18, NULL, NULL, 5, 9);
+INSERT INTO `paper_count` VALUES(3, 3, 1000, NULL, 500, 7000, 16000, NULL, 8, 18, NULL, NULL, 4, 6);
+INSERT INTO `paper_count` VALUES(4, 4, 2500, 500, 1250, 17500, 40000, NULL, 8, 18, 10, 15, 4, 6);
+INSERT INTO `paper_count` VALUES(5, 5, 1400, NULL, 700, 9800, 28000, NULL, 8, 18, NULL, NULL, 5, 9);
+INSERT INTO `paper_count` VALUES(6, 6, 1000, NULL, 500, 7000, 16000, NULL, 8, 18, NULL, NULL, 4, 6);
+INSERT INTO `paper_count` VALUES(7, 7, 2000, 500, 1000, 20000, 40000, 90000, 8, 18, 12, 12, 7, 6);
+INSERT INTO `paper_count` VALUES(8, 8, 1300, NULL, 650, 13000, 26000, NULL, 8, 18, NULL, NULL, 7, 6);
+INSERT INTO `paper_count` VALUES(9, 9, 900, NULL, 450, 9000, 20000, NULL, 8, 18, NULL, NULL, 6, 6);
+INSERT INTO `paper_count` VALUES(10, 10, 2000, 500, 1000, 20000, 40000, 90000, 6, 17, 12, 12, 7, 6);
+INSERT INTO `paper_count` VALUES(11, 11, 1300, NULL, 650, 13000, 26000, NULL, 6, 17, NULL, NULL, 7, 6);
+INSERT INTO `paper_count` VALUES(12, 12, 900, NULL, 450, 9000, 20000, NULL, 6, 17, NULL, NULL, 6, 6);
+
+
+INSERT INTO `paper_type` VALUES(1, 38, 'small', 4);
+INSERT INTO `paper_type` VALUES(2, 38, 'small', 6);
+INSERT INTO `paper_type` VALUES(3, 38, 'small', 8);
+INSERT INTO `paper_type` VALUES(4, 38, 'large', 4);
+INSERT INTO `paper_type` VALUES(5, 38, 'large', 6);
+INSERT INTO `paper_type` VALUES(6, 38, 'large', 8);
+INSERT INTO `paper_type` VALUES(7, 50, 'small', 4);
+INSERT INTO `paper_type` VALUES(8, 50, 'small', 6);
+INSERT INTO `paper_type` VALUES(9, 50, 'small', 8);
+INSERT INTO `paper_type` VALUES(10, 50, 'large', 4);
+INSERT INTO `paper_type` VALUES(11, 50, 'large', 6);
+INSERT INTO `paper_type` VALUES(12, 50, 'large', 8);
+
+
+
+INSERT INTO "settings" VALUES (1,'__USER_XLSX_DIR__','','text');
+INSERT INTO "settings" VALUES (2,'__USE_LOCAL_XLSX__','0','bool');
+INSERT INTO "settings" VALUES (3,'__SHOW_TRACY__','0','bool');

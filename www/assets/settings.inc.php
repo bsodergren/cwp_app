@@ -2,7 +2,7 @@
 
 
 $table = $explorer->table("settings");
-$table->order("type ASC");
+$table->order("setting_type ASC");
 $results = $table->fetchAssoc('id');
 
 if ($results) {
@@ -10,22 +10,19 @@ if ($results) {
     foreach ($results as $k => $u) {
 
         $setting[$u['definedName']] =  [ 
-            'type' => $u['type'],
-            'value' => $u['value'],
-            'name' => $u['name'],
-            'description' => $u['description'],
+            'type' => $u['setting_type'],
+            'value' => $u['setting_value'],
+            'name' => $u['setting_name'],
+            'description' => $u['setting_description'],
     ];
 
-      
-        define($u['definedName'] ,$u['value']);
+        define($u['definedName'] ,$u['setting_value']);
 
     }
     define("__SETTINGS__", $setting);
 }
 
 unset($setting);
-
-
 
 logger("DB Settings", __SETTINGS__);
 ?>

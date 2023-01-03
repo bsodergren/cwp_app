@@ -4,10 +4,14 @@ require_once(".config.inc.php");
 define("REFRESH_TIMEOUT", 0);
 $break = false;
 
-if (array_key_exists("submit_edit", $_REQUEST) == TRUE) {
+if ($_POST["submit"] == "Edit")
+{
 
-    define("REFRESH_URL", __URL_HOME__ . "/edit_form.php?job_id=" . $_REQUEST['job_id'] . "&form_number=" . $_REQUEST['form_number'] . "");
+    require_once(__PROCESS_DIR__ . "/form_edit.php");
+
+   // define("REFRESH_URL", __URL_HOME__ . "/edit_form.php?job_id=" . $_REQUEST['job_id'] . "&form_number=" . $_REQUEST['form_number'] . "");
     $break = true;
+
 } else {
     foreach ($_REQUEST as $key => $value) {
         $break = false;

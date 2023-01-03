@@ -1,5 +1,10 @@
 <?php
 
+function logger($text,$var='')
+{
+    bdump($var, $text);
+}
+
 function output($var)
 {
 
@@ -8,6 +13,7 @@ function output($var)
    // return 0;
     
 }
+
 
 function create_form($url,$method,$input)
 {
