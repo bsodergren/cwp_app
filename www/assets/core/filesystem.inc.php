@@ -49,6 +49,7 @@ function get_filename($pdf_file,$job_number,$type='',$form_number='',$create_dir
 		}
 	}
 	
+	$filename = FileSystem::normalizePath($filename);
 	return $filename;
 }
 
@@ -70,4 +71,9 @@ function get_xlsx_filename($pdf_file,$job_number,$form_number,$create_dir=false)
 function get_zip_filename($pdf_file,$job_number,$form_number='',$create_dir=false)
 {
 	return  get_filename($pdf_file,$job_number,'zip',$form_number,$create_dir);
+}
+
+function get_zip_directory($pdf_file,$job_number,$form_number='',$create_dir=false)
+{
+	return  get_directory($pdf_file,$job_number,'zip',$form_number,$create_dir);
 }

@@ -42,23 +42,23 @@ if ($cnt > 0) {
 
 		$zip_file = get_zip_filename($v['pdf_file'], $v['job_number']);
 		$xlsx_dir = get_xlsx_directory($v['pdf_file'], $v['job_number']);
-		if ($v["xlsx_dir"] && is_dir($xlsx_dir) == true) {
+		if ($v["xlsx_exists"] && is_dir($v["xlsx_exists"] ) == true) {
 			$vdisabled = "";
 		}
 
 		$replacement['FORM_BUTTONS_HTML'] =	$form->input_submit('process', '', "Process PDF Form", '', $class_normal . $pdisabled);
 		//$form->input_submit('actSubmit', '', 'View Forms', '', class_normal.$vdisabled);
 
-		if ($v['xlsx_dir'] == true) {
+		if ($v['xlsx_exists'] == true) {
 			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_xlsx', '', 'delete xlsx', '', $class_delete);
 		} else {
 			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_xlsx', '', 'create xlsx', '', $class_create . $pdisabled);
 		}
 
-		if ($v['zip_file'] == true) {
+		if ($v['zip_exists'] == true) {
 			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_zip', '', 'delete zip', '', $class_delete);
 		} else {
-			if ($v['xlsx_dir'] == true) {
+			if ($v['zip_exists'] == true) {
 				$zdisabled = "";
 			}
 
@@ -78,6 +78,8 @@ if ($cnt > 0) {
 	$template->template('index/main', ['MEDIA_JOB_ROW' => $media_html]);
 
 	$template->render();
+} else {
+echo JavaRefresh('/import.php',0);
 }
 
 

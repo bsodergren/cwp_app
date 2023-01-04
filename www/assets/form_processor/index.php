@@ -8,6 +8,7 @@ if (key_exists("process", $_REQUEST)) {
 }
 
 if (key_exists("create_xlsx", $_REQUEST)) {
+    include __LAYOUT_HEADER__;
 
     // Need output here
     $xlsx_array = build_xlsx_array($_REQUEST['job_id']);
@@ -17,7 +18,9 @@ if (key_exists("create_xlsx", $_REQUEST)) {
     $pdf_file = $xlsx_array[$keyidx]["pdf_file"];
 
     write_xlsx_workbook($xlsx_array, $job_number, $pdf_file);
-    $job['xlsx_dir'] = get_xlsx_directory($pdf_file, $job_number);
+    ob_flush();
+    $job['xlsx_exists'] = get_xlsx_directory($pdf_file, $job_number);
+    define('REFRESH_TIMEOUT', 15);
 }
 
 if (key_exists("delete_xlsx", $_REQUEST)) {
@@ -25,11 +28,12 @@ if (key_exists("delete_xlsx", $_REQUEST)) {
     delete_zip($job_id);
 }
 if (key_exists("create_zip", $_REQUEST)) {
-    $zip_file = get_zip_filename($job['pdf_file'], $job['job_number'], '', true);
+    $xlsx_dir = get_xlsx_directory($job['pdf_file'], $job['job_number']);
+    $zip_file = get_zip_filename($xlsx_dir,$job['pdf_file'], $job['job_number'], '', true);
 
-    zip_Workbooks($job['xlsx_dir'], $job_id, $zip_file);
+    zip_Workbooks($xlsx_dir, $job_id, $zip_file);
 
-    $job['zip_file'] = $zip_file;
+    $job['zip_exists'] = $zip_file;
 }
 if (key_exists("delete_zip", $_REQUEST)) {
     delete_zip($job_id);

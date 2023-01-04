@@ -29,7 +29,7 @@ define('__INC_CLASS_DIR__', __ASSETS_DIR__.'/class');
 define('__INC_PDF_DIR__', __ASSETS_DIR__.'/pdf_parser');
 define('__INC_XLSX_DIR__', __ASSETS_DIR__.'/xlsx_parser');
 define('__PROCESS_DIR__', __ASSETS_DIR__.'/form_processor');
-
+define('__UPDATES_DIR__',__ASSETS_DIR__."/config/updates");
 define('__COMPOSER_DIR__', __WEB_ROOT__.'/library/vendor');
 
 define('__TEMP_DIR__', sys_get_temp_dir());

@@ -51,10 +51,10 @@ function delete_zip($job_id)
     global $explorer;
     global $job;
     
-    $data = Array ('zip_file' => '' );
+    $data = Array ('zip_exists' => '' );
     $explorer->table("media_job")->where ('job_id',  $job_id)->update($data);
-    if (file_exists($job['zip_file'])) {
-        FileSystem::delete($job['zip_file']);
+    if (is_dir($job['zip_exists'])) {
+        FileSystem::delete($job['zip_exists']);
     }   
 }
 

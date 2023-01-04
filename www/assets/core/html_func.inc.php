@@ -1,4 +1,5 @@
 <?php
+use Nette\Utils\FileSystem;
 
 function logger($text,$var='')
 {
@@ -134,4 +135,27 @@ function JavaRefresh($url,$timeout=0)
     $html .= "\n".'</script>';
 
     return $html;
+}
+
+function skipFile($filename)
+{
+
+  
+    if (!check_skipFile($filename)) {
+   
+        $replacement  = '<?php';
+        $replacement .= ' #skip';
+        $__db_string  = FileSystem::read($filename);
+        $__db_write   = str_replace('<?php', $replacement, $__db_string);
+        FileSystem::write($filename, $__db_write);
+    }
+
+}
+
+function check_skipFile($filename)
+{
+    $f    = fopen($filename, 'r');
+    $line = fgets($f);
+    fclose($f);
+    return strpos($line, '#skip');
 }

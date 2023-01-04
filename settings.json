@@ -12,8 +12,8 @@
     "main_window": {
         "title": "Media Flag Creator",
         "icon": "",
-        "default_size": [1024, 800],
-        "minimum_size": [640, 480],
+        "default_size": [1280, 800],
+        "minimum_size": [1024, 480],
         "maximum_size": [0, 0],
         "disable_maximize_button": false,
         "center_on_screen": true,

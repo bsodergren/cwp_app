@@ -1,4 +1,4 @@
-<?php
+<?php #skip
 
 use Nette\Utils\FileSystem;
 
@@ -6,7 +6,7 @@ $initial_conn = new Nette\Database\Connection(__DATABASE_DSN__);
 
 $_default_sql_dir = FileSystem::normalizePath(__SQLITE_DIR__ . "/default");
 
-$refresh=false;
+
 
 if ($dh = opendir($_default_sql_dir)) {    
     while ($sql_file = readdir($dh)) {
@@ -26,13 +26,4 @@ if ($dh = opendir($_default_sql_dir)) {
     unset($_default_sql_dir);
 }
 
-
-if($refresh == true)
-{
-    $refresh = false;
-   echo JavaRefresh("index.php",20);
-    ob_flush();
-}
-
-$refresh = false;
 

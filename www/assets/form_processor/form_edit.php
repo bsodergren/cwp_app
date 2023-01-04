@@ -2,9 +2,9 @@
 require_once(".config.inc.php");
 
 $deleted_id = 0;
-dump($_POST);
-exit;
 
+define("REFRESH_URL", "/index.php");
+/*
 $job_id=$_REQUEST['job_id'];
 $form_number=$_REQUEST['form_number'];
 
@@ -175,4 +175,6 @@ foreach ($form_row as $idx => $row)
 
 <?php
 include __LAYOUT_FOOTER__;
+
+*/
 ?>
