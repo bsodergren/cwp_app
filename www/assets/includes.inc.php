@@ -15,8 +15,11 @@ if (!file_exists(__SQLITE_DATABASE__)) {
     require_once $_runone_file;
     skipFile($_runone_file);
 
+    define('__FIRST_RUN__',true);
+
 }
-        require_once $_update_file;
+
+require_once $_update_file;
 
 
 

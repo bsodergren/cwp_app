@@ -31,7 +31,7 @@ function get_directory($pdf_file,$job_number, $type='',$create_dir=false)
 function get_filename($pdf_file,$job_number,$type='',$form_number='',$create_dir=false)
 {
 	$file = basename($pdf_file,".pdf");
-    $filename = $file."_".$job_number;
+    $filename = $job_number.'_'.$file;
 	
 	if (strtolower($type) == 'xlsx')
 	{

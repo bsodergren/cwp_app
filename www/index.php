@@ -45,28 +45,29 @@ if ($cnt > 0) {
 		if ($v["xlsx_exists"] && is_dir($v["xlsx_exists"] ) == true) {
 			$vdisabled = "";
 		}
+		$tooltip = ' data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="process.php ';
 
-		$replacement['FORM_BUTTONS_HTML'] =	$form->input_submit('process', '', "Process PDF Form", '', $class_normal . $pdisabled);
+		$replacement['FORM_BUTTONS_HTML'] =	$form->input_submit('process', '', "Process PDF Form", '', $class_normal . $pdisabled . $tooltip . 'process"');
 		//$form->input_submit('actSubmit', '', 'View Forms', '', class_normal.$vdisabled);
 
 		if ($v['xlsx_exists'] == true) {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_xlsx', '', 'delete xlsx', '', $class_delete);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_xlsx', '', 'delete xlsx', '', $class_delete. $tooltip . 'delete_xlsx"');
 		} else {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_xlsx', '', 'create xlsx', '', $class_create . $pdisabled);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_xlsx', '', 'create xlsx', '', $class_create . $pdisabled. $tooltip . 'create_xlsx"');
 		}
 
 		if ($v['zip_exists'] == true) {
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_zip', '', 'delete zip', '', $class_delete);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_zip', '', 'delete zip', '', $class_delete. $tooltip . 'delete_zip"');
 		} else {
 			if ($v['zip_exists'] == true) {
 				$zdisabled = "";
 			}
 
-			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_zip', '', 'create zip', '', $class_create . $zdisabled);
+			$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('create_zip', '', 'create zip', '', $class_create . $zdisabled. $tooltip . 'create_zip"');
 		}
 
-		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('refresh_import', '', 'refresh import', '', $class_create);
-		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_job', '', 'delete job', '', $class_delete);
+		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('refresh_import', '', 'refresh import', '', $class_create. $tooltip . 'refresh_import"');
+		$replacement['FORM_BUTTONS_HTML'] .= $form->input_submit('delete_job', '', 'delete job', '', $class_delete. $tooltip . 'delete_job"');
 		$replacement['FORM_CLOSE'] = $form->close();
 		$template->template('index/job', $replacement);
 	}

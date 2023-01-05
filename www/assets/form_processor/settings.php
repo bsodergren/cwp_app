@@ -1,6 +1,6 @@
 <?php 
 
-define("REFRESH_TIMEOUT", 5);
+define("REFRESH_TIMEOUT", 0);
 define("REFRESH_URL", 'index.php');
 
     $form = new Formr\Formr('bootstrap4');
@@ -40,7 +40,7 @@ define("REFRESH_URL", 'index.php');
 
             
            $count = $explorer->table('settings')->where('definedName', $key)->update([$field => $value]);
-            $template->render('process/update_setting',['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field ]);
+           $template->render('process/update_setting',['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field ]);
             
             ob_flush();
 

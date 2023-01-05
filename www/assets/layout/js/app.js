@@ -1,11 +1,14 @@
-function formValidation() {
+function formValidation() 
+{
   // Make quick references to our fields.
   var jobNumber = document.getElementById("jobNumber");
   var pdffile = document.getElementById("fileToUpload");
+
   if (validateFileType(pdffile, "* Please select a pdf file *")) {
-  if (textNumeric(jobNumber, "* Please enter a valid job Number *")) {
-    if (lengthDefine(jobNumber, 6, 6)) {
-      return true;
+    if (textNumeric(jobNumber, "* Please enter a valid job Number *")) {
+      if (lengthDefine(jobNumber, 6, 6)) {
+        return true;
+      }
     }
   }
   return false;
@@ -64,3 +67,11 @@ function lengthDefine(inputtext, min, max) {
 }
 
 
+function popup(mylink, windowname,width=800,height=400)
+{
+   if (! window.focus)return true;
+   var href; 
+   if (typeof(mylink) == 'string') href=mylink; else href=mylink.href;
+   window.open(href, windowname, 'width='+width+',height='+height+',scrollbars=yes'); 
+   return false; 
+} 

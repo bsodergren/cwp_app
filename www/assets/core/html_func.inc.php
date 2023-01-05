@@ -1,8 +1,67 @@
 <?php
 use Nette\Utils\FileSystem;
+use Nette\Utils\DateTime;
+
+function get_caller_info()
+{
+    $trace = debug_backtrace();
+
+    $s = '';
+    $file = $trace[1]['file'];
+    foreach($trace as $row) {
+        switch($row['function']) {
+            case __FUNCTION__:
+                break;
+            case "logger":
+                $lineno = $row["line"];
+                break;
+            case "require_once":
+                break;
+            case "include":
+                break;
+            default:
+                $s = $row['function'] . ":" . $s;
+                $file = $row['file'];
+        }
+    }
+    $file = pathinfo($file, PATHINFO_BASENAME);
+    return $file . ":" . $s . ":";
+}
+
 
 function logger($text,$var='')
 {
+    $function_list = get_caller_info();
+
+    $colors = new Colors();
+
+    if(defined('ERROR_LOG_FILE'))
+    {
+        $html_var='';
+        $html_string='';
+        $html_msg='';
+
+        if(is_array($var) || is_object($var)) {
+            $html_var_string = var_export($var, 1);
+    
+        } else {
+            $html_var_string = $var;
+        }
+
+        if($html_var_string != '' ) {
+
+          //  $html_var_string = wordwrap($var, 80, "<br>");
+            $html_var = $colors->getColoredHTML("<span style=\"text-indent: 40px\">" . $html_var_string . "</span>", "green");
+        }
+    
+        $html_msg = $colors->getColoredHTML($text, "red");
+        $html_func = $colors->getColoredHTML($function_list, "blue");
+
+        $html_string = DateTime::from(null).":".$html_func . ":" .$html_msg . " " . $html_var . "<br>\n";
+
+        Log::append(ERROR_LOG_FILE,$html_string);
+    }
+
     bdump($var, $text);
 }
 
@@ -139,21 +198,19 @@ function JavaRefresh($url,$timeout=0)
 
 function skipFile($filename)
 {
-
-  
-    if (!check_skipFile($filename)) {
-   
         $replacement  = '<?php';
         $replacement .= ' #skip';
         $__db_string  = FileSystem::read($filename);
         $__db_write   = str_replace('<?php', $replacement, $__db_string);
         FileSystem::write($filename, $__db_write);
-    }
-
 }
 
 function check_skipFile($filename)
 {
+    if(defined('__FIRST_RUN__')) {
+        return 0;
+    }
+
     $f    = fopen($filename, 'r');
     $line = fgets($f);
     fclose($f);

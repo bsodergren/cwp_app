@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Basic constants for application that are displayed in the output
  */
@@ -52,6 +53,7 @@ define('__LAYOUT_HEADER__', __LAYOUT_ROOT__.'/header.php');
 define('__LAYOUT_NAVBAR__', __LAYOUT_ROOT__.'/navbar.php');
 define('__LAYOUT_FOOTER__', __LAYOUT_ROOT__.'/footer.php');
 
+
 /*
  * URL defaults.
  */
@@ -61,7 +63,6 @@ define('__URL_LAYOUT__', __URL_HOME__.__LAYOUT_DIR__);
 
 set_include_path(get_include_path().PATH_SEPARATOR.__COMPOSER_DIR__);
 require_once __COMPOSER_DIR__.'/autoload.php';
-
 
 
 
@@ -85,18 +86,19 @@ if(defined('__SHOW_TRACY__'))
     if (__SHOW_TRACY__ == 1)
     { 
 
-
-    
-
-
         Debugger::enable();
         Debugger::$dumpTheme    = 'dark';
 //        Debugger::$editor = null;.
 //        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
         Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
         Debugger::$showBar = 1;
+
+        define("ERROR_LOG_FILE", __WEB_ROOT__.'/debug.log');
+
     }
 }
+
+$onLoad="onLoad=\"popup('/debug.php', 'logs',1000,1000)\"";
 
 if (!function_exists('dump')){
 	function dump($var)
