@@ -35,3 +35,4 @@ install.cmd
 .gitignore
 *Media Load Flags/*
 .webcache/*
+www/logs/*

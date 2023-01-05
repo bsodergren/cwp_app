@@ -14,9 +14,7 @@ if (!file_exists(__SQLITE_DATABASE__)) {
     output("Creating Database in " . __SQLITE_DATABASE__);
     require_once $_runone_file;
     skipFile($_runone_file);
-
     define('__FIRST_RUN__',true);
-
 }
 
 require_once $_update_file;
@@ -73,3 +71,19 @@ foreach ($require_fileArray as $include) {
 }
 
 $template = new Template();
+
+
+/*
+if (__SCRIPT_NAME__ != 'debug') {
+    $error_array =getErrorLogs();
+    foreach($error_array as $k => $file){
+
+        $filename = basename($file);        
+        logger("=============".__SCRIPT_NAME__."============================",'',$filename);
+    }
+    }
+    unset($file);
+    unset($filename);
+    unset($k);
+    unset($error_array);
+*/

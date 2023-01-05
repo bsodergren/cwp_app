@@ -99,6 +99,8 @@ $textbox_html='';
 		}
 	}
 
+	$delete_log = template::echo("settings/delete_log");
+
 	$template->template("settings/new_setting",'');
 
 	$settings_html = $template->return();
@@ -108,7 +110,8 @@ $textbox_html='';
 	$template->template("settings/main",[
 		'CHECKBOX_HTML' => $checkbox_html,
 		'TEXTBOX_HTML' => $textbox_html,
-		'SETTINGS_HTML' => $settings_html	]);
+		'SETTINGS_HTML' => $settings_html,
+		'DELETE_LOG' => $delete_log	]);
 
 		$template->render();
 include __LAYOUT_FOOTER__;  ?>

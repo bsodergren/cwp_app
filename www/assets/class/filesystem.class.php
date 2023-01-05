@@ -7,6 +7,7 @@ class log
 
     public static function append(string $file, string $content, ?int $mode = 0666): void
 	{
+
 		FileSystem::createDir(dirname($file));
 		if (@file_put_contents($file, $content,FILE_APPEND) === false) { // @ is escalated to exception
 			throw new Nette\IOException(sprintf(

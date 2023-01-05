@@ -9,6 +9,7 @@ class Colors
 
     private $background_colors = [];
 
+    private $fg_color;
 
     public function __construct()
     {
@@ -41,22 +42,30 @@ class Colors
 
     }//end __construct()
 
+    public function getClassColor()
+    {
+        if (isset($this->foreground_colors[$this->fg_color]))
+        {
+            return 'color:'.$this->fg_color.';';
+        }
+        return '';
+    }
+
+    public function getColoredDiv($html,$background_color)
+    {
+
+        $class_tag = '';
+        if (isset($this->background_colors[$background_color]))
+        {
+            $class_tag = "class";
+        }
+    }
 
     // Returns colored string
-    public function getColoredHTML($string, $foreground_color=null, $background_color=null)
+    public function getColoredSpan($string, $foreground_color=null, $background_color=null)
     {
-        $colored_string = '<span style=" ';
-
-        // Check if given foreground color found
-        if (isset($this->foreground_colors[$foreground_color]))
-        {
-            $colored_string .= 'color:'.$foreground_color.';';
-        }
-       
-
-        // Add string and end coloring
-        $colored_string .= '">'.$string.'</span>';
-
+        $this->fg_color = $foreground_color;
+        $colored_string = '<span style="'.$this->getClassColor().'">'.$string.'</span>';;
         return $colored_string;
 
     }//end getColoredHTML()

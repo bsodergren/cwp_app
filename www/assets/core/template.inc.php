@@ -57,6 +57,8 @@ class Template
 
     public function template($template, $replacement_array='')
     {
+   
+
         $template_file=__TEMPLATE_DIR__."/".$template.".html";
 
         if (!file_exists($template_file)) {
@@ -66,8 +68,14 @@ class Template
 
             $this->html .= $html_text;
         }
+            $html_text = file_get_contents($template_file);
 
-        $html_text = file_get_contents($template_file);
+        if ($template != "debug/logentry" )
+        {
+            logger($template_file,$replacement_array,"templates.log");
+
+        }
+        
 
         if (is_array($replacement_array)) {
             foreach ($replacement_array as $key => $value) {
@@ -79,7 +87,7 @@ class Template
             $html_text = preg_replace_callback('|(%%\w+%%)|', array($this, "callback_replace"), $html_text);
         }
 
-        $html_text = "<!-- start $template --> \n" . $html_text . "\n";
+      //  $html_text = "<!-- start $template --> \n" . $html_text . "\n";
         $this->html .= $html_text;
         return $this->html;
     }

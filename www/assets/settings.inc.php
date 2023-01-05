@@ -22,7 +22,7 @@ if ($results) {
     define("__SETTINGS__", $setting);
 }
 
-unset($setting);
 
-logger("DB Settings", __SETTINGS__);
+logger("settings", $setting);
+unset($setting);
 ?>

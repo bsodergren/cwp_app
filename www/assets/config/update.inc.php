@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Nette\Utils\FileSystem;
 
@@ -63,8 +63,7 @@ if ($all = opendir(__UPDATES_DIR__)) {
         if (!is_dir(__UPDATES_DIR__ . '/' . $file)) {
             if (preg_match('/(php)$/', $file)) {
                 $include = filesystem::normalizePath(__UPDATES_DIR__ . '/' . $file);
-                if (!check_skipFile($include))
-                {
+                if (!check_skipFile($include)) {
 
                     require_once $include;
                     skipFile($include);
@@ -81,8 +80,7 @@ if ($all = opendir(__UPDATES_DIR__)) {
                     }
 
                     if (is_array($rename_column)) {
-                        foreach ($rename_column as $table_name => $column)
-                        {
+                        foreach ($rename_column as $table_name => $column) {
                             $update->set($table_name);
                             foreach ($column as $old => $new) {
                                 if ($update->check_columnExists($old)) {
@@ -113,6 +111,15 @@ if ($all = opendir(__UPDATES_DIR__)) {
                         }
                     }
 
+                    if (is_array($new_data)) {
+
+                        foreach ($new_data as $table => $new_data_vals) {
+
+                            $initial_conn->query('INSERT INTO ' . $table . ' ?', $new_data_vals);
+                            $refresh = true;
+                        }
+                    }
+
                     if (is_array($update_data)) {
                         foreach ($update_data as $table => $updates) {
                             foreach ($updates as $where => $data) {
@@ -138,6 +145,7 @@ if ($all = opendir(__UPDATES_DIR__)) {
                 unset($new_table);
                 unset($rename_column);
                 unset($new_column);
+                unset($new_data);
                 unset($update_data);
             } //end if
         } //end if
