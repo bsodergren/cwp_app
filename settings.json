@@ -51,9 +51,9 @@
         "command_line_switches": {},
         "enable_downloads": false,
         "context_menu": {
-            "enable_menu": false,
-            "navigation": true,
-            "print": true,
+            "enable_menu": true,
+            "navigation": false,
+            "print": false,
             "view_source": false,
             "open_in_external_browser": true,
             "devtools": false

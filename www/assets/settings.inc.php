@@ -22,7 +22,7 @@ if ($results) {
     define("__SETTINGS__", $setting);
 }
 
-
-logger("settings", $setting);
+$const = get_defined_constants(true);
+logger("settings", $const,"defined.log");
 unset($setting);
 ?>

@@ -1,5 +1,11 @@
-<?php 
+<?php #skip 
 $new_table = [];
+$update_data = [];
+$new_data = [];
+$rename_column = [];
+$new_column = [];
+
+
 $rename_column = ["settings" => ["setting_name" => "definedName"]];
 $new_column = ["settings" => ["setting_name" => "text", "setting_description" => "text"]];
 

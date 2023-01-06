@@ -8,6 +8,7 @@ define("REFRESH_URL", 'index.php');
 
 $form = new Formr\Formr('bootstrap4');
 
+
 if ($form->submitted()) {
 
     
@@ -56,16 +57,11 @@ if ($form->submitted()) {
                 $field = "setting_" . $pcs[1];
             }
 
-            $arr[$key][$field] = $value;
-
-
-
             $count = $explorer->table('settings')->where('definedName', $key)->update([$field => $value]);
-            $template->render('process/update_setting', ['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field]);
+            echo $template->render('process/update_setting', ['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field]);
 
             ob_flush();
         }
-
         if ($new_settiings['setting_definedName'] != '') {
 
             if ($new_settiings['setting_value'] == '') {

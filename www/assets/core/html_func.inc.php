@@ -4,7 +4,8 @@ use Nette\Utils\DateTime;
 
 
 
-function getErrorLogs(){
+function getErrorLogs()
+{
     $err_array = [];
 
     if ($all = opendir(__ERROR_LOG_DIRECTORY__)) {
@@ -22,17 +23,6 @@ function getErrorLogs(){
     return $err_array;
 }
 
-function settingTrue($define_name)
-{
-    if (defined($define_name))
-    {
-        if ( constant($define_name) == 1)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
 
 
 
@@ -72,8 +62,8 @@ function logger($text,$var='', $logfile='default.log')
 
     $colors = new Colors();
 
-    if(defined('__SHOW_DEBUG_PANEL__'))
-    {
+   // if(defined('__SHOW_DEBUG_PANEL__'))
+   // {
         $errorLogFile = __ERROR_LOG_DIRECTORY__ . "/" . $logfile;
 
         $html_var='';
@@ -105,7 +95,7 @@ function logger($text,$var='', $logfile='default.log')
             'MSG_VALUE' => $html_var, ]);
             
         Log::append($errorLogFile,$html_string);
-    }
+   // }
 
     bdump($var, $text);
 }
@@ -196,11 +186,6 @@ function draw_radio($name,$value)
 }
 
 
-function display_log($string)
-{
-    echo "<pre>".$string."</pre>\n";
-}
-
 
 function myHeader($redirect = __URL_PATH__."/home.php")
 {
@@ -219,48 +204,5 @@ function myHeader($redirect = __URL_PATH__."/home.php")
 
 function JavaRefresh($url,$timeout=0)
 {
-    global $_REQUEST;
-    
-    $html = '<script>' . "\n";
-    
-    
-    if($timeout > 0)
-    {
-        $html .= 'setTimeout(function(){ ';
-    }
-    
-    $html .= "window.location.href = '".$url."';";
-    
-    if($timeout > 0)
-    {
-        $timeout = $timeout * 1000;
-        $html .= '}, '.$timeout.');';
-    }
-    $html .= "\n".'</script>';
-
-    return $html;
-}
-
-function skipFile($filename)
-{
-
-    if (!check_skipFile($filename)) {
-        $replacement  = '<?php';
-        $replacement .= ' #skip';
-        $__db_string  = FileSystem::read($filename);
-        $__db_write   = str_replace('<?php', $replacement, $__db_string);
-        FileSystem::write($filename, $__db_write);
-    }
-}
-
-function check_skipFile($filename)
-{
-    if(defined('__FIRST_RUN__')) {
-        return 0;
-    }
-
-    $f    = fopen($filename, 'r');
-    $line = fgets($f);
-    fclose($f);
-    return strpos($line, '#skip');
+    mediaUpdate::JavaRefresh($url,$timeout);
 }

@@ -11,6 +11,8 @@ $cnt = $table->count('*');
 if ($cnt > 0) {
 	foreach ($results as $k => $v) {
 		unset($replacement);
+		$media = new Media($v);
+
 		$url = __URL_HOME__ . "/form.php?job_id=" . $v['job_id'];
 		$text_close = basename($v['pdf_file'], ".pdf");
 		$text_job = "Job Number: " . $v['job_number'];
@@ -40,7 +42,7 @@ if ($cnt > 0) {
 		$vdisabled = " disabled";
 		$zdisabled = " disabled";
 
-		$zip_file = get_zip_filename($v['pdf_file'], $v['job_number']);
+		$zip_file = get_zip_filename();
 		$xlsx_dir = get_xlsx_directory($v['pdf_file'], $v['job_number']);
 		if ($v["xlsx_exists"] && is_dir($v["xlsx_exists"] ) == true) {
 			$vdisabled = "";

@@ -25,14 +25,14 @@ define('__ROOT_BIN_DIR__', __PROJECT_ROOT__ . "/bin");
  *
  */
 define('__ASSETS_DIR__', __WEB_ROOT__ . '/assets');
-define('__INC_CORE_DIR__', __ASSETS_DIR__ . '/core');
 define('__INC_CLASS_DIR__', __ASSETS_DIR__ . '/class');
+define('__INC_CORE_DIR__', __ASSETS_DIR__ . '/core');
 define('__INC_PDF_DIR__', __INC_CORE_DIR__ . '/pdf_parser');
 define('__INC_XLSX_DIR__', __INC_CORE_DIR__ . '/xlsx_parser');
 define('__PROCESS_DIR__', __INC_CORE_DIR__ . '/form_processor');
-define('__UPDATES_DIR__', __ASSETS_DIR__ . "/config/updates");
+define('__UPDATES_DIR__', __ASSETS_DIR__ . "/updates");
 define('__COMPOSER_DIR__', __WEB_ROOT__ . '/library/vendor');
-define('__ERROR_LOG_DIRECTORY__', __WEB_ROOT__. '/logs');
+define('__ERROR_LOG_DIRECTORY__', __WEB_ROOT__ . '/logs');
 
 define('__TEMP_DIR__', sys_get_temp_dir());
 
@@ -64,26 +64,24 @@ define('__URL_LAYOUT__', __URL_HOME__ . __LAYOUT_DIR__);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __COMPOSER_DIR__);
 require_once __COMPOSER_DIR__ . '/autoload.php';
-
-
+require_once __ASSETS_DIR__ . "/configure.inc.php";
 require_once __ASSETS_DIR__ . "/includes.inc.php";
-
 require_once __ASSETS_DIR__ . "/settings.inc.php";
 
+use Nette\Utils\FileSystem;
 use Tracy\Debugger;
 
-if (settingTrue('__SHOW_TRACY__')) {
-        Debugger::enable();
-        Debugger::$dumpTheme    = 'dark';
-        //        Debugger::$editor = null;.
-        //        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
-        Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
-        Debugger::$showBar = 1;
+if (mediaSettings::isTrue('__SHOW_TRACY__')) {
+    Debugger::enable();
+    Debugger::$dumpTheme    = 'dark';
+    //        Debugger::$editor = null;.
+    //        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
+    Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
+    Debugger::$showBar = 1;
 }
-
-if (settingTrue('__SHOW_DEBUG_PANEL__')) {
-        $onLoad = "onLoad=\"popup('/debug.php', 'logs',800,400)\"";
-
+$onLoad='';
+if (mediaSettings::isTrue('__SHOW_DEBUG_PANEL__')) {
+    $onLoad = "onLoad=\"popup('/debug.php', 'logs',800,400)\"";
 }
 
 if (!function_exists('dump')) {
@@ -102,17 +100,15 @@ if (!function_exists('bdump')) {
 
 define("__MEDIA_FILES_DIR__", "/Media Load Flags");
 
-if (settingTrue('__USE_LOCAL_XLSX__')) {
-        if (
-            settingTrue('__USER_XLSX_DIR__') &&
-            is_dir(__USER_XLSX_DIR__)
-        ) {
-            define("__FILES_DIR__", __USER_XLSX_DIR__ . __MEDIA_FILES_DIR__);
-        }
-    
+if (mediaSettings::isTrue('__USE_LOCAL_XLSX__')) {
+    if (
+        mediaSettings::isTrue('__USER_XLSX_DIR__')  ) {
+        define("__FILES_DIR__", __USER_XLSX_DIR__);
+        FileSystem::createDir(__FILES_DIR__);
+    }
 }
 
-if (!defined('__FILES_DIR__')) {
+if (!mediaSettings::isSet('__FILES_DIR__')) {
     define("__FILES_DIR__", __PROJECT_ROOT__ . __MEDIA_FILES_DIR__);
 }
 

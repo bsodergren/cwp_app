@@ -1,4 +1,10 @@
-<?php
+<?php #skip
+$new_table = [];
+$update_data = [];
+$new_data = [];
+$rename_column = [];
+$new_column = [];
+
 
 $new_data = [
     "settings" => [
