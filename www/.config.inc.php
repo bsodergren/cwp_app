@@ -68,6 +68,8 @@ require_once __ASSETS_DIR__ . "/configure.inc.php";
 require_once __ASSETS_DIR__ . "/includes.inc.php";
 require_once __ASSETS_DIR__ . "/settings.inc.php";
 
+logger("Start of file",'',"start.log");
+
 use Nette\Utils\FileSystem;
 use Tracy\Debugger;
 
@@ -78,10 +80,6 @@ if (mediaSettings::isTrue('__SHOW_TRACY__')) {
     //        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
     Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
     Debugger::$showBar = 1;
-}
-$onLoad='';
-if (mediaSettings::isTrue('__SHOW_DEBUG_PANEL__')) {
-    $onLoad = "onLoad=\"popup('/debug.php', 'logs',800,400)\"";
 }
 
 if (!function_exists('dump')) {

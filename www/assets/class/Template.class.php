@@ -1,11 +1,5 @@
+
 <?php
-
-function print_r2($val){
-    echo '<pre>';
-    print_r($val);
-    echo  '</pre>';
-}
-
 
 
 class Template
@@ -69,13 +63,6 @@ class Template
             $this->html .= $html_text;
         }
             $html_text = file_get_contents($template_file);
-
-        if ($template != "debug/logentry" )
-        {
-            logger($template_file,$replacement_array,"templates.log");
-
-        }
-        
 
         if (is_array($replacement_array)) {
             foreach ($replacement_array as $key => $value) {

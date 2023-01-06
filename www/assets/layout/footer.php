@@ -1,5 +1,25 @@
 <p>&nbsp;</p>
 </main>
+
+<nav class="navbar  fixed-bottom  navbar-expand-md navbar-dark bg-dark shadow-sm p-2">
+	<div class="container">
+			<ul class="navbar-nav">
+
+
+      <? 
+      $errorArray = getErrorLogs();
+
+      foreach($errorArray as $k =>$file){
+        $file = basename($file);
+        $key = str_replace(".","_",basename($file));
+        echo '<li class="nav-item"><a class="nav-link" target="_blank" href="debug.php?log='.$key.'">'.$file.'</a></li>';
+      }
+      ?>
+				</ul>
+		</div>
+</nav>
+
+
         <script src="<?php echo __URL_LAYOUT__;?>/js/jquery-3.4.1.min.js"></script>
 
 

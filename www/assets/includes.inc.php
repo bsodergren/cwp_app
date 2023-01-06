@@ -3,7 +3,6 @@
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 
-
 $const = get_defined_constants(true);
 
 $include_array = [];
@@ -19,6 +18,8 @@ foreach ($include_array as $required_file) {
 }
 
 $template = new Template();
+
+
 
 /*
 if (__SCRIPT_NAME__ != 'debug') {

@@ -11,21 +11,19 @@ $form = new Formr\Formr('bootstrap4');
 
 if ($form->submitted()) {
 
-    
+
     if (key_exists('delete_logs', $_POST)) {
 
         $errorArray = getErrorLogs();
 
         foreach ($errorArray as $k => $file) {
             FileSystem::delete($file);
-
-            
         }
-        echo JavaRefresh(REFRESH_URL,REFRESH_TIMEOUT);
+
+        echo JavaRefresh(REFRESH_URL, REFRESH_TIMEOUT);
         exit;
-        
     } else {
-        
+
         // get our form values and assign them to a variable
         foreach ($_POST as $key => $value) {
 
@@ -58,7 +56,7 @@ if ($form->submitted()) {
             }
 
             $count = $explorer->table('settings')->where('definedName', $key)->update([$field => $value]);
-            echo $template->render('process/update_setting', ['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field]);
+         //   echo $template->render('process/update_setting', ['KEY' => $key, 'VALUE' => $value, 'FIELD' => $field]);
 
             ob_flush();
         }
@@ -70,8 +68,8 @@ if ($form->submitted()) {
             }
 
             $explorer->table("settings")->insert($new_settiings);
-            echo "Added " . $new_settiings['definedName'] . " with " . $new_settiings['value'] . " <br>";
+           // echo "Added " . $new_settiings['definedName'] . " with " . $new_settiings['value'] . " <br>";
             ob_flush();
         }
-   }
+    }
 }

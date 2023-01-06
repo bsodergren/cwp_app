@@ -6,12 +6,11 @@ class MediaFileSystem
 {
     public $directory;
     use Nette\StaticClass;
-    
+
     public function __construct($pdf_file, $job_number)
     {
         $this->job_number = $job_number;
         $this->pdf_file = $pdf_file;
-
     }
 
     public function getFilename($type = '', $form_number = '', $create_dir = '')
@@ -21,24 +20,35 @@ class MediaFileSystem
 
     private function __filename($type = '', $form_number = '', $create_dir = false)
     {
-
         $file = basename($this->pdf_file, ".pdf");
         $filename = $this->job_number . '_' . $file;
 
+
         if (strtolower($type) == 'xlsx') {
-            $directory = $this->__directory($type, $create_dir);
-            $filename = $directory . '/' . $filename . "_FM" . $form_number . '.xlsx';
+
+            $filename = $filename . "_FM" . $form_number . '.xlsx';
         }
 
         if (strtolower($type) == 'zip') {
-            $directory = $this->__directory($type, $create_dir);
+
             if ($form_number != '') {
-                $filename = $directory . '/' . $filename . "_FM" . $form_number . '.zip';
+                $filename =  $filename . "_FM" . $form_number . '.zip';
             } else {
-                $filename = $directory . '/' . $filename . ".zip";
+                $filename =  $filename . ".zip";
             }
+       }
+        if (strtolower($type) == 'pdf') {
+            $filename =  $this->pdf_file;
+
         }
 
+        if($type != '')
+        {
+             $directory = $this->__directory($type, $create_dir);
+        }
+
+
+        $filename = $directory . '/' . $filename;
         $filename = FileSystem::normalizePath($filename);
         return $filename;
     }
@@ -62,7 +72,6 @@ class MediaFileSystem
 
         $this->directory = FileSystem::normalizePath($directory);
 
-        logger("Media " . $type . " directory", $directory, 'filesystem.log');
         if ($create_dir == true) {
             FileSystem::createDir($this->directory);
         }
@@ -74,8 +83,6 @@ class MediaFileSystem
     {
         return $this->__directory($type, $create_dir);
     }
-
-
 }
 
 class log

@@ -17,7 +17,8 @@ if (isset($_FILES['the_file'])) {
   $f             = end($f);
   $fileExtension = strtolower($f);
   $media_closing = '/' . basename($fileName, '.pdf');
-  $pdf_directory = get_directory($fileName, $_POST['job_number'], 'pdf', true);
+  $locations = new MediaFileSystem($fileName, $_POST['job_number']);
+  $pdf_directory = $locations->getDirectory('pdf', true);
   $pdf_file      = $pdf_directory . '/' . basename($fileName);
 }
 

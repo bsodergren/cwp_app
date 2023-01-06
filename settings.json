@@ -6,7 +6,7 @@
     "debugging": {
         "show_console": true,
         "subprocess_show_console": false,
-        "log_level": "DEBUG",
+        "log_level": "info",
         "log_file": "debug.log"
     },
     "main_window": {
@@ -52,7 +52,7 @@
         "enable_downloads": false,
         "context_menu": {
             "enable_menu": true,
-            "navigation": false,
+            "navigation": true,
             "print": false,
             "view_source": false,
             "open_in_external_browser": true,

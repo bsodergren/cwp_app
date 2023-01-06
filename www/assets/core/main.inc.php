@@ -5,3 +5,10 @@ function toint($string)
     $string_ret = str_replace(",","",$string);
     return $string_ret;
 }
+
+
+function print_r2($val){
+    echo '<pre>';
+    print_r($val);
+    echo  '</pre>';
+}

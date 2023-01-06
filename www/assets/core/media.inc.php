@@ -8,11 +8,14 @@ function add_new_media_drop($pdf_uploaded_file="",$job_number=110011)
 	$media = $explorer->table("media_job");
 
 	$pdf_filename = basename($pdf_uploaded_file);
-		
+
 	$val = $explorer->table("media_job")->where('pdf_file',$pdf_filename)->select('job_id');
 		foreach ($val as $u) {
 			$job_id = $u->job_id;
 		}
+
+
+ 
 	if($job_id == '') {
 		$explorer->table("media_job")->insert([
 			'job_number' => $job_number,

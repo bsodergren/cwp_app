@@ -3,7 +3,6 @@
 use Nette\Utils\FileSystem;
 
 require_once __INC_CLASS_DIR__ . "/MediaUpdate.class.php";
-
 $refresh = false;
 if (!file_exists(__SQLITE_DATABASE__)) {
     $connection = new Nette\Database\Connection(__DATABASE_DSN__);

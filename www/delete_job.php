@@ -3,19 +3,20 @@ require_once(".config.inc.php");
 
 $job_id=$_REQUEST['job_id'];
 
-$job = get_Job($job_id);
+$job  = $connection->fetch('SELECT * FROM media_job WHERE job_id = ?', $job_id);
+$media = new Media($explorer,$job);
 
 if(key_exists("actSubmit",$_REQUEST))
 {
 	if($_REQUEST['actSubmit'] == "confirm")
 	{
 
-		delete_xlsx($job_id);   
-		delete_zip($job_id);
-		delete_job($job_id);
-
+		$media->delete_zip();
+		$media->delete_xlsx();   		
+		$media->delete_job();
 	}
-	echo   JavaRefresh(__URL_PATH__."/home.php");
+
+	echo   JavaRefresh(__URL_PATH__."/index.php");
 	exit;
 }
 
