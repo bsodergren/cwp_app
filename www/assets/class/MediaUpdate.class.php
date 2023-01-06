@@ -5,9 +5,9 @@ use Nette\Utils\FileSystem;
 
 class MediaUpdate
 {
-    protected $conn;
     public $table_name;
     public $refresh = false;
+    protected $conn;
 
     public function __construct($db_conn)
     {
@@ -24,71 +24,6 @@ class MediaUpdate
         }
     }
 
-    public static function setSkipFile($filename)
-    {
-
-        if (!self::skipFile($filename)) {
-            $replacement  = '<?php';
-            $replacement .= ' #skip';
-            $__db_string  = FileSystem::read($filename);
-            $__db_write   = str_replace('<?php', $replacement, $__db_string);
-            FileSystem::write($filename, $__db_write);
-        }
-    }
-
-    public static function skipFile($filename)
-    {
-        $f    = fopen($filename, 'r');
-        $line = fgets($f);
-        fclose($f);
-        return strpos($line, '#skip');
-    }
-
-
-    public function set($table_name)
-    {
-        $this->table_name = $table_name;
-    }
-
-    public function check_tableExists($table_name='')
-    {
-        if($table_name != '' )
-        {
-            $this->table_name = $table_name;
-        }
-
-        $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='" . $this->table_name . "'";
-        $result = $this->conn->fetchField($query);
-        return $result;
-    }
-
-    public function check_columnExists($column)
-    {
-        $query = "SELECT 1 FROM pragma_table_info('" . $this->table_name . "') where name='" . $column . "'";
-        $result = $this->conn->fetchField($query);
-        return $result;
-    }
-
-    public function create_table($table_name)
-    {
-        $sql_file = FileSystem::normalizePath(__SQLITE_DIR__ . "/default" . '/' . "cwp_table_" . $table_name . ".sql");
-        if (file_exists($sql_file)) {
-            Nette\Database\Helpers::loadFromFile($this->conn, $sql_file);
-        }
-    }
-
-    public function create_column($column, $type)
-    {
-        $query = "ALTER TABLE " . $this->table_name . " ADD " . $column . " " . $type . ";";
-        $result = $this->conn->fetchField($query);
-    }
-
-    public function rename_column($old, $new)
-    {
-        $query = "ALTER TABLE " . $this->table_name . " RENAME COLUMN '" . $old . "'  TO '" . $new . "';";
-        $result = $this->conn->fetchField($query);
-    }
-
     public static function get_filelist($directory, $ext = 'log', $skip_files = 0)
     {
         $files_array = [];
@@ -100,32 +35,55 @@ class MediaUpdate
 
                         if ($skip_files == 1) {
                             if (!self::skipFile($file)) {
-                                $files_array[]  = $file;
+                                $files_array[] = $file;
                             }
                         } else {
-                            $files_array[]  = $file;
+                            $files_array[] = $file;
                         }
                     } //end if
                 } //end if
-            } //end while    
+            } //end while
             closedir($all);
         } //end if
 
         return $files_array;
     }
 
+    public static function skipFile($filename)
+    {
+        $f = fopen($filename, 'r');
+        $line = fgets($f);
+        fclose($f);
+        return strpos($line, '#skip');
+    }
+
+    public static function javaRefresh($url, $timeout = 0)
+    {
+        global $_REQUEST;
+
+        $html = '<script>' . "\n";
+
+
+        if ($timeout > 0) {
+            $html .= 'setTimeout(function(){ ';
+        }
+
+        $html .= "window.location.href = '" . $url . "';";
+
+        if ($timeout > 0) {
+            $timeout = $timeout * 1000;
+            $html .= '}, ' . $timeout . ');';
+        }
+        $html .= "\n" . '</script>';
+
+        echo $html;
+    }
+
     public function versionUpdate($file)
     {
         include_once($file);
 
-
-        $updates = [
-            'newTable' => $new_table,
-            'updateColumns' => $rename_column,
-            'newColumn' => $new_column,
-            'newData' => $new_data,
-            'updateData' => $update_data,
-        ];
+        $updates = ['newTable' => $new_table, 'updateColumns' => $rename_column, 'newColumn' => $new_column, 'newData' => $new_data, 'updateData' => $update_data,];
 
         foreach ($updates as $classmethod => $data_array) {
             $this->$classmethod($data_array);
@@ -133,11 +91,45 @@ class MediaUpdate
 
         $filename = basename($file);
 
-        if ($this->check_tableExists('updates'))
-        {
+        if ($this->check_tableExists('updates')) {
             $this->newData(["updates" => ["update_filename" => $filename]]);
         } else {
             $this->setSkipFile($file);
+        }
+    }
+
+    public function check_tableExists($table_name = '')
+    {
+        if ($table_name != '') {
+            $this->table_name = $table_name;
+        }
+
+        $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='" . $this->table_name . "'";
+        $result = $this->conn->fetchField($query);
+        return $result;
+    }
+
+    public function newData($new_data)
+    {
+        if (is_array($new_data)) {
+
+            foreach ($new_data as $table => $new_data_vals) {
+
+                $this->conn->query('INSERT INTO ' . $table . ' ?', $new_data_vals);
+                $this->refresh = true;
+            }
+        }
+    }
+
+    public static function setSkipFile($filename)
+    {
+
+        if (!self::skipFile($filename)) {
+            $replacement = '<?php';
+            $replacement .= ' #skip';
+            $__db_string = FileSystem::read($filename);
+            $__db_write = str_replace('<?php', $replacement, $__db_string);
+            FileSystem::write($filename, $__db_write);
         }
     }
 
@@ -152,6 +144,19 @@ class MediaUpdate
                     $this->refresh = true;
                 }
             }
+        }
+    }
+
+    public function set($table_name)
+    {
+        $this->table_name = $table_name;
+    }
+
+    public function create_table($table_name)
+    {
+        $sql_file = FileSystem::normalizePath(__SQLITE_DIR__ . "/default" . '/' . "cwp_table_" . $table_name . ".sql");
+        if (file_exists($sql_file)) {
+            Nette\Database\Helpers::loadFromFile($this->conn, $sql_file);
         }
     }
 
@@ -173,6 +178,19 @@ class MediaUpdate
         }
     }
 
+    public function check_columnExists($column)
+    {
+        $query = "SELECT 1 FROM pragma_table_info('" . $this->table_name . "') where name='" . $column . "'";
+        $result = $this->conn->fetchField($query);
+        return $result;
+    }
+
+    public function rename_column($old, $new)
+    {
+        $query = "ALTER TABLE " . $this->table_name . " RENAME COLUMN '" . $old . "'  TO '" . $new . "';";
+        $result = $this->conn->fetchField($query);
+    }
+
     public function newColumn($new_column)
     {
 
@@ -189,16 +207,10 @@ class MediaUpdate
         }
     }
 
-    public function newData($new_data)
+    public function create_column($column, $type)
     {
-        if (is_array($new_data)) {
-
-            foreach ($new_data as $table => $new_data_vals) {
-
-                $this->conn->query('INSERT INTO ' . $table . ' ?', $new_data_vals);
-                $this->refresh = true;
-            }
-        }
+        $query = "ALTER TABLE " . $this->table_name . " ADD " . $column . " " . $type . ";";
+        $result = $this->conn->fetchField($query);
     }
 
     public function updateData($update_data)
@@ -222,28 +234,6 @@ class MediaUpdate
                 }
             }
         }
-    }
-
-    public static function javaRefresh($url, $timeout = 0)
-    {
-        global $_REQUEST;
-
-        $html = '<script>' . "\n";
-
-
-        if ($timeout > 0) {
-            $html .= 'setTimeout(function(){ ';
-        }
-
-        $html .= "window.location.href = '" . $url . "';";
-
-        if ($timeout > 0) {
-            $timeout = $timeout * 1000;
-            $html .= '}, ' . $timeout . ');';
-        }
-        $html .= "\n" . '</script>';
-
-        echo $html;
     }
 }
 

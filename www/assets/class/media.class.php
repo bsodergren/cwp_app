@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * @property mixed $job_id
+ * @property mixed $pdf_file
+ * @property mixed $xlsx
+ * @property mixed $zip
+ * @property mixed $location
+ * @property mixed $jobNumber
+ */
 class Media
 {
-
-
 
     public function __construct(array $MediaDBRow = [])
     {

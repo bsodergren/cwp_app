@@ -2,7 +2,7 @@
 
 use Nette\Utils\FileSystem;
 
-require_once __INC_CLASS_DIR__ . "/configure.class.php";
+require_once __INC_CLASS_DIR__ . "/MediaUpdate.class.php";
 
 $refresh = false;
 if (!file_exists(__SQLITE_DATABASE__)) {
@@ -12,11 +12,11 @@ if (!file_exists(__SQLITE_DATABASE__)) {
     foreach ($file_tableArray as $k => $sql_file) {
         $table_name = str_replace("cwp_table_", "", basename($sql_file, ".sql"));
         $connection->query("drop table if exists " . $table_name);
-        Nette\Database\Helpers::loadFromFile($connection,  $sql_file);
+        Nette\Database\Helpers::loadFromFile($connection, $sql_file);
     }
 
     unset($sql_file);
-    Nette\Database\Helpers::loadFromFile($connection,  $_default_sql_dir . '/cwp_data.sql');
+    Nette\Database\Helpers::loadFromFile($connection, $_default_sql_dir . '/cwp_data.sql');
     unset($_default_sql_dir);
 
     $refresh = true;

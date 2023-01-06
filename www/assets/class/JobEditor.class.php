@@ -2,16 +2,14 @@
 
 use Nette\Utils\FileSystem;
 
-class Job  extends Media
+class JobEditor
 {
-    private $exp;
-
-    private $mediaLoc;
-
     public $job;
     public $pdf_file;
     public $jobNumber;
     public $job_id;
+    private $exp;
+    private $mediaLoc;
 
     public function __construct($explorer, $job_array)
     {
@@ -24,18 +22,6 @@ class Job  extends Media
         logger("Media Job Info", $job_array, "mediaJobData.log");
 
         $this->mediaLoc = new Location($this->pdf_file, $this->jobNumber);
-    }
-
-    private function deleteFromDatabase($table)
-    {
-        $count = $this->exp->table($table)->where('job_id', $this->job_id)->delete();
-    }
-
-
-    public function delete_form_data()
-    {
-        $this->deleteFromDatabase('form_data');
-        $this->deleteFromDatabase('media_forms');
     }
 
     public function delete_job()
@@ -61,11 +47,22 @@ class Job  extends Media
         }
     }
 
+    public function delete_form_data()
+    {
+        $this->deleteFromDatabase('form_data');
+        $this->deleteFromDatabase('media_forms');
+    }
+
+    private function deleteFromDatabase($table)
+    {
+        $count = $this->exp->table($table)->where('job_id', $this->job_id)->delete();
+    }
+
     public function delete_xlsx()
     {
 
         $data = array('xlsx_exists' => '');
-        $this->exp->table("media_job")->where('job_id',  $this->job_id)->update($data);
+        $this->exp->table("media_job")->where('job_id', $this->job_id)->update($data);
 
 
         if ($this->job['xlsx_exists']) {
@@ -80,7 +77,7 @@ class Job  extends Media
     public function delete_zip()
     {
         $data = array('zip_exists' => '');
-        $this->exp->table("media_job")->where('job_id',  $this->job_id)->update($data);
+        $this->exp->table("media_job")->where('job_id', $this->job_id)->update($data);
 
         if ($this->job['zip_exists']) {
             $zip_directory = $this->mediaLoc->getDirectory('zip');
@@ -92,11 +89,10 @@ class Job  extends Media
     }
 
 
-
     public function update_job_number($job_number)
     {
 
         $data = array('job_number' => $job_number);
-        $this->mediaLoc->exp->table("media_job")->where('job_id',  $this->job_id)->update($data);
+        $this->mediaLoc->exp->table("media_job")->where('job_id', $this->job_id)->update($data);
     }
 }

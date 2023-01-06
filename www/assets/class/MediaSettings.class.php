@@ -1,6 +1,6 @@
 <?php
 
-class mediaSettings
+class MediaSettings
 {
 
     public static function isTrue($define_name)
