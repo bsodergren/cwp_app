@@ -33,3 +33,4 @@ install.cmd
 .webcache
 www/logs/*
 .vscode/*
+.vscode/settings.json

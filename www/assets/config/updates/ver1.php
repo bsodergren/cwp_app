@@ -1,4 +1,4 @@
-<?php #skip 
+<?php 
 $new_table = [];
 $rename_column = ["settings" => ["setting_name" => "definedName"]];
 $new_column = ["settings" => ["setting_name" => "text", "setting_description" => "text"]];

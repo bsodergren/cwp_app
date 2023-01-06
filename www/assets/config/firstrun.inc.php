@@ -1,4 +1,4 @@
-<?php #skip  
+<?php  
 use Nette\Utils\FileSystem;
 
 $initial_conn = new Nette\Database\Connection(__DATABASE_DSN__);

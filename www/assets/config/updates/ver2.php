@@ -1,4 +1,4 @@
-<?php #skip 
+<?php
 
 $rename_column = ["media_job" => [
     "zip_file" => "zip_exists",

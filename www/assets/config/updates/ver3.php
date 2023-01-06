@@ -1,4 +1,4 @@
-<?php #skip
+<?php
 
 $new_data = [
     "settings" => [
