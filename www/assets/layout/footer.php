@@ -1,6 +1,7 @@
 <p>&nbsp;</p>
 </main>
-
+<?php     if (defined('__SHOW_DEBUG_PANEL__')
+&& __SHOW_DEBUG_PANEL__ == 1) { ?>
 <nav class="navbar  fixed-bottom  navbar-expand-md navbar-dark bg-dark shadow-sm p-2">
 	<div class="container">
 			<ul class="navbar-nav">
@@ -18,7 +19,7 @@
 				</ul>
 		</div>
 </nav>
-
+<?php } ?>
 
         <script src="<?php echo __URL_LAYOUT__;?>/js/jquery-3.4.1.min.js"></script>
 
