@@ -4,10 +4,10 @@
         "dpi_aware": true
     },
     "debugging": {
-        "show_console": true,
+        "show_console": false,
         "subprocess_show_console": false,
         "log_level": "info",
-        "log_file": "debug.log"
+        "log_file": ""
     },
     "main_window": {
         "title": "Media Flag Creator",
@@ -40,7 +40,7 @@
         "hide_files": []
     },
     "chrome": {
-        "log_file": "chrome_debug.log",
+        "log_file": "",
         "log_severity": "default",
         "cache_path": ".webcache",
         "external_drag": true,

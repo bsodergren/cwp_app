@@ -138,8 +138,7 @@ class Logger
 
         $s = '';
         $file = $trace[2]['file'];
-        foreach ($trace as $row)
-        {
+        foreach ($trace as $row) {
             $class = '';
             switch ($row['function']) {
                 case __FUNCTION__:
@@ -167,7 +166,7 @@ class Logger
                 default:
 
                     if ($row['class'] != '') {
-                        $class = $row['class'] . $row['type'] ;
+                        $class = $row['class'] . $row['type'];
                     }
                     $s =  $class . $row['function'] . ":" . $s;
                     $file = $row['file'];
@@ -175,14 +174,14 @@ class Logger
             }
         }
         $file = pathinfo($file, PATHINFO_BASENAME);
-        return $file . ":".$lineno.":" . $s;
+        return $file . ":" . $lineno . ":" . $s;
     }
 
 
     public static function log($text, $var = '', $logfile = 'default.log')
     {
 
-        if (defined('__SHOW_DEBUG_PANEL__')) {
+        if (MediaSettings::isTrue('__SHOW_DEBUG_PANEL__')) {
             $function_list = self::get_caller_info();
             $errorLogFile = __ERROR_LOG_DIRECTORY__ . "/" . $logfile;
 
@@ -197,7 +196,7 @@ class Logger
                 $html_var = $var;
             }
             //$html_var = htmlentities($html_var);
-           // $html_var = '<pre>' . $html_var . '</pre>';
+            // $html_var = '<pre>' . $html_var . '</pre>';
 
             $html_string = json_encode([
                 'TIMESTAMP' => DateTime::from(null),
@@ -206,44 +205,44 @@ class Logger
                 'MSG_VALUE' => $html_var,
             ]);
 
-            Log::append($errorLogFile, $html_string."\n");
+            Log::append($errorLogFile, $html_string . "\n");
         }
     }
 
 
 
-public static function printCode($array, $path = FALSE, $top = TRUE)
-{
-    $data = "";
-    $delimiter = "~~|~~";
+    public static function printCode($array, $path = FALSE, $top = TRUE)
+    {
+        $data = "";
+        $delimiter = "~~|~~";
 
-    $p = NULL;
-    if(is_array($array)) {
-        foreach($array as $key => $a) {
-            if(!is_array($a) || empty($a)) {
-                if(is_array($a)) {
-                    $data .= $path . "['{$key}'] = array();" . $delimiter;
+        $p = NULL;
+        if (is_array($array)) {
+            foreach ($array as $key => $a) {
+                if (!is_array($a) || empty($a)) {
+                    if (is_array($a)) {
+                        $data .= $path . "['{$key}'] = array();" . $delimiter;
+                    } else {
+                        $data .= $path . "['{$key}'] = \"" . htmlentities(addslashes($a)) . "\";" . $delimiter;
+                    }
                 } else {
-                    $data .= $path . "['{$key}'] = \"" . htmlentities(addslashes($a)) . "\";" . $delimiter;
+                    $data .= self::printCode($a, $path . "['{$key}']", FALSE);
                 }
-            } else {
-                $data .= self::printCode($a, $path . "['{$key}']", FALSE);
             }
         }
-    }
 
-    if($top) {
-        $return = "";
-        foreach(explode($delimiter, $data) as $value) {
-            if(!empty($value)) {
-                $return .= '$array' . $value . "<br>";
-            }
-        };
-        return $return;
-    }
+        if ($top) {
+            $return = "";
+            foreach (explode($delimiter, $data) as $value) {
+                if (!empty($value)) {
+                    $return .= '$array' . $value . "<br>";
+                }
+            };
+            return $return;
+        }
 
-    return $data;
-}
+        return $data;
+    }
 }
 
 function logger($text, $var = '', $logfile = 'default.log')

@@ -167,10 +167,8 @@ function get_drop_form_data($job_id,$form_number='',$sort=array())
 
 	$sql = "SELECT `f`.`id`,`f`.`job_id`,`f`.`form_number`,`f`.`form_letter`,`f`.`market`,`f`.`pub`,`f`.`count`,`f`.`ship`,`f`.`former`,`f`.`face_trim`,`f`.`no_bindery`,`m`.`job_number`, `m`.`pdf_file` FROM `form_data` f, `media_job` m WHERE ( `f`.`job_id` = ".$job_id ." and `m`.`job_id` = ".$job_id . $FORM_SEQ ." ) " . $sort_query ;
 
-	bdump($sql,"SQL Query ");
 
 	$result = $connection->fetchAll($sql);
-	bdump($result,"SQL result ");
 
     return $result;
 }

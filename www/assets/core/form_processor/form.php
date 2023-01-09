@@ -6,7 +6,6 @@ $break = false;
 
 if ($_POST["submit"] == "Edit")
 {
-
     require_once(__PROCESS_DIR__ . "/form_edit.php");
 
    // define("REFRESH_URL", __URL_HOME__ . "/edit_form.php?job_id=" . $_REQUEST['job_id'] . "&form_number=" . $_REQUEST['form_number'] . "");

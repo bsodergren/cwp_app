@@ -4,14 +4,15 @@ require_once(".config.inc.php");
 $deleted_id = 0;
 
 define("REFRESH_URL", "/index.php");
-/*
+logger("REquest", $_REQUEST,"formEdit.log");
+
 $job_id=$_REQUEST['job_id'];
 $form_number=$_REQUEST['form_number'];
 
 if(key_exists("cancel",$_REQUEST))
 {
 	$form_number--;
-	myHeader(__URL_HOME__."/form.php?job_id=".$job_id."&form_number=".$form_number."");  
+//	myHeader(__URL_HOME__."/form.php?job_id=".$job_id."&form_number=".$form_number."");  
 	exit;
 }
 
@@ -20,6 +21,8 @@ if(key_exists("submit",$_REQUEST))
 {
 	 foreach ($_REQUEST as $key => $value )
 	 {
+		logger("REquest $key", $value,"formEdit.log");
+
 		if ($key == "job_id") { continue; }
 		if ($key == "form_number") { continue; }
 		if ($key == "submit") { continue; }
@@ -82,21 +85,38 @@ if(key_exists("submit",$_REQUEST))
 		}
 	}
 	
-	$form_number--;
-	myHeader(__URL_HOME__."/form.php?job_id=".$job_id."&form_number=".$form_number."");  
+	//$form_number--;
+//	myHeader(__URL_HOME__."/form.php?job_id=".$job_id."&form_number=".$form_number."");  
 	//include __LAYOUT_FOOTER__;
 	
-	exit;
+//	exit;
 }
+logger("Dpo we make it here", $job_id,"formEdit.log");
+logger("Dpo we make it here", $form_number,"formEdit.log");
 
 define('TITLE', "Media Job editor");
 include __LAYOUT_HEADER__;
 //
 $form_url = __URL_PATH__."/edit_form.php";
 
-$db->where ("job_id", $job_id);
-$db->where ("form_number", $form_number);
-$form_row = $db->get("form_data");
+
+
+function toArray($obj) {
+    $vars = get_object_vars ( $obj );
+    $array = array ();
+    foreach ( $vars as $key => $value ) {
+        $array [ltrim ( $key, '_' )] = $value;
+    }
+    return $array;
+}
+$var = get_drop_form_data($job_id, $form_number,["SORT_FORMER"=>1,"SORT_LETTER"=>1]);
+
+
+foreach($var as $obj){
+    $form_row[] =  toArray($obj);
+
+   
+}
     
 $check_back = "";
 $check_front = "";
@@ -125,6 +145,7 @@ $check_front = "";
 <?
 foreach ($form_row as $idx => $row) 
 {
+	logger("form data",$row,"formEdit.log");
 	$classFront="Front".$row['form_letter'];
 	$classBack="Back".$row['form_letter'];
 	
@@ -175,6 +196,6 @@ foreach ($form_row as $idx => $row)
 
 <?php
 include __LAYOUT_FOOTER__;
-
+/*
 */
 ?>
