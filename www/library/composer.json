@@ -4,9 +4,9 @@
         "phpoffice/phpspreadsheet": "^1.24",
         "monolog/monolog": "^3.2",
         "formr/formr": "^1.4",
-        "tracy/tracy": "^2.9",
         "nette/utils": "^3.2",
         "nette/database": "^3.1",
-        "nette/robot-loader": "^3.4"
+        "nette/robot-loader": "^3.4",
+        "tracy/tracy": "^2.9"
     }
 }

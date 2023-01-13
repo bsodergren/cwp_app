@@ -1,18 +1,15 @@
-
 <?php
-
 
 class Template
 {
     public $html = '';
 
 
-    public static function echo($template='',$array='')
+    public static function echo($template = '', $array = '')
     {
         $template_obj = new Template();
-        $template_obj->template($template,$array);
+        $template_obj->template($template, $array);
         return $template_obj->html;
-        
     }
 
     public function callback_replace($matches)
@@ -20,27 +17,26 @@ class Template
         return "";
     }
 
-    public function clear(){
+    public function clear()
+    {
         $this->html = '';
     }
 
-    public function return($template='',$array='')
+    public function return($template = '', $array = '')
     {
-        if($template)
-        {
-            $this->template($template,$array);
+        if ($template) {
+            $this->template($template, $array);
         }
-        
+
         $html = $this->html;
         $this->clear();
         return $html;
     }
 
-    public function render($template='',$array='')
+    public function render($template = '', $array = '')
     {
-        if($template)
-        {
-            $this->template($template,$array);
+        if ($template) {
+            $this->template($template, $array);
         }
 
         $html = $this->html;
@@ -49,37 +45,33 @@ class Template
     }
 
 
-    public function template($template, $replacement_array='')
+    public function template($template, $replacement_array = '')
     {
-   
 
-        $template_file=__TEMPLATE_DIR__."/".$template.".html";
+
+        $template_file = __TEMPLATE_DIR__ . "/" . $template . ".html";
 
         if (!file_exists($template_file)) {
             //use default template directory
             $html_text = "<h1>NO TEMPLATE FOUND<br>";
-            $html_text .= "FOR <pre>".$template."</pre></h1> <br>";
+            $html_text .= "FOR <pre>" . $template . "</pre></h1> <br>";
 
             $this->html .= $html_text;
         }
-            $html_text = file_get_contents($template_file);
+        $html_text = file_get_contents($template_file);
 
         if (is_array($replacement_array)) {
             foreach ($replacement_array as $key => $value) {
-               // $value = "<!-- $key --> \n".$value;
-                $key = "%%".strtoupper($key)."%%";
+                // $value = "<!-- $key --> \n".$value;
+                $key = "%%" . strtoupper($key) . "%%";
                 $html_text = str_replace($key, $value, $html_text);
             }
 
             $html_text = preg_replace_callback('|(%%\w+%%)|', array($this, "callback_replace"), $html_text);
         }
 
-      //  $html_text = "<!-- start $template --> \n" . $html_text . "\n";
+        //  $html_text = "<!-- start $template --> \n" . $html_text . "\n";
         $this->html .= $html_text;
         return $this->html;
     }
-
-
-
-
 }

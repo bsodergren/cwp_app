@@ -4,7 +4,7 @@ require_once(".config.inc.php");
 $job_id=$_REQUEST['job_id'];
 
 $job  = $connection->fetch('SELECT * FROM media_job WHERE job_id = ?', $job_id);
-$media = new Media($explorer,$job);
+$media = new Media($job);
 
 if(key_exists("actSubmit",$_REQUEST))
 {
@@ -14,6 +14,7 @@ if(key_exists("actSubmit",$_REQUEST))
 		$media->delete_zip();
 		$media->delete_xlsx();   		
 		$media->delete_job();
+
 	}
 
 	echo   JavaRefresh(__URL_PATH__."/index.php");
@@ -37,7 +38,7 @@ $form_url = __URL_PATH__."/delete_job.php";
 		$form = new Formr\Formr();
 		$hidden = [	"job_id" => $job_id ];				
 		$form->open("",'',$form_url ,'post','',$hidden);
-		echo output("Are you sure you want to delete this job <br>");
+		echo HTMLDisplay::output("Are you sure you want to delete this job <br>");
 		$form->input_submit('actSubmit','',"Go Back",'','class="button"');
 
 		$form->input_submit('actSubmit','',"confirm",'','class="button"');

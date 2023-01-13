@@ -3,7 +3,6 @@ require_once('.config.inc.php');
 use Nette\Utils\FileSystem;
 
 define("REFRESH_TIMEOUT", 5);
-
 $error=false;
 // Store errors here
 $fileExtensionsAllowed = ['pdf'];
@@ -24,13 +23,13 @@ if (isset($_FILES['the_file'])) {
 
 if (isset($_POST['submit'])) {
     if (!in_array($fileExtension, $fileExtensionsAllowed)) {
-        output('This file extension is not allowed. Please upload a JPEG or PNG file');
+        HTMLDisplay::output('This file extension is not allowed. Please upload a JPEG or PNG file');
         define("REFRESH_URL", 'import.php');
         $error=true;
     }
 
     if ($fileSize > 4000000000) {
-        output('File exceeds maximum size (40MB)');
+        HTMLDisplay::output('File exceeds maximum size (40MB)');
         define("REFRESH_URL", 'import.php');
         $error=true;
     }
@@ -59,16 +58,16 @@ if (isset($_POST['submit'])) {
 
                 $process = proc_open($cmd, $descriptorspec, $pipes);
 
-                output('Waiting for PDF for finish');
+                HTMLDisplay::output('Waiting for PDF for finish');
                 sleep(5);            
 
-                output('The file ' . basename($fileName) . ' has been uploaded <br>');
-                output('Job number ' . $_POST['job_number'] . '<br>');
+                HTMLDisplay::output('The file ' . basename($fileName) . ' has been uploaded <br>');
+                HTMLDisplay::output('Job number ' . $_POST['job_number'] . '<br>');
             } else {
-                output('An error occurred. Please contact the administrator.');
+                HTMLDisplay::output('An error occurred. Please contact the administrator.');
             } //end if
         } else {
-            output("File already was uploaded<br>\n");
+            HTMLDisplay::output("File already was uploaded<br>\n");
         } //end if
 
         $val = $explorer->table('media_job')->where('pdf_file', $pdf_file)->select('job_id');
@@ -78,12 +77,12 @@ if (isset($_POST['submit'])) {
 
         $job_id = '';
         if ($job_id == '') {
-            $return = add_new_media_drop($pdf_file, $_POST['job_number']);
+            $MediaImport = new MediaImport($pdf_file, $_POST['job_number']);
 
-            if ($return < 1) {
-                output("<span class='p-3 text-danger'>File failed to process</span> <br>");
-                output("<span class='p-3 text-danger'>Will have to run Refresh Import </span><br>");
-                output(' Click on <a href="' . __URL_PATH__ . '/index.php">Home</a> to Continue <br>');
+            if ($MediaImport->status < 1) {
+                HTMLDisplay::output("<span class='p-3 text-danger'>File failed to process</span> <br>");
+                HTMLDisplay::output("<span class='p-3 text-danger'>Will have to run Refresh Import </span><br>");
+                HTMLDisplay::output(' Click on <a href="' . __URL_PATH__ . '/index.php">Home</a> to Continue <br>');
             }
         }
     }

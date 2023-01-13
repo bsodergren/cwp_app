@@ -14,15 +14,7 @@ class MediaUpdate
         $this->conn = $db_conn;
     }
 
-    public static function echo($value, $exit = 0)
-    {
 
-        echo '<pre>' . var_export($value, 1) . '</pre>';
-
-        if ($exit == 1) {
-            exit;
-        }
-    }
 
     public static function get_filelist($directory, $ext = 'log', $skip_files = 0)
     {
@@ -55,28 +47,6 @@ class MediaUpdate
         $line = fgets($f);
         fclose($f);
         return strpos($line, '#skip');
-    }
-
-    public static function javaRefresh($url, $timeout = 0)
-    {
-        global $_REQUEST;
-
-        $html = '<script>' . "\n";
-
-
-        if ($timeout > 0) {
-            $html .= 'setTimeout(function(){ ';
-        }
-
-        $html .= "window.location.href = '" . $url . "';";
-
-        if ($timeout > 0) {
-            $timeout = $timeout * 1000;
-            $html .= '}, ' . $timeout . ');';
-        }
-        $html .= "\n" . '</script>';
-
-        echo $html;
     }
 
     public function versionUpdate($file)
@@ -236,4 +206,3 @@ class MediaUpdate
         }
     }
 }
-

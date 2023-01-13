@@ -60,6 +60,6 @@ if (count($updates_array) >= 1) {
 }
 
 if ($refresh == true) {
-    mediaUpdate::javaRefresh("index.php", 0);
+    HTMLDisplay::javaRefresh("index.php", 0);
     ob_flush();
 }

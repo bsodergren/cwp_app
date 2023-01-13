@@ -1,17 +1,16 @@
 <?php
 require_once(".config.inc.php");
-
-define("REFRESH_TIMEOUT", 0);
 $break = false;
-
 if ($_POST["submit"] == "Edit")
 {
-    require_once(__PROCESS_DIR__ . "/form_edit.php");
+  //  require_once(__PROCESS_DIR__ . "/form_edit.php");
 
-   // define("REFRESH_URL", __URL_HOME__ . "/edit_form.php?job_id=" . $_REQUEST['job_id'] . "&form_number=" . $_REQUEST['form_number'] . "");
+    define("REFRESH_URL", __URL_HOME__ . "/form_edit.php?job_id=" . $_REQUEST['job_id'] . "&form_number=" . $_REQUEST['form_number'] . "");
+    define("REFRESH_TIMEOUT", 0);
     $break = true;
 
 } else {
+    define("REFRESH_TIMEOUT", 0);
     foreach ($_REQUEST as $key => $value) {
         $break = false;
         if (str_starts_with($key, "former")) {

@@ -63,24 +63,31 @@ define('__URL_HOME__', 'http://' . $_SERVER['HTTP_HOST'] . __URL_PATH__);
 define('__URL_LAYOUT__', __URL_HOME__ . __LAYOUT_DIR__);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __COMPOSER_DIR__);
-require_once __COMPOSER_DIR__ . '/autoload.php';
+require __COMPOSER_DIR__ . '/autoload.php';
+
+use Tracy\Debugger;
+use Nette\Utils\FileSystem;
+
 require_once __ASSETS_DIR__ . "/configure.inc.php";
-require_once __ASSETS_DIR__ . "/includes.inc.php";
 require_once __ASSETS_DIR__ . "/settings.inc.php";
+require_once __ASSETS_DIR__ . "/includes.inc.php";
 
 logger("Start of file",'',"start.log");
 
-use Nette\Utils\FileSystem;
-use Tracy\Debugger;
-
 if (mediaSettings::isTrue('__SHOW_TRACY__')) {
+
+
     Debugger::enable();
     Debugger::$dumpTheme    = 'dark';
     //        Debugger::$editor = null;.
     //        Debugger::$strictMode =  ~E_DEPRECATED | E_WARNING;
     Debugger::$showLocation = (Tracy\Dumper::LOCATION_CLASS | Tracy\Dumper::LOCATION_LINK);
+
     Debugger::$showBar = 1;
+    
 }
+
+
 
 if (!function_exists('dump')) {
     function dump($var)

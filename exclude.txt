@@ -9,5 +9,3 @@ D:\development\cwp_app\chrome_debug.log
 D:\development\cwp_app\cwp.app.iss
 D:\development\cwp_app\debug.log
 D:\development\cwp_app\open-editor.js
-D:\development\cwp_app\excludes.txt 
-D:\development\cwp_app\install_cmd.bat

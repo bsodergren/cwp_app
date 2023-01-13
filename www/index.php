@@ -12,14 +12,14 @@ logger("Test Message");
 if ($cnt > 0) {
 	foreach ($results as $k => $row) {
 		unset($replacement);
-		$media = new Media($explorer, $row);
+		$media = new Media($row);
 		$mediaDir = new MediaFileSystem($media->pdf_file, $media->job_number);
 
 		$url = __URL_HOME__ . "/form.php?job_id=" . $row['job_id'];
 
 		$text_close = basename($row['pdf_file'], ".pdf");
 
-		$text_job = "Job Number: " . $row['job_number'];
+		$text_job =  $row['job_number'];
 		$form = new Formr\Formr('', 'hush');
 
 		$hidden = ["job_id" => $row['job_id']];
@@ -41,6 +41,8 @@ if ($cnt > 0) {
 		}
 
 		$replacement['TEXT_JOB'] = $text_job;
+		$replacement['JOB_ID'] = $row['job_id'];
+
 		$replacement['TEXT_CLOSE'] = $text_close;
 		$replacement['NUM_OF_FORMS'] = $num_of_forms;
 

@@ -24,6 +24,53 @@
 
 
         <script type="text/javascript">
+
+
+document.querySelectorAll("#job_number").forEach(function(node){
+	node.ondblclick=function(){
+		var val=this.innerHTML;
+    let n = this.attributes[1].nodeValue; //[1].name;
+
+//console.log(n);
+
+  var hidden=document.createElement("input");
+  hidden.value="update_job";
+  hidden.name="update_job";
+  hidden.type = "hidden";
+
+  var input=document.createElement("input");
+		input.value=val;
+    input.name='job_number';
+//    input.
+    //input.name=
+
+    input.onchange=function(){
+      //let f = document.getElementById("form");
+
+      let elements = document.querySelectorAll("#process");
+
+      elements.forEach(e => {
+      //console.log(element);
+        e.remove();
+
+     // element.style.backgroundColor = "yellow";
+})
+      this.form.submit();
+    }
+
+		input.onblur=function(){
+			var val=this.value;
+			this.parentNode.innerHTML=val;
+		}
+		this.innerHTML="";
+    this.appendChild(hidden);
+		this.appendChild(input);
+		input.focus();
+	}
+});
+
+
+
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {
   boundary: document.body // or document.querySelector('#boundary')

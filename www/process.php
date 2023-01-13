@@ -6,10 +6,6 @@ ob_implicit_flush(true);
 require('.config.inc.php');
 
 define('__FORM_POST__', basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), '.php'));
-
-logger("Form Posted from ", __FORM_POST__, "process.log");
-logger("POST Data ", $_POST, "process.log");
-
 define('TITLE', '');
 if (
     __FORM_POST__ == __SCRIPT_NAME__ ||
@@ -25,6 +21,7 @@ if (isset($_POST['FORM_PROCESS'])) {
     $FORM_PROCESS =  $_POST['FORM_PROCESS'];
     unset($_POST['FORM_PROCESS']);
 }
+
 
 
 switch (__FORM_POST__) {
@@ -53,8 +50,14 @@ switch (__FORM_POST__) {
     case "index":
         require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
         break;
+
+    case "form_edit":
+        require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
+        break;
     default:
+        dump(__FORM_POST__);
         dump($_POST);
+        exit;
         break;
 }
 

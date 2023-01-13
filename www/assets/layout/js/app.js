@@ -75,3 +75,47 @@ function popup(mylink, windowname,width=800,height=400)
    window.open(href, windowname, 'width='+width+',height='+height+',scrollbars=yes'); 
    return false; 
 } 
+
+function editPlaceholder(id) {
+  var x = document.getElementById(id).placeholder;
+
+   if (x !== "") {
+    document.getElementById(id).value = x;
+    document.getElementById(id).style = "background:white";
+
+  }
+}
+
+function hideSubmit(id,text)
+{
+
+  
+  console.log(id);
+
+  document.getElementById('hiddenSubmit_'+id).value = text; 
+}
+
+function doSubmitValue(id)
+{
+  document.getElementById(id).value = id;
+}
+
+function editRadioValue(id)
+{
+
+      document.getElementById(id).value = "1";
+    
+}
+
+function checkValue(id) {
+    var ph = document.getElementById(id).placeholder;
+    var n =  document.getElementById(id).value;
+
+
+    if (ph == n) {
+        document.getElementById(id).value = "";
+    } else {
+      document.getElementById(id).style = "background:white";
+    }
+  }
+  
