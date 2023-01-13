@@ -3,6 +3,8 @@
 use Nette\Utils\FileSystem;
 use Nette\Utils\DateTime;
 
+require_once __INC_CLASS_DIR__ . "/Template.class.php";
+
 class HTMLDisplay
 {
 

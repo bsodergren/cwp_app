@@ -1,33 +1,38 @@
 <?php
+
 use Nette\Utils\FileSystem;
 
 $job_id = $_REQUEST['job_id'];
 $job  = $connection->fetch('SELECT * FROM media_job WHERE job_id = ?', $job_id);
 $media = new Media($job);
 
-if(key_exists('update_job',$_REQUEST))
-{
+if (key_exists('update_job', $_REQUEST)) {
 
     $media->delete_xlsx();
     $media->delete_zip();
 
     $job_number = $_REQUEST['job_number'];
-    $mediaLoc = new MediaFileSystem($media->pdf_file, $job_number );
+    $mediaLoc = new MediaFileSystem($media->pdf_file, $job_number);
     $mediaLoc->getDirectory();
 
-    filesystem::rename($media->base_dir, $mediaLoc->directory);
+    try {
+        if (filesystem::rename($media->base_dir, $mediaLoc->directory) == false) {
+            throw new Nette\IOException;
+        }
+    } catch (Nette\IOException $e) {
+        $msg = $e->getMessage();
+    }
 
-    $media->update_job_number($job_number);
+    if ($msg == '') {
 
-    echo JavaRefresh("/index.php",0);
-/*
-
-    $this->mediaLoc = new MediaFileSystem($this->pdf_file, $this->job_number);
-    $this->mediaLoc->getDirectory()
-*/
-
-exit;
-
+        $media->update_job_number($job_number);
+        echo JavaRefresh("/index.php", 0);
+    } else {
+        echo "There was a problem <br> " . $msg;
+        echo JavaRefresh("/index.php", 15);
+        exit;
+    }
+    exit;
 }
 
 foreach ($_REQUEST as $key => $value) {
@@ -77,8 +82,6 @@ foreach ($_REQUEST as $key => $value) {
         case  "delete_job":
             define('REFRESH_URL', __URL_PATH__ . "/delete_job.php?job_id=" . $job_id);
             break;
-
-        
     }
 }
 
