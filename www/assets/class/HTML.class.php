@@ -39,53 +39,6 @@ class HTMLDisplay
 
 
 
-
-
-    public function create_form($url, $method, $input)
-    {
-
-        $html = '';
-        $html .= '<form action="' . $url . '" method="' . $method . '">' . "\n";
-        $html .= $input;
-        $html .= "</form>\n";
-        self::output($html);
-    }
-
-
-    public function add_submit_button($name, $value, $attributes = '')
-    {
-        $html = '';
-        $html .= '<input ' . $attributes . ' type="submit" name="' . $name . '"  value="' . $value . '">';
-        return $html . "\n";
-    }
-
-    public function add_hidden($name, $value, $attributes = '')
-    {
-        $html = '';
-        $html .= '<input ' . $attributes . ' type="hidden" name="' . $name . '"  value="' . $value . '">';
-        return $html . "\n";
-    }
-
-    public function draw_link($url, $text, $attributes = '', $return = true)
-    {
-
-        $html = '';
-        $html .= '<a ' . $attributes . '  href="' . $url . '">' . $text . '</a>';
-        if ($return == true) {
-            return $html . "\n";
-        } else {
-            self::output($html);
-        }
-    }
-
-
-    public function draw_textbox($name, $value, $attributes = '')
-    {
-        $html = '';
-        $html .= '<input ' . $attributes . ' type="text" name="' . $name . '" placeholder="' . $value . '" value="' . $value . '">';
-        return $html;
-    }
-
     public function draw_checkbox($name, $value, $text = 'Face Trim')
     {
         global $pub_keywords;
@@ -115,6 +68,8 @@ class HTMLDisplay
         // $html = $html . "<br>"."\n";
         return $html;
     }
+
+    
 }
 
 

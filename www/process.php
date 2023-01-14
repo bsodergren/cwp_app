@@ -11,7 +11,8 @@ if (
     __FORM_POST__ == __SCRIPT_NAME__ ||
     __FORM_POST__ == ''
 ) {
-    define("REFRESH_URL", "/index.php");
+    echo JavaRefresh('/index.php',0);
+    exit;
 }
 
 

@@ -2,271 +2,283 @@
 
 use Nette\Utils\Strings;
 
-
-
 class PDFImport extends MediaImport
 {
 
-    public $form;
+	public $form =  array();
+	public $job_id;
 
-    public function __construct($pdf_file, $media_job_id)
-    {
-    
-        $type = '';
-        $form =  array();
-        $parser = new \Smalot\PdfParser\Parser();
-    
-        $pdf    = $parser->parseFile($pdf_file);
-    
-        $pages  = $pdf->getPages();
-    
-        foreach ($pages as $page) {
-              unset($page_text);
-    
-            $text = $page->getDataTm();
-    
-            foreach ($text as $n => $row) {
-                $page_text[$n] = $row[1];
-            }
-    
-            //	dump($page_text);
-            $page_count = count($page_text);
-    
-            unset($letter);
-            unset($peices);
-            unset($form_number_array);
-            unset($form_number);
-            unset($form_rows);
-    
-            $next_form = false;
-    
-            for ($idx = 0; $idx <= $page_count; $idx++) {
-    
-                $line = trim($page_text[$idx]);
-    
-    
-                if ($next_form == false) {
-                    if (str_contains($line, "PRODUCTION CLOSE")) {
-                        $printer_peices = explode(":", $line);
-                    }
-                    if (str_contains($line, "Run#")) {
-                        $form_peices = explode("Run#", $line);
-                        $form_number = trim($form_peices[1]);
-                    }
-    
-                    if (str_contains($line, "Count")) {
-                        $peices = explode(":", $line);
-                        $form[$form_number]["details"]["count"] = toint(trim($peices[1]));
-                    }
-    
-                    if (str_contains($line, "Config")) {
-                        $peices = explode(":", $line);
-                        $type = str_replace(" ", "", $peices[1]);
-                        $type = $this->getPageCount($type);
-                        $form[$form_number]["details"]["config"] = trim($type);
-                    }
-    
-                    if (str_contains($line, "Bind Type")) {
-                        $peices = explode(":", $line);
-                        $type = str_replace(" ", "", $peices[1]);
-                        $form[$form_number]["details"]["bind"] = trim($type);
-                    }
-    
-    
-                    if (isset($form_number)) {
-    
-                        $form[$form_number]["details"]["product"] = trim(str_replace("PRINTER", "", $printer_peices[1]));
-                        $form[$form_number]["details"]["job_id"] = $media_job_id;
-                        $form[$form_number]["details"]["form_number"] = $form_number;
-                    }
-                    if (isset($type) && $type == "sheeter") {
-                        if (isset($form_number)) {
-                            unset($form[$form_number]);
-                            unset($form_number);
-                            unset($type);
-                            $next_form = true;
-                        }
-    
-                        continue;
-                    }
-                }
-            }
-    
-    
-    
-    
-            if ($next_form == false && isset($form_number)) {
-    
-                for ($idx = 0; $idx <= $page_count; $idx++) {
-    
-                    $line = trim($page_text[$idx]);
-                    $res = $this->find_first($form_number, $idx, $page_text);
-                    $res2 = $this->find_end($form_number, $res, $page_text);
-                    $form_number_array[] = $res2;
-                    //$letter_idx = key($res2);
-                    $r_letter = key($res2);
-                    $idx = $res2[$r_letter]['stop'] + 1;
-                }
-    
-    
-                foreach ($form_number_array as $l_idx => $letter_array) {
-    
-                    $letter = key($letter_array);
-    
-                    $start = $letter_array[$letter]['start'];
-                    $stop = $letter_array[$letter]['stop'];
-    
-                    $form_rows[$letter] = $this->row_data($start, $stop, $page_text);
-                }
-                $form[$form_number]['forms'] = $form_rows;
-            //	dump($page_text);
-    
-                unset($letter);
-                unset($peices);
-                unset($form_number_array);
-                unset($form_number);
-                unset($form_rows);
-            }
-        }
-    
-         $this->form = $form;
-    }
-    
-    
-public function find_first($form_number, $start, $array)
-{
-	$result = [];
-	$row_count = count($array);
+	public function __construct($pdf_file = '', $media_job_id = '')
+	{
 
-	for ($idx = $start; $idx <= $row_count; $idx++) {
-		$line = trim($array[$idx]);
-		if (Strings::contains($line, '#' . $form_number)) {
-			$peices = explode("#" . $form_number, $line);
-			$letter = str_replace(',', '', $peices[1]);
-			$result = [$letter => ['start' => $idx + 1]];
-			break;
+		if ($media_job_id != '') {
+			$this->job_id = $media_job_id;
 		}
-	}
-	return $result;
-}
 
-public function find_end($form_number, $start_array, $array)
-{
-	$result = [];
+		if (file_exists($pdf_file)) 
+		{
+			$parser = new \Smalot\PdfParser\Parser();
+			$pdf    = $parser->parseFile($pdf_file);
+			$pages  = $pdf->getPages();
+			foreach ($pages as $page) {
+				$page_text = [];
 
-	$row_count = count($array);
-	$letter = key($start_array);
+				$text = $page->getDataTm();
 
-	$start_row = $start_array[$letter]['start'] + 1;
-	$start_array[$letter]['stop'] = $row_count - 1;
-
-	for ($idx = $start_row; $idx <= $row_count; $idx++) {
-		$line = trim($array[$idx]);
-		if (Strings::contains($line, '#' . $form_number)) {
-			$peices = explode("#" . $form_number, $line);
-			$t_letter = str_replace(',', '', $peices[1]);
-
-			for ($tdx = $idx; $tdx > $start_row; $tdx--) {
-				$t_line = trim($array[$tdx]);
-				$t_line = str_replace(',', '', $t_line);
-				if ($t_letter == $t_line) {
-					$start_array[$letter]['stop'] = $tdx - 1;
-					return $start_array;
+				foreach ($text as $n => $row) {
+					$page_text[$n] = $row[1];
 				}
+
+				$this->parse_page($page_text);
 			}
 		}
 	}
-	return $start_array;
-}
 
+	
+	
+	public function parse_page($page_text)
+	{
 
-public function row_data($start, $stop, $page_text)
-{
-	$tip = ' ';
-	if (((($stop + 1) - $start)  % 4) == 0) {
-		$break = 3;
-	} else if (((($stop + 1) - $start)  % 5) == 0) {
-		$break = 4;
-	}
+		$page_count = count($page_text);
 
-	$r = 0;
-	$i = 0;
-	for ($idx = $start; $idx <= $stop; $idx++) {
-		//		  HTMLDisplay::echo ($r. ":".$page_text[$idx]);
-		switch ($r) {
-			case 0:
-				$market = $page_text[$idx];
-				break;
-			case 1:
-				$pub = $page_text[$idx];
-				break;
-			case 2:
-				$count = str_replace(',', '',$page_text[$idx]);
-				break;
-			case 3:
-				$ship = $page_text[$idx];
-				break;
-			case 4:
-				$tip = $page_text[$idx];
-				break;
+		$form_number = $this->find_key("run#",  $page_text);
+		$config_type = $this->find_key("config",  $page_text);
+
+		if (isset($config_type) && $config_type == "sheeter") {
+
+			return;
 		}
 
-		if ($r < $break) {
-			$r++;
-		} else {
+		if (isset($form_number)) {
 
-			$row_array = [
+			$this->form[$form_number]["details"]["config"] = $config_type;
+			$this->form[$form_number]["details"]["bind"] = $this->find_key("bind",  $page_text);
+
+			$this->form[$form_number]["details"]["count"] = Utils::toint($this->find_key("count",  $page_text));
+
+			$this->form[$form_number]["details"]["product"] = $this->find_key("production",  $page_text);
+			$this->form[$form_number]["details"]["job_id"] = $this->job_id;
+			$this->form[$form_number]["details"]["form_number"] = $form_number;
+
+			for ($idx = 0; $idx <= $page_count; $idx++) {
+				if (!isset($res)) {
+					$res = $this->find_first($form_number, $idx, $page_text);
+					$current_key = key($res);
+					$idx = $res[$current_key]['start'];
+				} else {
+					$res2 = $this->find_end($form_number, $res, $page_text);
+					$form_number_array[] = $res2;
+					$r_letter = key($res2);
+					$idx = $res2[$r_letter]['stop'] + 1;
+					unset($res);
+				}
+			}
+
+			foreach ($form_number_array as $_ => $letter_array) {
+
+				$letter = key($letter_array);
+
+				$start = $letter_array[$letter]['start'];
+				$stop = $letter_array[$letter]['stop'];
+
+				$form_rows[$letter] = $this->row_data($start, $stop, $page_text);
+			}
+
+			$this->form[$form_number]['forms'] = $form_rows;
+		}
+	}
+
+
+	public function find_key($needle, $haystack, $value = '', $strict = false)
+	{
+
+		if ($value == '') {
+			$value = strtolower($needle);
+		}
+
+		foreach ($haystack as $k => $item) {
+			if ($strict == true) {
+				$item = str_replace(',', '', $item);
+				if ($value == 'letter') {
+					preg_match('/[ABCD,]+([ ]{1,})/', $item, $matches);
+					if ($matches[0] == true) {
+						$search = true;
+					} else {
+						$search = false;
+					}
+				} else {
+					$search = str_starts_with(strtolower($item), strtolower($needle));
+				}
+			} else {
+				$search = strpos(strtolower($item), strtolower($needle));
+			}
+
+			if ($search  !== FALSE) {
+				switch ($value) {
+					case 'run#':
+						$form_peices = explode("Run#", $item);
+						return trim($form_peices[1]);
+						break;
+
+					case "production":
+						$printer_peices = explode(":", $item);
+						return trim(str_replace("PRINTER", "", $printer_peices[1]));
+						break;
+
+					case 'count':
+						$peices = explode(":", $item);
+						return Utils::toint(trim($peices[1]));
+						break;
+
+					case 'config':
+						$peices = explode(":", $item);
+						$type = str_replace(" ", "", $peices[1]);
+						$type = $this->getPageCount($type);
+						return trim($type);
+						break;
+
+
+					case 'bind':
+						$peices = explode(":", $item);
+						$type = str_replace(" ", "", $peices[1]);
+						return trim($type);
+						break;
+
+
+					case 'letter':
+						return $k;
+						break;
+					case 'key':
+						return $k;
+						break;
+				}
+				break;
+			}
+		}
+	}
+
+
+	public function find_first($form_number, $start, $array)
+	{
+		$result = [];
+		$row_count = count($array);
+		$array = array_slice($array, $start, $row_count, true);
+
+		$key = $this->find_key('#' . $form_number, $array, 'key');
+
+		if ($key) {
+			$peices = explode("#" . $form_number, $array[$key]);
+			$letter = str_replace(',', '', $peices[1]);
+
+			$result = [$letter => ['start' => $key + 1]];
+			return $result;
+		}
+	}
+
+	public function find_end($form_number, $start_array, $array)
+	{
+		$result = [];
+
+		$row_count = count($array);
+		$letter = key($start_array);
+
+		$start_array[$letter]['stop'] = $row_count - 1;
+		$start = $start_array[$letter]['start'] + 1;
+		$array = array_slice($array, $start, $row_count, true);
+
+		$key = $this->find_key('#' . $form_number, $array, 'key');
+		$peices = explode("#" . $form_number, $array[$key]);
+		$t_letter = str_replace(',', '', $peices[1]);
+		if ($t_letter != null) {
+
+			$stop_key = $this->find_key($t_letter, $array, 'letter', true);
+			$start_array[$letter]['stop'] = $stop_key - 1;
+		}
+
+		return $start_array;
+	}
+
+
+	public function row_data($start, $stop, $page_text)
+	{
+		$tip = ' ';
+		if (((($stop + 1) - $start)  % 4) == 0) {
+			$break = 3;
+		} else if (((($stop + 1) - $start)  % 5) == 0) {
+			$break = 4;
+		}
+
+		$r = 0;
+		$i = 0;
+		for ($idx = $start; $idx <= $stop; $idx++) {
+			switch ($r) {
+				case 0:
+					$market = $page_text[$idx];
+					break;
+				case 1:
+					$pub = $page_text[$idx];
+					break;
+				case 2:
+					$count = str_replace(',', '', $page_text[$idx]);
+					break;
+				case 3:
+					$ship = $page_text[$idx];
+					break;
+				case 4:
+					$tip = $page_text[$idx];
+					break;
+			}
+
+			if ($r < $break) {
+				$r++;
+			} else {
+
+				$row_array = [
 					"original" => $market . " " . $pub . " " . $count . " " . $ship,
-				"market" => $market,
-				"pub" => $pub,
-				"count" => $count,
-				"ship" => $ship,
-				"tip" => $tip,
-			];
-			$r = 0;
-			$rows[$i] = $row_array;
-			$i++;
+					"market" => $market,
+					"pub" => $pub,
+					"count" => $count,
+					"ship" => $ship,
+					"tip" => $tip,
+				];
+				$r = 0;
+				$rows[$i] = $row_array;
+				$i++;
+			}
+		}
+		return $rows;
+	}
+
+	public function getPageCount($config_type)
+	{
+
+		switch ($config_type) {
+			case "2+2pgs4out":
+				return "4pg";
+				break;
+			case "2+4pgs2out":
+				return "6pg";
+				break;
+			case "4pgs4out":
+				return "4pg";
+				break;
+
+			case "4+2pgs2out":
+				return "6pg";
+				break;
+			case "6pgs2out":
+				return "6pg";
+				break;
+
+			case "4+4pgs2out":
+				return "8pg";
+				break;
+			case "8pgs2out":
+				return "8pg";
+				break;
+
+			default:
+				return "sheeter";
 		}
 	}
-	return $rows;
-}
-
-public function getPageCount($config_type)
-{
-
-	switch ($config_type) {
-		case "2+2pgs4out":
-			return "4pg";
-			break;
-		case "2+4pgs2out":
-			return "6pg";
-			break;
-		case "4pgs4out":
-			return "4pg";
-			break;
-
-		case "4+2pgs2out":
-			return "6pg";
-			break;
-		case "6pgs2out":
-			return "6pg";
-			break;
-
-		case "4+4pgs2out":
-			return "8pg";
-			break;
-		case "8pgs2out":
-			return "8pg";
-			break;
-
-		default:
-			return "sheeter";
-	}
-}
-
-
-
-
-
-
 }

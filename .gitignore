@@ -34,3 +34,4 @@ install.cmd
 www/logs/*
 .vscode/*
 .vscode/settings.json
+www/php_errors.log

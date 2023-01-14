@@ -46,13 +46,11 @@ foreach ($_REQUEST as $key => $value) {
 
             include __LAYOUT_HEADER__;
 
-            $xlsx_array = build_xlsx_array($_REQUEST['job_id']);
-            $keyidx = array_key_first($xlsx_array);
+             $media->excelArray();
+       
 
-            $job_number = $xlsx_array[$keyidx]["job_number"];
-            $pdf_file = $xlsx_array[$keyidx]["pdf_file"];
+            $excel = new MediaXLSX($media);
 
-            write_xlsx_workbook($xlsx_array, $job_number, $pdf_file);
             ob_flush();
 
             break;

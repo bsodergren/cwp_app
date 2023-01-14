@@ -1,7 +1,8 @@
 <?php
 
-class Template
+class Template 
 {
+
     public $html = '';
 
 

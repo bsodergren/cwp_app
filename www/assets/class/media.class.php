@@ -12,10 +12,11 @@ use Nette\Utils\FileSystem;
  */
 class Media
 {
-    private $exp;
+    protected $exp;
 
     private $conn;
     private $mediaLoc;
+    public $MediaArray = [];
 
     public function __construct($MediaDB = '')
     {
@@ -44,6 +45,81 @@ class Media
         }
     }
 
+
+    public function excelArray()
+	{
+		//global $explorer;
+
+
+		$form_config = $this->get_drop_details();
+
+		foreach ($form_config as $form_number => $vars) {
+
+
+			$total_back_peices = 0;
+
+			$prev_form_letter = "";
+
+			$sort = array("SORT_FORMER" => 1, "SORT_LETTER" => 1, "SORT_PUB" => 1);
+
+			$result = $this->get_drop_form_data($form_number, $sort);
+
+			foreach ($result as $row_id => $form_row) {
+
+				$current_form_letter = $form_row["form_letter"];
+
+				if ($prev_form_letter != $current_form_letter) {
+					$total_back_peices = 0;
+					$prev_form_letter = $current_form_letter;
+				}
+
+				if ($form_row["former"] == "") {
+					$form_row["former"] = "Front";
+				}
+
+				if (!isset($this->MediaArray[$form_number]["bind"])) {
+					$this->MediaArray[$form_number] = array(
+						"bind" => $vars["bind"],
+						"config" => $vars["config"],
+						"job_number" => $form_row["job_number"],
+						"pdf_file" => $form_row["pdf_file"],
+						"job_id" => $media->job_id
+					);
+				}
+
+
+				if ($form_row["former"] == "Back") {
+					$total_back_peices = $total_back_peices + $form_row["count"];
+					$this->MediaArray[$form_number][$form_row["former"]][$form_row["form_letter"]][99] = array(
+						"market" => $form_row["market"],
+						"pub" => $form_row["pub"],
+						"count" => $total_back_peices,
+						"ship" => $form_row["ship"],
+						"job_number" => $form_row["job_number"],
+						"former" => $form_row["former"],
+						"face_trim" => $form_row["face_trim"],
+						"no_bindery" => $form_row["no_bindery"]
+					);
+				} else {
+					$this->MediaArray[$form_number][$form_row["former"]][$form_row["form_letter"]][] = array(
+						"market" => $form_row["market"],
+						"pub" => $form_row["pub"],
+						"count" => $form_row["count"],
+						"ship" => $form_row["ship"],
+						"job_number" => $form_row["job_number"],
+						"former" => $form_row["former"],
+						"face_trim" => $form_row["face_trim"],
+						"no_bindery" => $form_row["no_bindery"]
+					);
+				}
+			}
+		}
+
+		$this->MediaArray;
+	}
+
+
+
     private function getDirectories()
     {
 
@@ -58,6 +134,16 @@ class Media
         $this->zip_directory = $this->mediaLoc->getDirectory('zip');
         $this->zip_file = $this->mediaLoc->getFilename('zip');
 
+    }
+
+    public function getFilename($type = '', $form_number = '', $create_dir = '')
+    {
+        return $this->mediaLoc->getFilename($type, $form_number, $create_dir);
+    }
+
+    public function getDirectory($type = '', $create_dir = '')
+    {
+        return $this->mediaLoc->getDirectory($type, $create_dir);
     }
 
     public function set($name, $value)
@@ -80,7 +166,7 @@ class Media
         $result = $explorer->table('media_job')->select($field . '_exists')->where('job_id', $job_id);
         $exists = $result->fetch();
         $var_name = $field . '_exists';
-        return toint($exists->$var_name);
+        return Utils::toint($exists->$var_name);
     }
 
 
@@ -129,6 +215,7 @@ class Media
             $form_config[$data["form_number"]] = array("bind" => $data["bind"], "config" => $data["config"]);
         }
 
+        $this->form_config = $form_config;
         return $form_config;
     }
 
@@ -237,6 +324,7 @@ class Media
             "bind_type" => $bind_type
         );
 
+        $this->form_configuration = $form_configuration;
         return $form_configuration;
     }
 

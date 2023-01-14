@@ -32,6 +32,13 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "cwp_app.iss,*.log,.git*,.idea*,.vscode,*\logs\*,*Media Load Flags\*,old_ext\*,cwp_sqlite.*,.webcache\*"; Flags: ignoreversion recursesubdirs createallsubdirs
+[Code]
+
+function PrepareToInstall(var NeedsRestart: Boolean): String;
+begin
+  if DirExists('{app}\www') then
+    DelTree('{app}\www\*', True, True, True);
+end;
 
 [Icons]
 Name: "{autoprograms}\Media Creator"; Filename: "{app}\MediaCreator.exe"

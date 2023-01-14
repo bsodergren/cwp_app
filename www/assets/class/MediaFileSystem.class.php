@@ -5,7 +5,6 @@ use Nette\Utils\FileSystem;
 class MediaFileSystem
 {
     public $directory;
-    use Nette\StaticClass;
 
     public function __construct($pdf_file, $job_number)
     {
