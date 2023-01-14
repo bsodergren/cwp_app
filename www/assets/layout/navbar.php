@@ -1,8 +1,8 @@
 <!-- start navbar file -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm p-2">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm p-2 fs-4">
 	<div class="container">
-		<a class="navbar-brand" href="#">
-			<img src="<?php echo __URL_LAYOUT__; ?>/images/logonotext.png" alt="" width="50" height="50" class="mr-3"><?php echo TITLE; ?></a>
+		<a class="navbar-brand fs-4" href="#">
+			<img src="<?php echo __URL_LAYOUT__; ?>/images/logonotext.png" alt="" width="50" height="50" class="mr-2"><?php echo TITLE; ?></a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			</ul>

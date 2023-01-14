@@ -71,7 +71,7 @@ class Template
             $html_text = preg_replace_callback('|(%%\w+%%)|', array($this, "callback_replace"), $html_text);
         }
 
-        //  $html_text = "<!-- start $template --> \n" . $html_text . "\n";
+          $html_text = "<!-- start $template --> \n" . $html_text . "\n";
         $this->html .= $html_text;
         return $this->html;
     }

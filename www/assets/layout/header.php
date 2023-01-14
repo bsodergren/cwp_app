@@ -19,9 +19,16 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+	  <?php echo $custom_js;?>
 </head>
 
 <body <?php echo $onLoad;?>>
-	<?php require __LAYOUT_NAVBAR__; ?>
-	<main role="main" class="container pt-3">
-	<!-- end of header.php -->
+
+	<?php
+	if(!MediaSettings::isTrue('NO_NAV')){
+	require __LAYOUT_NAVBAR__;
+	?>
+<main role="main" class="container mt-1">
+<?php 	} ?>
+
+<!-- end of header.php -->

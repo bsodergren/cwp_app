@@ -5,12 +5,17 @@ define('TITLE', "Form Editor");
 $display = new MediaDisplay();
 $media = new Media();
 
+$custom_js = template::echo("form/javascript",['URL_LAYOUT' => __URL_LAYOUT__]);
+
+$onLoad = '';
+
+$onLoad = '';
 include __LAYOUT_HEADER__;
 
 $row_html = '';
 $letter_html = '';
 $next_view = "job";
-$media->set("job_id", $_REQUEST['job_id']);
+$media->job_id = $_REQUEST['job_id'];
 
 $max_forms =  $media->get_max_drop_forms();
 $first_form = $media->get_first_form();
@@ -48,7 +53,7 @@ $result = $media->get_drop_form_data($current_form_number, $sort);
 foreach ($result as $idx => $form_array) {
     $form_number = $form_array['form_number'];
     //$job_id = $form_array['job_id'];
-    $media->set("job_id", $form_array['job_id']);
+    $media->job_id = $form_array['job_id'];
 
     $config = $media->get_drop_details($form_number);
 
@@ -90,7 +95,9 @@ foreach ($new_forms as $form_number => $parts) {
 
     $form_html['FORM_URL'] = $form_url;
 
-    $edit_button = '<input type="submit" name="submit" value="Edit">';
+    $edit_url = "/form_edit.php?job_id=". $media->job_id."&form_number=".$current_form_number;
+
+    $edit_button = '<input type="button" name="btnOpenPopup" onClick="OpenNewWindow(\''.$edit_url.'\')" value="Edit">';
 
     $form_html["NAME"] = $form_array['job_number'] . " - Form Number " . $form_number . " of " . $max_forms . ' - ' . $config[$form_number]["config"] . ' - ' . $config[$form_number]["bind"];
     $form_html["EDIT"] = $edit_button;
@@ -101,9 +108,11 @@ foreach ($new_forms as $form_number => $parts) {
 
         $row_html = $display->display_table_rows($form_data, $form_letter);
         $template->template("form/header", array("NUMBER" => $form_number, "LETTER" => $form_letter, "ROWS" => $row_html));
-        $letter_html .= $template->return();
-        $template->clear();
+        
+       // $template->clear();
     }
+    $letter_html .= $template->return();
+    $template->clear();
 }
 
 $form_html["CURRENT_FORM_NUMBER"] = $current_form_number;

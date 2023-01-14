@@ -3,11 +3,14 @@ require_once(".config.inc.php");
 
 $deleted_id = 0;
 
-
 $job_id=$_REQUEST['job_id'];
 $form_number=$_REQUEST['form_number'];
 
 define('TITLE', "Media Job editor");
+define('NO_NAV',true);
+//$custom_js = template::echo("form_edit/javascript",['URL_LAYOUT' => __URL_LAYOUT__]);
+//$onLoad = ' onbeforeunload="refreshAndClose();"';
+
 include __LAYOUT_HEADER__;
 
 $media = new media();

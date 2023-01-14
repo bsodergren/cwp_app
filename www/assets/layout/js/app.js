@@ -1,4 +1,4 @@
-function formValidation() 
+function importValidation() 
 {
   // Make quick references to our fields.
   var jobNumber = document.getElementById("jobNumber");
@@ -86,6 +86,26 @@ function editPlaceholder(id) {
   }
 }
 
+function editRadioValue(id)
+{
+  const t_arr = id.split('_');
+    console.log(t_arr);
+    let former = t_arr[0];
+    let letter = t_arr[1];
+    let f_id = t_arr[2];
+
+    if ( former == "Front"){
+      let back_id = "Back_"  + letter + "_" + f_id;
+      document.getElementById(back_id).value = "";
+    } else {
+      let front_id = "Front_"  + letter + "_" + f_id;
+      document.getElementById(front_id).value = "";
+    }
+
+    document.getElementById(id).value = former;
+    
+}
+
 function hideSubmit(id,text)
 {
 
@@ -100,12 +120,6 @@ function doSubmitValue(id)
   document.getElementById(id).value = id;
 }
 
-function editRadioValue(id)
-{
-
-      document.getElementById(id).value = "1";
-    
-}
 
 function checkValue(id) {
     var ph = document.getElementById(id).placeholder;

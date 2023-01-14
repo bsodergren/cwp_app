@@ -51,7 +51,7 @@ class MediaDisplay extends HTMLDisplay
                 "SHIP" => $part["ship"],
                 "RADIO_BTNS" => $radio_check,
                 "FACE_TRIM" => $this->draw_checkbox("facetrim_" . $part["id"], $part["facetrim"], 'Face Trim'),
-                "NO_TRIM" => $this->draw_checkbox("nobindery_" . $part["id"], $part["nobindery"], 'No Bindery Trim')
+                "NO_TRIM" => $this->draw_checkbox("nobindery_" . $part["id"], $part["nobindery"], 'No Trimmers')
             );
 
             $row_template->template("form/row", $array);

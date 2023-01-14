@@ -1,10 +1,15 @@
 <?php
 
+$custom_js = template::echo("form_edit/javascript",['URL_LAYOUT' => __URL_LAYOUT__]);
+$onLoad = ' onbeforeunload="refreshAndClose();" onLoad="doLoad(00)" ';
+define('NO_NAV',true);
+
+
 $job_id = $_REQUEST['job_id'];
 $form_number = $_REQUEST['form_number'];
+$job  = $connection->fetch('SELECT * FROM media_job WHERE job_id = ?', $job_id);
 
-$media = new Media();
-$media->job_id = $job_id;
+$media = new Media($job);
 
 
 $first_form = $media->get_first_form();
@@ -18,14 +23,26 @@ $form_url = __URL_HOME__ . "/form.php?job_id=" . $job_id . $form_req;
 
 
 if (key_exists("Return", $_REQUEST)) {
+	include __LAYOUT_HEADER__;
 
-
-	HTMLDisplay::javaRefresh($form_url, 0);
 	exit;
 }
+
+if (key_exists("Reset", $_REQUEST)) 
+{
+	$media->delete_form($form_number);
+	$pdfObj = new PDFImport($media->pdf_fullname, $media->job_id,$form_number);
+
+	$media->add_form_data($form_number, $pdfObj->form[$form_number]);
+	include __LAYOUT_HEADER__;
+
+	exit;
+}
+
+
 if (key_exists("submit", $_REQUEST)) {
 
-	$refresh_url = __URL_HOME__ . "/form_edit.php?job_id=" . $job_id . "&form_number=" . $form_number . "";
+//	$refresh_url = __URL_HOME__ . "/form_edit.php?job_id=" . $job_id . "&form_number=" . $form_number . "";
 
 
 	foreach ($_REQUEST as $key => $value) {
@@ -53,7 +70,7 @@ if (key_exists("submit", $_REQUEST)) {
 				case "delete":
 
 					$media->deleteFormRow($id);
-					HTMLDisplay::javaRefresh($refresh_url, 0);
+					include __LAYOUT_HEADER__;
 					exit;
 					break;
 
@@ -63,7 +80,7 @@ if (key_exists("submit", $_REQUEST)) {
 					$media->updateFormRow($id, $form_data);
 					unset($form_data['id']);
 					$media->addFormRow($form_data);
-					HTMLDisplay::javaRefresh($refresh_url, 0);
+					include __LAYOUT_HEADER__;
 
 					exit;
 					break;
@@ -104,6 +121,9 @@ if (key_exists("submit", $_REQUEST)) {
 	//$form_number--;
 	//	myHeader(__URL_HOME__."/form.php?job_id=".$job_id."&form_number=".$form_number."");  
 	//include __LAYOUT_FOOTER__;
-	HTMLDisplay::javaRefresh($form_url, 0);
+//	HTMLDisplay::javaRefresh($form_url, 0);
 }
+
+include __LAYOUT_HEADER__;
+
 exit;

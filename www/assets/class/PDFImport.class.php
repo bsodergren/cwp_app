@@ -8,34 +8,50 @@ class PDFImport extends MediaImport
 	public $form =  array();
 	public $job_id;
 
-	public function __construct($pdf_file = '', $media_job_id = '')
+	public function __construct($pdf_file = '', $media_job_id = '', $form_number = '')
 	{
 
 		if ($media_job_id != '') {
 			$this->job_id = $media_job_id;
 		}
 
-		if (file_exists($pdf_file)) 
-		{
+		if (file_exists($pdf_file)) {
 			$parser = new \Smalot\PdfParser\Parser();
 			$pdf    = $parser->parseFile($pdf_file);
 			$pages  = $pdf->getPages();
-			foreach ($pages as $page) {
+
+
+	
+			if ($form_number != '') {
+				$form_number--;
 				$page_text = [];
 
-				$text = $page->getDataTm();
+				$text = $pages[$form_number]->getDataTm();
 
 				foreach ($text as $n => $row) {
 					$page_text[$n] = $row[1];
 				}
-
 				$this->parse_page($page_text);
+			} else {
+
+				foreach ($pages as $page) {
+
+					$page_text = [];
+
+					$text = $page->getDataTm();
+
+					foreach ($text as $n => $row) {
+						$page_text[$n] = $row[1];
+					}
+
+					$this->parse_page($page_text);
+				}
 			}
 		}
 	}
 
-	
-	
+
+
 	public function parse_page($page_text)
 	{
 
@@ -73,7 +89,6 @@ class PDFImport extends MediaImport
 					unset($res);
 				}
 			}
-
 			foreach ($form_number_array as $_ => $letter_array) {
 
 				$letter = key($letter_array);
@@ -98,10 +113,11 @@ class PDFImport extends MediaImport
 
 		foreach ($haystack as $k => $item) {
 			if ($strict == true) {
-				$item = str_replace(',', '', $item);
+				$item = trim(str_replace(',', '', $item));
 				if ($value == 'letter') {
-					preg_match('/[ABCD,]+([ ]{1,})/', $item, $matches);
-					if ($matches[0] == true) {
+					preg_match('/[ABCD,]+\b/', $item, $matches);
+
+					if ($matches[0] == trim($needle)) {
 						$search = true;
 					} else {
 						$search = false;
@@ -169,7 +185,6 @@ class PDFImport extends MediaImport
 		if ($key) {
 			$peices = explode("#" . $form_number, $array[$key]);
 			$letter = str_replace(',', '', $peices[1]);
-
 			$result = [$letter => ['start' => $key + 1]];
 			return $result;
 		}
@@ -187,10 +202,11 @@ class PDFImport extends MediaImport
 		$array = array_slice($array, $start, $row_count, true);
 
 		$key = $this->find_key('#' . $form_number, $array, 'key');
+
 		$peices = explode("#" . $form_number, $array[$key]);
+
 		$t_letter = str_replace(',', '', $peices[1]);
 		if ($t_letter != null) {
-
 			$stop_key = $this->find_key($t_letter, $array, 'letter', true);
 			$start_array[$letter]['stop'] = $stop_key - 1;
 		}

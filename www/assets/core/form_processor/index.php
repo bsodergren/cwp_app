@@ -8,10 +8,19 @@ $media = new Media($job);
 
 if (key_exists('update_job', $_REQUEST)) {
 
+
+    $job_number = $_REQUEST['job_number'];
+
+    if (strlen($job_number) != 6) {
+        echo "There was a problem <br> the job number was incorrect";
+        echo JavaRefresh("/index.php", 3);
+        exit;
+    }
+
     $media->delete_xlsx();
     $media->delete_zip();
 
-    $job_number = $_REQUEST['job_number'];
+
     $mediaLoc = new MediaFileSystem($media->pdf_file, $job_number);
     $mediaLoc->getDirectory();
 
@@ -46,8 +55,8 @@ foreach ($_REQUEST as $key => $value) {
 
             include __LAYOUT_HEADER__;
 
-             $media->excelArray();
-       
+            $media->excelArray();
+
 
             $excel = new MediaXLSX($media);
 
@@ -65,7 +74,7 @@ foreach ($_REQUEST as $key => $value) {
 
             $media->delete_xlsx();
             $media->delete_zip();
-            $media->delete_form_data();
+            $media->delete_form();
             include __LAYOUT_HEADER__;
 
             new MediaImport($media->pdf_fullname, $media->job_number);

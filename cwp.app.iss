@@ -31,7 +31,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "cwp_app.iss,*.log,.git*,.idea*,.vscode,*\logs\*,*Media Load Flags\*,old_ext\*,cwp_sqlite.*,.webcache\*"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "cwp_app.iss,*.log,.git*,.idea*,.vscode,*\logs,*Media Load Flags,old_ext\*,cwp_sqlite.*,.webcache\*"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Code]
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;

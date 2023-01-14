@@ -1,0 +1,20 @@
+<script src="%%URL_LAYOUT%%/js/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn').click(function () {
+            window.opener.location.reload(true);
+            window.close();
+        });
+    });
+
+    function refreshAndClose() {
+        window.opener.location.reload(true);
+        window.close();
+    }
+
+    var t;
+    function doLoad(timeOut) {
+        t = setTimeout("window.close()", timeOut);
+    }
+</script>

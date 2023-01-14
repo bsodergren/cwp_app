@@ -5,6 +5,7 @@ ob_implicit_flush(true);
 
 require('.config.inc.php');
 
+
 define('__FORM_POST__', basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), '.php'));
 define('TITLE', '');
 if (
@@ -54,6 +55,7 @@ switch (__FORM_POST__) {
 
     case "form_edit":
         require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
+        exit;
         break;
     default:
         dump(__FORM_POST__);
