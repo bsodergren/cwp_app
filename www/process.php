@@ -1,22 +1,17 @@
 <?php
 ob_start();
-
 ob_implicit_flush(true);
-
 require('.config.inc.php');
-
-
 define('__FORM_POST__', basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), '.php'));
+
 define('TITLE', '');
+
 if (
     __FORM_POST__ == __SCRIPT_NAME__ ||
     __FORM_POST__ == ''
 ) {
-    echo JavaRefresh('/index.php',0);
-    exit;
+    MediaError::msg("info",__FORM_POST__."< >" . __SCRIPT_NAME__,0);
 }
-
-
 
 $FORM_PROCESS = '';
 if (isset($_POST['FORM_PROCESS'])) {
@@ -29,19 +24,11 @@ if (isset($_POST['FORM_PROCESS'])) {
 switch (__FORM_POST__) {
 
     case "settings":
-        include __LAYOUT_HEADER__;
-
-        echo $FORM_PROCESS;
-        ob_flush();
         require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
         ob_flush();
 
         break;
     case "import":
-        include __LAYOUT_HEADER__;
-
-        echo $FORM_PROCESS;
-        ob_flush();
         require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
         ob_flush();
         break;
@@ -74,7 +61,7 @@ if (defined('REFRESH_URL')) {
 
 
 if (isset($_POST['FORM_PROCESS'])) {
-    include __LAYOUT_FOOTER__;
+    include_once __LAYOUT_FOOTER__;
 }
 
 ob_end_flush();

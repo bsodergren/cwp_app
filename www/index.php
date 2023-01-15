@@ -3,7 +3,9 @@ require_once ".config.inc.php";
 
 
 define('TITLE', APP_NAME);
-include __LAYOUT_HEADER__;
+define('__CUSTOM_JS__', Template::GetHTML("index/javascript"));
+
+include_once __LAYOUT_HEADER__;
 
 $table = $explorer->table("media_job");
 $results = $table->fetchAssoc('job_id');
@@ -96,4 +98,4 @@ if ($cnt > 0) {
 
 
 
-include __LAYOUT_FOOTER__;
+include_once __LAYOUT_FOOTER__;

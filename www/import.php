@@ -8,6 +8,6 @@ $template = new Template();
 
 require_once __LAYOUT_HEADER__;
 
-$template->render('import/main','',1);
+$template->render('import/main',[]);
 
 require_once __LAYOUT_FOOTER__;

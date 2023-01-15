@@ -5,12 +5,7 @@ define('TITLE', "Form Editor");
 $display = new MediaDisplay();
 $media = new Media();
 
-$custom_js = template::echo("form/javascript",['URL_LAYOUT' => __URL_LAYOUT__]);
-
-$onLoad = '';
-
-$onLoad = '';
-include __LAYOUT_HEADER__;
+include_once __LAYOUT_HEADER__;
 
 $row_html = '';
 $letter_html = '';
@@ -43,12 +38,7 @@ if (empty($results)) {
 
 $sort = array("SORT_FORMER" => 1, "SORT_LETTER" => 1);
 
-logger("current_form_number", $current_form_number);
-
-
-
 $result = $media->get_drop_form_data($current_form_number, $sort);
-
 
 foreach ($result as $idx => $form_array) {
     $form_number = $form_array['form_number'];
@@ -81,9 +71,6 @@ foreach ($new_forms as $form_number => $parts) {
     if ($current_form_number != $first_form) {
         $previous_form_html = '<input type="submit" name="submit_back" value="previous form">';
     }
-
-    logger("next_form_number", $next_form_number);
-    logger("max_forms", $max_forms);
 
     if ($next_form_number > $max_forms) {
         $next_view = "save";
@@ -126,4 +113,4 @@ $template->render();
 
 
 
-include __LAYOUT_FOOTER__;
+include_once __LAYOUT_FOOTER__;

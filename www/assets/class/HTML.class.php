@@ -5,6 +5,8 @@ use Nette\Utils\DateTime;
 
 require_once __INC_CLASS_DIR__ . "/Template.class.php";
 
+
+
 class HTMLDisplay
 {
 
@@ -15,10 +17,10 @@ class HTMLDisplay
         if ($timeout > 0) {
             $timeout = $timeout * 1000;
             $update_inv =  $timeout / 100;
-            echo Template::echo("progress_bar", ['SPEED' => $update_inv]);
+            Template::echo("progress_bar", ['SPEED' => $update_inv]);
         }
 
-        echo template::echo('js_refresh_window', ['REFRESH_URL' => $url, 'MS_SECONDS' => $timeout]);
+        Template::echo('js_refresh_window', ['REFRESH_URL' => $url, 'MS_SECONDS' => $timeout]);
     }
 
     public static function echo($value, $exit = 0)

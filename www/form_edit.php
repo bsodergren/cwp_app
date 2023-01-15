@@ -8,10 +8,8 @@ $form_number=$_REQUEST['form_number'];
 
 define('TITLE', "Media Job editor");
 define('NO_NAV',true);
-//$custom_js = template::echo("form_edit/javascript",['URL_LAYOUT' => __URL_LAYOUT__]);
-//$onLoad = ' onbeforeunload="refreshAndClose();"';
 
-include __LAYOUT_HEADER__;
+include_once __LAYOUT_HEADER__;
 
 $media = new media();
 $media->job_id = $job_id;
@@ -69,6 +67,6 @@ $html_array = [
 echo $template->return("form_edit/main", $html_array);
 
 
-include __LAYOUT_FOOTER__;
+include_once __LAYOUT_FOOTER__;
 
 ?>

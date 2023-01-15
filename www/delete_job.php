@@ -22,7 +22,7 @@ if(key_exists("actSubmit",$_REQUEST))
 }
 
 define('TITLE', "Media Job editor");
-include __LAYOUT_HEADER__;
+include_once __LAYOUT_HEADER__;
 $form_url = __URL_PATH__."/delete_job.php";
 
 
@@ -53,5 +53,5 @@ $form_url = __URL_PATH__."/delete_job.php";
 </main>
 
 <?php
-include __LAYOUT_FOOTER__;
+include_once __LAYOUT_FOOTER__;
 ?>

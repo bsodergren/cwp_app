@@ -61,7 +61,7 @@ jQuery('body,html').animate({scrollTop: 1000000}, 800);
 	    while (($str_data = fgets($handle, 5000)) !== FALSE)
         {
 
-           echo Template::echo("debug/logentry",json_decode($str_data,1));
+           Template::echo("debug/logentry",json_decode($str_data,1));
         }
         fclose($handle)			;
     }

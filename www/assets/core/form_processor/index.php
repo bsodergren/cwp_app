@@ -11,10 +11,9 @@ if (key_exists('update_job', $_REQUEST)) {
 
     $job_number = $_REQUEST['job_number'];
 
-    if (strlen($job_number) != 6) {
-        echo "There was a problem <br> the job number was incorrect";
-        echo JavaRefresh("/index.php", 3);
-        exit;
+    if (strlen($job_number) != 6)
+    {
+        MediaError::msg("warning","There was a problem <br> the job number was incorrect");
     }
 
     $media->delete_xlsx();
@@ -33,13 +32,10 @@ if (key_exists('update_job', $_REQUEST)) {
     }
 
     if ($msg == '') {
-
         $media->update_job_number($job_number);
         echo JavaRefresh("/index.php", 0);
     } else {
-        echo "There was a problem <br> " . $msg;
-        echo JavaRefresh("/index.php", 15);
-        exit;
+        MediaError::msg("warning","There was a problem <br> " . $msg,15);
     }
     exit;
 }
@@ -52,16 +48,10 @@ foreach ($_REQUEST as $key => $value) {
             break;
         case  "create_xlsx":
             define('REFRESH_TIMEOUT', 3);
-
-            include __LAYOUT_HEADER__;
-
+            include_once __LAYOUT_HEADER__;
             $media->excelArray();
-
-
             $excel = new MediaXLSX($media);
-
             ob_flush();
-
             break;
         case  "create_zip":
             $xlsx_dir = $media->xlsx_directory;
@@ -75,7 +65,7 @@ foreach ($_REQUEST as $key => $value) {
             $media->delete_xlsx();
             $media->delete_zip();
             $media->delete_form();
-            include __LAYOUT_HEADER__;
+            include_once __LAYOUT_HEADER__;
 
             new MediaImport($media->pdf_fullname, $media->job_number);
             break;
