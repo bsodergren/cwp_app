@@ -1,5 +1,8 @@
 <?php
 require_once(".config.inc.php");
+define('TITLE', "Media Job editor");
+$template = new Template();
+
 
 $job_id=$_REQUEST['job_id'];
 
@@ -21,7 +24,6 @@ if(key_exists("actSubmit",$_REQUEST))
 	exit;
 }
 
-define('TITLE', "Media Job editor");
 include_once __LAYOUT_HEADER__;
 $form_url = __URL_PATH__."/delete_job.php";
 

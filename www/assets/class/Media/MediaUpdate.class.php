@@ -18,28 +18,26 @@ class MediaUpdate
     public static function get_filelist($directory, $ext = 'log', $skip_files = 0)
     {
         $files_array = [];
-        
+
         if (is_dir($directory)) {
             $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-
-         
-
             foreach ($rii as $file) {
-
                 if ($file->isDir()) {
                     continue;
                 }
                 $filename = $file->getPathname();
-
-                if ($skip_files == 1) {
-                    if (!self::skipFile($filename)) {
+                if (preg_match('/(' . $ext . ')$/', $filename)) {
+                    if ($skip_files == 1) {
+                        if (!self::skipFile($filename)) {
+                            $files_array[] = $filename;
+                        }
+                    } else {
                         $files_array[] = $filename;
                     }
-                } else {
-                    $files_array[] = $filename;
                 }
             }
         }
+
         return $files_array;
     }
 

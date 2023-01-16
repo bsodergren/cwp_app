@@ -13,8 +13,8 @@ define('__LAYOUT_DIR__', '/assets/layout');
 define('__LAYOUT_ROOT__', __WEB_ROOT__ . __LAYOUT_DIR__);
 define('__TEMPLATE_DIR__', __LAYOUT_ROOT__ . '/template');
 
-require_once __INC_CLASS_DIR__ . "/Utilities.class.php";
-require_once __INC_CLASS_DIR__ . "/Template.class.php";
+require_once __INC_CLASS_DIR__ . "/Utils.class.php";
+require_once __INC_CLASS_DIR__ . "/HTML/Template.class.php";
 
 
 set_include_path(get_include_path().PATH_SEPARATOR.__COMPOSER_DIR__);

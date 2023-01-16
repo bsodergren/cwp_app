@@ -2,6 +2,8 @@
 ob_start();
 ob_implicit_flush(true);
 require('.config.inc.php');
+$template = new Template();
+
 define('__FORM_POST__', basename(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), '.php'));
 
 define('TITLE', '');
@@ -29,6 +31,7 @@ switch (__FORM_POST__) {
 
         break;
     case "import":
+        include __LAYOUT_HEADER__;
         require_once(__PROCESS_DIR__ . "/" . __FORM_POST__ . ".php");
         ob_flush();
         break;

@@ -4,9 +4,11 @@ use Nette\Utils\FileSystem;
 
 $refresh = false;
 if (!file_exists(__SQLITE_DATABASE__)) {
-    $connection = new Nette\Database\Connection(__DATABASE_DSN__);
+   $connection = new Nette\Database\Connection(__DATABASE_DSN__);
     $_default_sql_dir = FileSystem::normalizePath(__SQLITE_DIR__ . "/default");
     $file_tableArray = MediaUpdate::get_filelist($_default_sql_dir, 'cwp_table.*)\.(sql', 0);
+
+
     foreach ($file_tableArray as $k => $sql_file) {
         $table_name = str_replace("cwp_table_", "", basename($sql_file, ".sql"));
         $connection->query("drop table if exists " . $table_name);

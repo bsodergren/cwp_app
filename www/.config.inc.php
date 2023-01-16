@@ -7,8 +7,8 @@ function debug(...$var)
 /**
  *  Basic constants for application that are displayed in the output
  */
-define('APP_NAME', 'Media Import');
-define('APP_ORGANIZATION', 'KLiK');
+define('APP_NAME', 'Media');
+define('APP_ORGANIZATION', 'cwp');
 define('APP_OWNER', 'bjorn');
 define('APP_DESCRIPTION', 'Embeddable PHP Login System');
 
