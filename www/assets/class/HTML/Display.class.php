@@ -1,15 +1,9 @@
 <?php
 
-use Nette\Utils\FileSystem;
-use Nette\Utils\DateTime;
-
-require_once __INC_CLASS_DIR__ . "/Template.class.php";
-
 
 
 class HTMLDisplay
 {
-
 
     public static function javaRefresh($url, $timeout = 0)
     {
@@ -72,10 +66,4 @@ class HTMLDisplay
     }
 
     
-}
-
-
-function JavaRefresh($url, $timeout = 0)
-{
-    HTMLDisplay::JavaRefresh($url, $timeout);
 }

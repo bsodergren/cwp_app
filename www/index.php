@@ -1,16 +1,20 @@
 <?php
 require_once ".config.inc.php";
 
-
 define('TITLE', APP_NAME);
 define('__CUSTOM_JS__', Template::GetHTML("index/javascript"));
+
+
+$template = new Template();
 
 include_once __LAYOUT_HEADER__;
 
 $table = $explorer->table("media_job");
 $results = $table->fetchAssoc('job_id');
 $cnt = $table->count('*');
-logger("Test Message");
+
+MediaLogger("Test Message");
+
 if ($cnt > 0) {
 	foreach ($results as $k => $row) {
 		unset($replacement);

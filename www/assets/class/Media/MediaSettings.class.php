@@ -10,7 +10,7 @@ class MediaSettings
 
 
             if (constant($define_name) == true) {
-                //  mediaUpdate::echo(constant($define_name));
+                //  MediaUpdate::echo(constant($define_name));
                 return 1;
             }
         }

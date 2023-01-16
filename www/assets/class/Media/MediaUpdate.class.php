@@ -1,5 +1,6 @@
 <?php
 
+
 use Nette\Utils\FileSystem;
 
 
@@ -14,30 +15,31 @@ class MediaUpdate
         $this->conn = $db_conn;
     }
 
-
-
     public static function get_filelist($directory, $ext = 'log', $skip_files = 0)
     {
         $files_array = [];
-        if ($all = opendir($directory)) {
-            while ($filename = readdir($all)) {
-                if (!is_dir($directory . '/' . $filename)) {
-                    if (preg_match('/(' . $ext . ')$/', $filename)) {
-                        $file = filesystem::normalizePath($directory . '/' . $filename);
+        
+        if (is_dir($directory)) {
+            $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
-                        if ($skip_files == 1) {
-                            if (!self::skipFile($file)) {
-                                $files_array[] = $file;
-                            }
-                        } else {
-                            $files_array[] = $file;
-                        }
-                    } //end if
-                } //end if
-            } //end while
-            closedir($all);
-        } //end if
+         
 
+            foreach ($rii as $file) {
+
+                if ($file->isDir()) {
+                    continue;
+                }
+                $filename = $file->getPathname();
+
+                if ($skip_files == 1) {
+                    if (!self::skipFile($filename)) {
+                        $files_array[] = $filename;
+                    }
+                } else {
+                    $files_array[] = $filename;
+                }
+            }
+        }
         return $files_array;
     }
 

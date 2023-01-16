@@ -1,5 +1,4 @@
 <?php
-
 use Nette\Utils\FileSystem;
 
 class MediaFileSystem

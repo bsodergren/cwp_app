@@ -286,7 +286,7 @@ class MediaXLSX extends Media
 
 
 		if ($pcs <= $max_carton && $face_trim != 1) {
-			logger("max_carton pcs", $max_carton);
+			MediaLogger("max_carton pcs", $max_carton);
 			$package = "carton";
 		} elseif (($pcs > $max_carton || $face_trim == 1)  && $pcs <= $max_half_skid) {
 			$package = "half";

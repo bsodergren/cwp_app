@@ -26,4 +26,23 @@ if ($results) {
 $const = get_defined_constants(true);
 
 unset($setting);
+
+
+function MediaLogger($text, $var = '', $logfile = 'default.log', $html = true)
+{
+    MediaLogger::log($text, $var, $logfile, $html);
+}
+
+function getErrorLogs()
+{
+    return MediaLogger::getErrorLogs();
+}
+
+
+function JavaRefresh($url, $timeout = 0)
+{
+    HTMLDisplay::JavaRefresh($url, $timeout);
+}
+
+
 ?>

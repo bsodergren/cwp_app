@@ -2,7 +2,6 @@
 
 use Nette\Utils\FileSystem;
 use Nette\Utils\DateTime;
-
 class log
 {
 
@@ -20,7 +19,7 @@ class log
     }
 }
 
-class Logger
+class MediaLogger
 {
 
     public static function getErrorLogs()
@@ -31,7 +30,7 @@ class Logger
             while ($file = readdir($all)) {
                 if (!is_dir(__ERROR_LOG_DIRECTORY__ . '/' . $file)) {
                     if (preg_match('/(log)$/', $file)) {
-                        $err_array[]  = filesystem::normalizePath(__ERROR_LOG_DIRECTORY__ . '/' . $file);
+                        $err_array[] = filesystem::normalizePath(__ERROR_LOG_DIRECTORY__ . '/' . $file);
                     } //end if
                 } //end if
             } //end while    
@@ -55,7 +54,7 @@ class Logger
             switch ($row['function']) {
                 case __FUNCTION__:
                     break;
-                case "logger":
+                case "MediaLogger":
                     $lineno = $row["line"];
                     break;
                 case "log":
@@ -80,7 +79,7 @@ class Logger
                     if ($row['class'] != '') {
                         $class = $row['class'] . $row['type'];
                     }
-                    $s =  $class . $row['function'] . ":" . $s;
+                    $s = $class . $row['function'] . ":" . $s;
                     $file = $row['file'];
                     break;
             }
@@ -127,7 +126,7 @@ class Logger
         }
     }
 
-    public static function echo($msg, $var = '', $indent = 0)
+    public static function echo ($msg, $var = '', $indent = 0)
     {
 
         $color = new Colors();
@@ -174,22 +173,11 @@ class Logger
                 if (!empty($value)) {
                     $return .= '$array' . $value . "<br>";
                 }
-            };
+            }
+            ;
             return $return;
         }
 
         return $data;
     }
-}
-
-function logger($text, $var = '', $logfile = 'default.log', $html = true)
-{
-    logger::log($text, $var, $logfile, $html);
-}
-
-
-
-function getErrorLogs()
-{
-    return logger::getErrorLogs();
 }

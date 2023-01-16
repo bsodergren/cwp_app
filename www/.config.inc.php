@@ -1,5 +1,9 @@
 <?php
 
+function debug(...$var)
+{
+    echo "<pre>" . var_export($var, 1) . "</pre>";
+}
 /**
  *  Basic constants for application that are displayed in the output
  */
@@ -67,14 +71,16 @@ require __COMPOSER_DIR__ . '/autoload.php';
 
 use Tracy\Debugger;
 use Nette\Utils\FileSystem;
-
-require_once __ASSETS_DIR__ . "/configure.inc.php";
-require_once __ASSETS_DIR__ . "/settings.inc.php";
+//Include all necessary files.
 require_once __ASSETS_DIR__ . "/includes.inc.php";
 
-logger("Start of file",'',"start.log");
+// Configure things like the database
+require_once __ASSETS_DIR__ . "/configure.inc.php";
 
-if (mediaSettings::isTrue('__SHOW_TRACY__')) {
+// Get settings from DB.
+require_once __ASSETS_DIR__ . "/settings.inc.php";
+
+if (MediaSettings::isTrue('__SHOW_TRACY__')) {
 
 
     Debugger::enable();
@@ -105,15 +111,15 @@ if (!function_exists('bdump')) {
 
 define("__MEDIA_FILES_DIR__", "/Media Load Flags");
 
-if (mediaSettings::isTrue('__USE_LOCAL_XLSX__')) {
+if (MediaSettings::isTrue('__USE_LOCAL_XLSX__')) {
     if (
-        mediaSettings::isTrue('__USER_XLSX_DIR__')  ) {
+        MediaSettings::isTrue('__USER_XLSX_DIR__')  ) {
         define("__FILES_DIR__", __USER_XLSX_DIR__);
         FileSystem::createDir(__FILES_DIR__);
     }
 }
 
-if (!mediaSettings::isSet('__FILES_DIR__')) {
+if (!MediaSettings::isSet('__FILES_DIR__')) {
     define("__FILES_DIR__", __PROJECT_ROOT__ . __MEDIA_FILES_DIR__);
 }
 

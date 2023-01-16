@@ -1,9 +1,4 @@
 <?php
-
-
-use Nette\Utils\FileSystem;
-use Nette\Utils\DateTime;
-
 class Colors
 {
 
@@ -105,16 +100,3 @@ class Colors
 
 
 } //end class
-
-class utils
-{
-
-    public static function toint($string)
-	{
-		
-		$string_ret = str_replace(",","",$string);
-		return $string_ret;
-	}
-}
-
-

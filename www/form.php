@@ -4,6 +4,7 @@ require_once(".config.inc.php");
 define('TITLE', "Form Editor");
 $display = new MediaDisplay();
 $media = new Media();
+$template = new TEmplate();
 
 include_once __LAYOUT_HEADER__;
 

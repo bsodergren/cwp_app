@@ -1,17 +1,19 @@
 <?php
 require_once(".config.inc.php");
 
-$deleted_id = 0;
-
-$job_id=$_REQUEST['job_id'];
-$form_number=$_REQUEST['form_number'];
-
 define('TITLE', "Media Job editor");
 define('NO_NAV',true);
 
 include_once __LAYOUT_HEADER__;
 
 $media = new media();
+$template = new TEmplate();
+
+$deleted_id = 0;
+
+$job_id=$_REQUEST['job_id'];
+$form_number=$_REQUEST['form_number'];
+
 $media->job_id = $job_id;
 
 function toArray($obj) {
