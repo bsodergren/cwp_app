@@ -38,3 +38,4 @@ www/php_errors.log
 *php_errors*
 public/.database/cwp_sqlite.db
 public/www
+public/www
