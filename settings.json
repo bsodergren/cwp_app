@@ -25,15 +25,15 @@
     },
     "popup_window": {
         "icon": "",
-        "fixed_title": "",
+        "fixed_title": "Media Popup",
         "center_relative_to_parent": true,
         "default_size": [800, 600]
     },
     "web_server": {
         "listen_on": ["127.0.0.1", 0],
-        "www_directory": "public/www",
+        "www_directory": ".public/www",
         "index_files": ["home.php"],
-        "cgi_interpreter": "php/php-cgi.exe",
+        "cgi_interpreter": ".php/php-cgi.exe",
         "cgi_extensions": ["php"],
         "cgi_temp_dir": "",
         "404_handler": "/error.php",
