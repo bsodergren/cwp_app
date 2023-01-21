@@ -1,0 +1,5 @@
+D:\development\cwp_app\.public\www\.database\cwp_sqlite.db
+D:\development\cwp_app\chrome_debug.log
+D:\development\cwp_app\cwp.app.iss
+D:\development\cwp_app\debug.log
+D:\development\cwp_app\open-editor.js

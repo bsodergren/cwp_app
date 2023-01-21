@@ -1,0 +1,6 @@
+D:\development\cwp_app\.git
+D:\development\cwp_app\.idea
+D:\development\cwp_app\.vscode
+D:\development\cwp_app\.webcache
+D:\development\cwp_app\Media Load Flags
+D:\development\cwp_app\.public\www\.git

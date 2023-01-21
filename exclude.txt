@@ -3,9 +3,9 @@ D:\development\cwp_app\.idea
 D:\development\cwp_app\.vscode
 D:\development\cwp_app\.webcache
 D:\development\cwp_app\Media Load Flags
-D:\development\cwp_app\www\logs
-D:\development\cwp_app\.database\cwp_sqlite.db
+D:\development\cwp_app\.public\www\.database\cwp_sqlite.db
 D:\development\cwp_app\chrome_debug.log
 D:\development\cwp_app\cwp.app.iss
 D:\development\cwp_app\debug.log
 D:\development\cwp_app\open-editor.js
+D:\development\cwp_app\.public\www\.git
