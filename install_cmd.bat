@@ -3,15 +3,10 @@
 echo %UserProfile%
 
 SET Source=D:\development\cwp_app
- echo directory to install Media 
- set /p var=Enter destination folder for /MediaCreator (Default %USERPROFILE%/Desktop) Use "'s if there are spaces" || SET var=%USERPROFILE%\Desktop
- SET Target=%var%\MediaCreator
- if NOT EXIST %Target% (mkdir %Target%)
-
-
-
-REM echo xcopy %Source% %Target% /F /E /H /Y /EXCLUDE:%Source%\exclude.txt
-
+echo directory to install Media 
+set /p var=Enter destination folder for /MediaCreator (Default %USERPROFILE%/Desktop) Use "'s if there are spaces" || SET var=%USERPROFILE%\Desktop
+SET Target=%var%\MediaCreator
+if NOT EXIST %Target% (mkdir %Target%)
 
 SetLocal EnableDelayedExpansion
 
@@ -26,4 +21,6 @@ For /F UseBackQDelims^=^ EOL^= %%A In ("%exDList%"
 For /F UseBackQDelims^=^ EOL^= %%A In ("%exFList%"
 ) Do If Not Defined xFiles (Set xFiles="%%~A") Else Set xFiles=!xFiles! "%%~A"
 
-robocopy %Source%  %Target% /v /mir /XF %xFiles% /XD %xDirs% /log:log.txt /np >nul 2>&1
+robocopy %Source%  %Target% /v /mir /XF %xFiles% /XD %xDirs% /np >nul 2>&1
+php -n -f edit.php "%Source%" "%Target%"
+
