@@ -1,7 +1,5 @@
 @echo off
 
-echo %UserProfile%
-
 SET Source=%cd%
 echo directory to install Media 
 set /p var=Enter destination folder for /MediaCreator (Default %USERPROFILE%/Desktop) Use "'s if there are spaces" || SET var=%USERPROFILE%\Desktop
