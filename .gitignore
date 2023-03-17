@@ -7,3 +7,4 @@ chrome_debug.log
 .idea/
 log.txt
 cwp_sqlite.db
+.public/.database/cwp_sqlite.db

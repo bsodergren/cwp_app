@@ -1,4 +1,17 @@
 {
     "sqltools.useNodeRuntime": true,
-    "sqltools.connections": []
+    "sqltools.connections": [],
+    "files.exclude": {
+        ".idea/": true,
+        ".public/vendor": true,
+        ".php/": true,
+        "locales/": true,
+        ".bin/": true,
+        "*.dll": true,
+        "*.bin": true,
+        "*.dat": true,
+        "*.bat": true,
+        "*.pak": true,
+        ".webcache/": true
+        }
 }
