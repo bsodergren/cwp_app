@@ -1,3 +1,6 @@
 [submodule "public/www"]
 	path = .public/www
 	url = git@github.com:bsodergren/cwp_www.git
+[submodule "public/www"]
+	path = .public/symfony
+	url = git@github.com:bsodergren/cwp_symf.git
