@@ -6,6 +6,4 @@ chrome_debug.log
 .vscode/
 .idea/
 log.txt
-.database/cwp_sqlite.db
-.public/www/library/vendor/*
-.public/www/library/composer.lock
+cwp_sqlite.db
