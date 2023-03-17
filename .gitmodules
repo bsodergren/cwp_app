@@ -4,3 +4,6 @@
 [submodule ".public/symfony/cwp_symf"]
 	path = .public/symfony/cwp_symf
 	url = git@github.com:bsodergren/cwp_symf.git
+[submodule ".public/cwp_symf"]
+	path = .public/cwp_symf
+	url = git@github.com:bsodergren/cwp_symf.git
