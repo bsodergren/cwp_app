@@ -1,6 +1,3 @@
-[submodule "public/www"]
-	path = .public/www
+[submodule "cwp_www"]
+	path = cwp_www
 	url = git@github.com:bsodergren/cwp_www.git
-[submodule ".public/cwp_symf"]
-	path = .public/cwp_symf
-	url = git@github.com:bsodergren/cwp_symf.git
