@@ -1,9 +1,9 @@
 This snapshot was automatically generated on
-Wed, 04 Jan 2023 00:14:38 +0000
+Tue, 09 May 2023 16:37:02 +0000
 
-Version: 8.2.1
+Version: 8.2.6
 Branch: HEAD
-Build: D:\a\php-ftw\php-ftw\php\vs16\x64\obj\Release
+Build: D:\a\php-ftw\php-ftw\php\vs16\x64\obj\Release_TS
 
 Built-in Extensions
 ===========================

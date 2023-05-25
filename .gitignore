@@ -10,3 +10,6 @@ cwp_sqlite.db
 .public/.database/cwp_sqlite.db
 logfile.log
 verbose.log
+www/php_errors.log
+config.ini
+config.ini

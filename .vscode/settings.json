@@ -3,8 +3,8 @@
     "sqltools.connections": [],
     "files.exclude": {
         ".idea/": true,
-        ".public/vendor": true,
-        ".php/": true,
+        ".public/vendor": false,
+        ".php/": false,
         "locales/": true,
         ".bin/": true,
         "*.dll": true,
