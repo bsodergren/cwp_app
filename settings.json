@@ -53,7 +53,7 @@
         "context_menu": {
             "enable_menu": true,
             "navigation": true,
-            "print": false,
+            "print": true,
             "view_source": true,
             "open_in_external_browser": true,
             "devtools": true
