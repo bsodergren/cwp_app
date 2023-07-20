@@ -5,6 +5,7 @@
         ".idea/": true,
         "locales/": true,
         "*.dll": true,
+        "*.bin": true,
         "*.dat": true,
         "*.pak": true,
         ".webcache/": true
