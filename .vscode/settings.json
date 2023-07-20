@@ -3,14 +3,11 @@
     "sqltools.connections": [],
     "files.exclude": {
         ".idea/": true,
-        ".public/vendor": false,
-        ".php/": false,
         "locales/": true,
         ".bin/": true,
         "*.dll": true,
         "*.bin": true,
         "*.dat": true,
-        "*.bat": true,
         "*.pak": true,
         ".webcache/": true
         }

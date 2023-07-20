@@ -2,7 +2,7 @@
 @echo off
 
 set patchbin=%cd%\patcher.exe
-set olddir=%cd%\public
+set olddir=%cd%
 ::set patchzip=%cd%\Latest.zip
 set patchzip=D:\development\cwp_app\Latest.zip
 
