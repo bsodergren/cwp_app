@@ -34,5 +34,4 @@ git commit -m "Updates to v %1"
 git push
 
 chdir /d %old_dir%
-
 %patch_bin% -O %old_dir% -P %patchzip%
