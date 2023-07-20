@@ -4,9 +4,7 @@
     "files.exclude": {
         ".idea/": true,
         "locales/": true,
-        ".bin/": true,
         "*.dll": true,
-        "*.bin": true,
         "*.dat": true,
         "*.pak": true,
         ".webcache/": true

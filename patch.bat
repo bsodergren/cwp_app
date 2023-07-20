@@ -1,6 +1,6 @@
 @echo off
 
-set patchbin=%cd%\patcher.exe
+set patchbin=%cd%\.bin\patcher.exe
 set olddir=%cd%
 
 ::set patchzip=%cd%\public\www\updater\Latest.zip
