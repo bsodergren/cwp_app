@@ -1,6 +1,0 @@
-.public\www\.database\cwp_sqlite.db
-chrome_debug.log
-cwp.app.iss
-debug.log
-open-editor.js
-edit.php

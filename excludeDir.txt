@@ -1,6 +1,0 @@
-.git
-.idea
-.vscode
-.webcache
-Media Load Flags
-.public\www\.git

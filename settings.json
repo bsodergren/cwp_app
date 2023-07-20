@@ -10,7 +10,7 @@
         "log_file": ""
     },
     "main_window": {
-        "title": "Media Flag Creator",
+        "title": "Media Flag Creator DEV SYSTEM",
         "icon": "",
         "default_size": [1280, 800],
         "minimum_size": [1024, 480],
