@@ -1,0 +1,11 @@
+D:\development\cwp_app\.git
+D:\development\cwp_app\.idea
+D:\development\cwp_app\.vscode
+D:\development\cwp_app\.webcache
+D:\development\cwp_app\public\database
+D:\development\cwp_app\chrome_debug.log
+D:\development\cwp_app\cwp.app.iss
+D:\development\cwp_app\debug.log
+D:\development\cwp_app\open-editor.js
+D:\development\cwp_app\public\www\.git
+D:\development\cwp_app\public\www\updater\versions

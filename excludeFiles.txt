@@ -1,0 +1,5 @@
+chrome_debug.log
+cwp.app.iss
+debug.log
+open-editor.js
+edit.php
