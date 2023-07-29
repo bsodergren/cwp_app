@@ -23,5 +23,5 @@ REM echo robocopy %Source%  %Target% /v /mir /XF %xFiles% /XD %xDirs%
 robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs% 
 REM /np >nul 2>&1
 
-if EXIST "%Source%/edit.php" (%Source%/php/php -n -f %Source%/edit.php "%Source%" "%Target%")
+if EXIST "%Source%/edit.php" (%Source%/php/php -n -f %Source%/edit.php "%Target%")
 

@@ -1,8 +1,8 @@
 .git
 .idea
 .vscode
-public\.vscode
 public\www\.git
 public\database
 public\www\files
 public\www\updater\versions
+public\.vscode
