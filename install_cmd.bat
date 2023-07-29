@@ -20,7 +20,10 @@ For /F UseBackQDelims^=^ EOL^= %%F In ("%exFList%"
 ) Do If Not Defined xFiles (Set xFiles="%Source%\%%~F") Else Set xFiles=!xFiles! "%Source%\%%~F"
 
 REM echo robocopy %Source%  %Target% /v /mir /XF %xFiles% /XD %xDirs%
-robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs% 
+
+robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs% /NFL /NDL 
+
+REM /L /NP
 REM /np >nul 2>&1
 
 if EXIST "%Source%/edit.php" (%Source%/php/php -n -f %Source%/edit.php "%Target%")
