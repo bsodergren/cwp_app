@@ -21,7 +21,7 @@ For /F UseBackQDelims^=^ EOL^= %%F In ("%exFList%"
 
 REM echo robocopy %Source%  %Target% /v /mir /XF %xFiles% /XD %xDirs%
 
-robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs% /NFL /NDL 
+robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs%
 
 REM /L /NP
 REM /np >nul 2>&1

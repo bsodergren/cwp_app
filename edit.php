@@ -73,7 +73,7 @@ $json_str = <<<EOD
         "listen_on": ["127.0.0.1", 0],
         "www_directory": "public/www",
         "index_files": ["index.php"],
-        "cgi_interpreter": "php/php.exe",
+        "cgi_interpreter": "php/php-cgi.exe",
         "cgi_extensions": ["php"],
         "cgi_temp_dir": "",
         "404_handler": "/error.php",
