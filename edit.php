@@ -12,9 +12,10 @@ $php_ini_file = $argv[1].\DIRECTORY_SEPARATOR.'php'.\DIRECTORY_SEPARATOR.'php.in
 
 $str = <<<EOD
 [application]
-name=cwp
+name=CWP Media Creator
 debug=false
 [email]
+enable=1
 imap={imap.gmail.com:993/imap/ssl}
 username=bjorn.sodergren@gmail.com
 password=lhdezcpzgxpuultg
@@ -160,4 +161,3 @@ post_max_size=2048M
 EOD;
 
 file_put_contents($php_ini_file, $php_ini_str);
-
