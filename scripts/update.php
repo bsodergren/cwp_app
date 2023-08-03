@@ -7,8 +7,8 @@ $version = $argv[2];
 
 $drive_letter = substr($argv[1], 0, 2);
 $target_dir = $drive_letter.str_replace($drive_letter, '', $argv[1]);
-$web_dir = $target_dir; // .\DIRECTORY_SEPARATOR.'public';
-$update_dir = $target_dir.\DIRECTORY_SEPARATOR.'AppUpdates';
+$web_dir = $target_dir.\DIRECTORY_SEPARATOR.'public';
+$update_dir = $web_dir.\DIRECTORY_SEPARATOR.'AppUpdates';
 
 $update_zips = $update_dir;
 
@@ -77,7 +77,7 @@ foreach ($files_array as $file) {
         $newFiles[] = $file;
     }
 }
-
+/*
 $currentList = file_get_contents($fileList);
 $newList_Array = explode("\n", $currentList);
 
@@ -94,9 +94,9 @@ if (count($deletedArray) > 0) {
 
 $fileList_str = implode("\n", $newFiles);
 file_put_contents($fileList, $fileList_str);
-
+*/
 $zip_file = $update_zips.\DIRECTORY_SEPARATOR.$version.'.zip';
-$rootPath = $web_dir;
+$rootPath = $target_dir;
 $zipPath = str_replace(basename($zip_file), '', $zip_file);
 
 $zip = new ZipArchive();
@@ -110,11 +110,11 @@ foreach ($newFiles as $file) {
     }
 }
 
-if (file_exists($deleteList)) {
-    $filePath = realpath($deleteList);
-    $relativePath = substr($filePath, strlen($rootPath) + 1);
-    $zip->addFile($filePath, $relativePath);
-}
+// if (file_exists($deleteList)) {
+//     $filePath = realpath($deleteList);
+//     $relativePath = substr($filePath, strlen($rootPath) + 1);
+//     $zip->addFile($filePath, $relativePath);
+// }
 
 // Zip archive will be created only after closing object
 $zip->close();

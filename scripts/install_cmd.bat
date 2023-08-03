@@ -8,8 +8,8 @@ if NOT EXIST %Target% (mkdir %Target%)
 
 SetLocal EnableDelayedExpansion
 
-Set "exFList=%Source%\excludeFiles.txt"
-Set "exDList=%Source%\excludeDir.txt"
+Set "exFList=%Source%\scripts\excludeFiles.txt"
+Set "exDList=%Source%\scripts\excludeDir.txt"
 Set "xFiles="
 Set "xDirs="
 
@@ -26,5 +26,5 @@ robocopy %Source%  %Target% /V /mir /XF %xFiles% /XD %xDirs%
 REM /L /NP
 REM /np >nul 2>&1
 
-if EXIST "%Source%/edit.php" (%Source%/php/php -n -f %Source%/edit.php "%Target%")
+if EXIST "%Source%/scripts/edit.php" (%Source%/php/php -n -f %Source%/scripts/edit.php "%Target%")
 

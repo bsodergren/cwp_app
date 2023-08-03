@@ -8,9 +8,7 @@ set web_dir=%build_dir%\public
 set updateDir=%build_dir%\public\AppUpdates
 
 
-set build_bin=%bin_dir%\builder.exe
-set patch_bin=%bin_dir%\patcher.exe
-set build_options=%bin_dir%\sample.cfg
+set build_options=%build_dir%\scripts\sample.cfg
 
 set current_file=%web_dir%\current.txt
 set json_file=%updateDir%\update.json
@@ -31,13 +29,10 @@ set zip_file=%versionNumber%.zip
 set patchzip=%updateDir%\%zip_file%
 
 
-if EXIST "%build_dir%/update.php" (%build_dir%/php/php  -f %build_dir%/update.php "%web_dir%" "%versionNumber%")
+if EXIST "%build_dir%/scripts/update.php" (%build_dir%/php/php  -f %build_dir%/scripts/update.php "%build_dir%" "%versionNumber%")
 
  chdir /d %web_dir%
 
   git add  %current_file% %json_file%  %patchzip%
   git commit -m "Updates to v %versionNumber%"
   git push
-
-REM chdir /d %old_dir%
-REM %patch_bin% -O %old_dir% -P %patchzip%
