@@ -7,7 +7,7 @@ $version = $argv[2];
 
 $drive_letter = substr($argv[1], 0, 2);
 $target_dir = $drive_letter.str_replace($drive_letter, '', $argv[1]);
-$web_dir = $target_dir.\DIRECTORY_SEPARATOR.'public';
+$web_dir = str_replace('public', '', $target_dir).\DIRECTORY_SEPARATOR.'public';
 $update_dir = $web_dir.\DIRECTORY_SEPARATOR.'AppUpdates';
 
 $update_zips = $update_dir;
@@ -19,7 +19,7 @@ $deleteList = $web_dir.\DIRECTORY_SEPARATOR.'delete.txt';
 $skipdirs = [
    'public\\AppUpdates',
    'public\\vendor',
-   'php',
+   '\\php',
    // 'www\\updater\\updater_versions',
    // 'www\\updater\\download',
    'public\\database',
