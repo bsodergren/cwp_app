@@ -19,6 +19,7 @@ $deleteList = $web_dir.\DIRECTORY_SEPARATOR.'delete.txt';
 $skipdirs = [
    'public\\AppUpdates',
    'public\\vendor',
+   'php',
    // 'www\\updater\\updater_versions',
    // 'www\\updater\\download',
    'public\\database',
