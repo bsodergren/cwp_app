@@ -31,14 +31,35 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "cwp_app.iss,*.log,.git*,.idea*,.vscode,*\logs,*Media Load Flags,old_ext\*,cwp_sqlite.*,.webcache\*"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "*.log,.git*,.idea*,.vscode,settings.json"; Flags: ignoreversion 
+             Source: "D:\development\cwp_app\settings.install"; DestName: "settings.json"; DestDir: "{app}";
+
+Source: "D:\development\cwp_app\php\*"; DestDir: "{app}\php"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\bin\*"; DestDir: "{app}\bin"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\locales\*"; DestDir: "{app}\locales"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\scripts\*"; DestDir: "{app}\scripts"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "D:\development\cwp_app\public\*"; DestDir: "{app}\public"; Excludes: "*.log,.git*,.idea*,.vscode,test_navlinks.*,config.ini"; Flags: ignoreversion 
+Source: "D:\development\cwp_app\public\config.install"; DestName: "config.ini"; DestDir: "{app}\public";
+
+Source: "D:\development\cwp_app\public\vendor\*"; DestDir: "{app}\public\vendor"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "D:\development\cwp_app\public\AppUpdates\*"; DestDir: "{app}\public\AppUpdates"; Excludes: "*.zip,*.json"; Flags: ignoreversion  
+
+Source: "D:\development\cwp_app\public\www\*"; DestDir: "{app}\public\www"; Excludes: ""; Flags: ignoreversion  
+Source: "D:\development\cwp_app\public\www\assets\*"; DestDir: "{app}\public\www\assets"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "D:\development\cwp_app\public\www\settings\*"; DestDir: "{app}\public\www\settings"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "D:\development\cwp_app\public\www\updater\*"; DestDir: "{app}\public\www\updater"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+
+
+
+
+
+
 [Code]
 
-function PrepareToInstall(var NeedsRestart: Boolean): String;
-begin
-  if DirExists('{app}\www') then
-    DelTree('{app}\www\*', True, True, True);
-end;
 
 [Icons]
 Name: "{autoprograms}\Media Creator"; Filename: "{app}\MediaCreator.exe"
