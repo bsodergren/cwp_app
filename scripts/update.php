@@ -19,7 +19,7 @@ $deleteList = $web_dir.\DIRECTORY_SEPARATOR.'delete.txt';
 $skipdirs = [
    'public\\AppUpdates',
    'public\\vendor',
-   '\\php',
+  // '\\php',
    // 'www\\updater\\updater_versions',
    // 'www\\updater\\download',
    'public\\database',
@@ -33,6 +33,7 @@ $skipfiles =
 [
     'update.log',
     'config.ini',
+    'config.install',
     'test_navlinks.php',
     '.gitignore',
     '.editorconfig',

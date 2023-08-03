@@ -8,7 +8,7 @@ AppId={{C5A769F9-275A-4774-8ACC-2C3FA0775B1C}
 
 
 AppName=Media Creator
-AppVersion=2.0
+AppVersion=2.2
 AppPublisher=Bjorn Sodergren
 AppPublisherURL=https://www.sodergren.us
 AppSupportURL=https://www.sodergren.us
