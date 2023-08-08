@@ -17,7 +17,7 @@ DefaultGroupName=MediaCreator
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=D:\development\Installers
+OutputDir=D:\development\cwp_app\Installers
 
 OutputBaseFilename=mediacreatorsetup
 Compression=lzma
@@ -35,7 +35,7 @@ Name: "{app}\public";Permissions: users-full
 Name: "{app}\public\src";Permissions: users-full
 [Files]
 
-Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "*.log,.git*,.idea*,.vscode,settings.json"; Flags: ignoreversion ;Permissions: users-full
+Source: "D:\development\cwp_app\*"; DestDir: "{app}"; Excludes: "Installers,*.log,.git*,.idea*,.vscode,settings.json"; Flags: ignoreversion ;Permissions: users-full
 Source: "D:\development\cwp_app\settings.install"; DestName: "settings.json"; DestDir: "{app}";Permissions: users-full
 
 Source: "D:\development\cwp_app\php\*"; DestDir: "{app}\php"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs;Permissions: users-full
