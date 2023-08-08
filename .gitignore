@@ -18,3 +18,4 @@ chrome.log
 xdebug.log
 php/php_errors.log
 php_errors.log
+debug.info.log

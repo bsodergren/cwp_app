@@ -7,7 +7,7 @@
         "show_console": false,
         "subprocess_show_console": false,
         "log_level": "info",
-        "log_file": ""
+        "log_file": "debug.info.log"
     },
     "main_window": {
         "title": "Media Flag Creator DEV SYSTEM",
@@ -20,7 +20,7 @@
         "start_maximized": false,
         "start_fullscreen": false,
         "always_on_top": false,
-        "minimize_to_tray": false,
+        "minimize_to_tray": true,
         "minimize_to_tray_message": "Minimized to tray"
     },
     "popup_window": {
@@ -40,7 +40,7 @@
         "hide_files": []
     },
     "chrome": {
-        "log_file": "",
+        "log_file": "chrome.log",
         "log_severity": "default",
         "cache_path": "",
         "external_drag": true,

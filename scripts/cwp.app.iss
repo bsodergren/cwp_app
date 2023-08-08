@@ -16,7 +16,7 @@ DefaultDirName={autopf}\MediaCreator
 DefaultGroupName=MediaCreator
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=dialog
+;PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=D:\development\Installers
 
 OutputBaseFilename=mediacreatorsetup
@@ -41,7 +41,7 @@ Source: "D:\development\cwp_app\settings.install"; DestName: "settings.json"; De
 Source: "D:\development\cwp_app\php\*"; DestDir: "{app}\php"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs;Permissions: users-full
 Source: "D:\development\cwp_app\bin\*"; DestDir: "{app}\bin"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs ;Permissions: users-full
 Source: "D:\development\cwp_app\locales\*"; DestDir: "{app}\locales"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs ;Permissions: users-full
-;Source: "D:\development\cwp_app\scripts\*"; DestDir: "{app}\scripts"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\development\cwp_app\scripts\*"; DestDir: "{app}\scripts"; Excludes: ""; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: "D:\development\cwp_app\public\*"; DestDir: "{app}\public"; Excludes: "*.log,.git*,.idea*,.vscode,test_navlinks.*,config.ini"; Flags: ignoreversion ;Permissions: users-full
 Source: "D:\development\cwp_app\public\config.install"; DestName: "config.ini"; DestDir: "{app}\public";Permissions: users-full
