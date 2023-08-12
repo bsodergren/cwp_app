@@ -4,7 +4,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{AECEFE49-62E6-4B55-87F4-8186EAC62508}
+AppId={{6913B9B5-0940-4F33-9B87-CD8E8629E369}
 AppName=Media Creator
 AppVersion=2.4
 AppPublisher=Bjorn Sodergren
