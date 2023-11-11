@@ -3,12 +3,14 @@
         "single_instance_guid": "",
         "dpi_aware": true
     },
+	
     "debugging": {
         "show_console": false,
         "subprocess_show_console": false,
         "log_level": "info",
         "log_file": "debug.info.log"
     },
+	
     "main_window": {
         "title": "Media Flag Creator DEV SYSTEM",
         "icon": "",
@@ -23,6 +25,7 @@
         "minimize_to_tray": true,
         "minimize_to_tray_message": "Minimized to tray"
     },
+	
     "popup_window": {
         "icon": "",
         "fixed_title": "Media Popup",
