@@ -25,17 +25,11 @@ echo %versionNumber% > %current_file%
 
 chdir /d %web_dir%
 
+echo "GIT ADD"
 git add  .
+
+echo "GIT commit"
 git commit -m "Updates to v %versionNumber%"
+
+echo "GIT push"
 git push
-git checkout -b %versionNumber% develop
-git push --set-upstream origin %versionNumber%
-git checkout main
-git merge %versionNumber%
-git tag -a %versionNumber% -m "%versionNumber% public release" main
-git push --tags
-git push
-git checkout develop
-git merge %versionNumber%
-git push
-git branch -d %versionNumber%
